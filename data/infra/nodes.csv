@@ -1,0 +1,7 @@
+node_id,node_name,tier,node_type,cpu_cores,cpu_freq_ghz,ram_gb,storage_gb,mobility
+N1,Pepper,iot,robot,4,1.8,8,32,mobile
+N2,RaspberryPi4,edge,embedded_edge,4,1.5,4,32,static
+N3,LaptopEdge,edge,laptop,8,3.2,16,512,mobile
+N4,JetsonNano,edge,edge_ai,6,1.4,8,128,static
+N5,IntelNUC_Fog,fog,fog_node,8,3.6,16,512,static
+N7,Cloud_A100,cloud,cloud_gpu_node,96,2.5,900,10000,static
