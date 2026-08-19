@@ -5,13 +5,12 @@ import json
 from agent.model.schemas import Requirement
 from agent.prompts.requirement_extraction import SYSTEM_PROMPT, build_user_prompt
 from agent.states.state import AgentState
-from agent.utils.config import load_config
-from agent.utils.llm import get_llm
+from agent.utils.llm import get_mistral_llm
 
 
 def intent_grounding_node(state: AgentState) -> dict:
-    config = load_config()
-    model = get_llm(config.llm)
+    # TODO: model choice per node (Mistral vs OpenAI-oss) is not decided yet.
+    model = get_mistral_llm()
 
     user_prompt = build_user_prompt(state["intent_text"], state["services"])
     response = model.invoke([("system", SYSTEM_PROMPT), ("human", user_prompt)])

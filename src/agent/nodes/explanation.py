@@ -2,13 +2,12 @@
 
 from agent.prompts.explanation import SYSTEM_PROMPT
 from agent.states.state import AgentState
-from agent.utils.config import load_config
-from agent.utils.llm import get_llm
+from agent.utils.llm import get_mistral_llm
 
 
 def explanation_node(state: AgentState) -> dict:
-    config = load_config()
-    model = get_llm(config.llm)
+    # TODO: model choice per node (Mistral vs OpenAI-oss) is not decided yet.
+    model = get_mistral_llm()
 
     decision_result = state["decision_result"]
     user_prompt = (
