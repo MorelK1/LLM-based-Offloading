@@ -1,0 +1,16 @@
+# Configuration for the intent-based offloading pipeline
+
+llm:
+  # The model (LLM_MODEL) and API key (NVIDIA_API_KEY) are read from .env
+  base_url: "https://integrate.api.nvidia.com/v1"
+  temperature: 0.0
+  max_tokens: 1024
+
+data:
+  nodes_csv: "data/infra/nodes.csv"
+  links_csv: "data/infra/links.csv"
+  app_state_json: "data/app_state/services.json"
+
+scenario:
+  # End-to-end constraint of scenario 1 (real-time video analysis)
+  end_to_end_latency_ms: 150
