@@ -4,3 +4,8 @@ __pycache__/
 .pytest_cache/
 .env
 .ipynb_checkpoints/
+*.egg-info/
+build/
+dist/
+testbench.ipynb
+state_space_prompt_permissive.py
