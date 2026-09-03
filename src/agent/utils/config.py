@@ -40,9 +40,9 @@ def load_config(path: Path | None = None) -> AppConfig:
     with open(config_path) as f:
         raw = yaml.safe_load(f)
 
-    model = os.environ.get("LLM_MODEL")
+    model = os.environ.get("MISTRAL_MODEL")
     if not model:
-        raise RuntimeError("LLM_MODEL is missing from the environment (.env)")
+        raise RuntimeError("MISTRAL_MODEL is missing from the environment (.env)")
     raw["llm"]["model"] = model
 
     return AppConfig(**raw)
