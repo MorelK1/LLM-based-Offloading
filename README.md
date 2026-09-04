@@ -60,6 +60,15 @@ pytest
 
 ## Known limitations / TODO
 
+- `necessity_checker.py`: `latency` requirements are evaluated as cumulative
+  network latency from the pipeline's root down to the service (via each
+  service's `next_services` edges and `data/infra/links.csv`), not a
+  per-service processing/compute time. This assumes (a) the pipeline DAG has
+  no merge points (a service with more than one predecessor raises an
+  error), and (b) every pair of consecutive services is hosted on the same
+  node or on two directly linked nodes — multi-hop routing between
+  non-adjacent nodes is not supported and raises an error instead of being
+  silently approximated.
 - `decision_engine.py`: greedy solver (lowest tier satisfying the
   constraints), does not yet account for multi-service end-to-end latency or
   network links — to be replaced with a proper constraint solver.
