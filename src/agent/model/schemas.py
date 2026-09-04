@@ -34,6 +34,11 @@ class Service(BaseModel):
     description: str
     current_node: str
     requirements: dict[str, float] | None = None
+    # Downstream service(s) this service sends its output to, forming the
+    # application's pipeline as a DAG. Empty for a terminal service (e.g. the
+    # last stage). Used to compute cumulative (end-to-end) latency up to a
+    # given service -- see necessity_checker.py.
+    next_services: list[str] = Field(default_factory=list)
 
 
 # Discrete set of KPIs / units the LLM may choose from, so it can't hallucinate
