@@ -5,13 +5,15 @@
         "service_id": "T1",
         "name": "Capture",
         "description": "Video stream acquisition",
-        "current_node": "N1"
+        "current_node": "N1",
+        "next_services": ["T2"]
       },
       {
         "service_id": "T2",
         "name": "Preprocessing",
         "description": "Resizing",
-        "current_node": "N1"
+        "current_node": "N1",
+        "next_services": ["T3"]
       },
       {
         "service_id": "T3",
@@ -21,19 +23,22 @@
         "requirements": {
           "cpu_cores": 4,
           "ram_gb": 8
-        }
+        },
+        "next_services": ["T4"]
       },
       {
         "service_id": "T4",
         "name": "Tracking",
         "description": "Multi-frame object tracking",
-        "current_node": "N5"
+        "current_node": "N5",
+        "next_services": ["T5"]
       },
       {
         "service_id": "T5",
         "name": "Storage/Big Data Analysis",
         "description": "Archiving",
-        "current_node": "N7"
+        "current_node": "N7",
+        "next_services": []
       }
     ]
   }
