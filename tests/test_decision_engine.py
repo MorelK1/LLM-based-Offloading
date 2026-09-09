@@ -38,6 +38,7 @@ def test_migrates_to_cloud_when_fog_insufficient():
             ),
         },
         "nodes": _nodes(),
+        "links": [],
     }
 
     result = decision_engine_node(state)["decision_result"]
