@@ -1,19 +1,21 @@
 """LangGraph node: Trace & Explanation Generation."""
 
-from agent.prompts.explanation import SYSTEM_PROMPT
+from agent.prompts.explanation import SYSTEM_PROMPT, build_user_prompt
 from agent.states.state import AgentState
-from agent.utils.llm import get_mistral_llm
+from agent.utils.llm_openrouter import get_openrouter_gpt_llm
 
 
 def explanation_node(state: AgentState) -> dict:
-    # TODO: model choice per node (Mistral vs OpenAI-oss) is not decided yet.
-    model = get_mistral_llm()
+    # OpenRouter (openai/gpt-5.4-mini), same choice as intent_grounding_node:
+    # NVIDIA API Catalog's inference backend (get_mistral_llm) proved too
+    # unreliable in practice -- see testbench / README.
+    model = get_openrouter_gpt_llm()
 
-    decision_result = state["decision_result"]
-    user_prompt = (
-        f"Necessity check: {state['necessity_result'].model_dump_json()}\n"
-        f"Decision: {decision_result.model_dump_json() if decision_result else 'null'}\n"
-        f"Requirements: {[r.model_dump() for r in state['requirements']]}"
+    user_prompt = build_user_prompt(
+        state["intent_text"],
+        state["requirements"],
+        state["necessity_result"],
+        state["decision_result"],
     )
     response = model.invoke([("system", SYSTEM_PROMPT), ("human", user_prompt)])
     return {"explanation": response.content}
