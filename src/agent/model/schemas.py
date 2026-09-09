@@ -88,3 +88,9 @@ class DecisionResult(BaseModel):
     eligible_nodes_considered: list[str]
     requirements_satisfied: list[str]
     new_configuration: dict[str, str]  # service_id -> node_id (full state)
+    # Human-readable (ok/reason) trace of every check performed against the
+    # chosen placement -- see utils/csp_checks.py.
+    resolution_trace: list[str] = Field(default_factory=list)
+    # Trace of the search process itself (candidates tried, improvements
+    # found) -- see utils/csp_solver.py:solve_placement.
+    search_trace: list[str] = Field(default_factory=list)
