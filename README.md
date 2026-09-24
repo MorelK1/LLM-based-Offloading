@@ -94,6 +94,43 @@ for the homemade solver, a `search_trace` (how the search got there).
 `utils/csp_solver.py:diagnose_node_options` additionally answers "why not
 node X for this one service?" independently of a full solve.
 
+## Enact scenario & intent datasets
+
+`data/enact_scenario/` is a second, additive scenario (real weather-forecasting telemetry from
+`dataset/enact/`, extended with generic nodes across every continuum tier) -- built without
+touching `data/infra/`, `data/app_state/`, or the pre-existing `data/eval/` fixtures. Full
+write-up (topology, services, telemetry, every intent, every pipeline run) in
+[`data/enact_scenario/RESULTS.md`](data/enact_scenario/RESULTS.md); the generation method behind
+every file and every intent (sources, formulas, what's hand-authored vs. LLM-generated) is in
+[`data/enact_scenario/METHODOLOGY.md`](data/enact_scenario/METHODOLOGY.md).
+
+Intent datasets, in `data/eval/`:
+- `intent_grounding_enact.jsonl` -- pre-existing, 10 hand-picked ground-truth cases (RAM only),
+  grounded on `dataset/enact/pod_telemetry_pods_on.csv` measurements.
+- `intent_grounding_enact_variants.jsonl` -- pre-existing, 30 paraphrases of the above,
+  **LLM-generated** by `scripts/generate_intent_dataset.py` (`prompts/intent_generation.py`
+  asks the LLM to reword a known ground-truth requirement into one natural sentence, anti-
+  canonical phrasing enforced by the prompt).
+- `intent_grounding_enact_extended.jsonl` -- 14 new cases (cpu/energy/latency KPIs, plus 3
+  offload-trigger scenarios on `C1`/`C2-v2`/`F2-v2`). **Hand-authored, not LLM-generated**:
+  each floor/ceiling value comes directly from computed mean/p95/max statistics on real
+  `pod_telemetry_pods_on.csv` readings (or from `cumulative_latency_ms` on the new
+  `services_pipeline.json` DAG for the latency cases), picked by hand to be deliberately
+  satisfied or violated.
+- `intent_grounding_enact_clarity_spectrum.jsonl` -- 20 new cases spanning 5 clarity tiers
+  (explicit -> casual -> implicit -> noisy -> vague-with-no-threshold), grounded on
+  `dataset/enact/node_telemetry_pods_on.csv` node-level stats (cpu/energy/storage/network
+  in-out). **Also hand-authored, not LLM-generated** -- unlike the `_variants.jsonl` file
+  above, no LLM was used to produce the intent text itself; the point of this file is instead
+  to *measure* the LLM's extraction (`intent_grounding_node`) as clarity degrades. Results of
+  running it 3x per case through the real pipeline: `data/enact_scenario/RESULTS.md`, Part 3.
+
+Formal evaluation harness (extraction accuracy + decision-layer correctness, scored separately,
+raw/scored data persisted, analysis notebook with tables and figures): `experimentation/`.
+Methodology (two-layer principle, metric definitions, error taxonomies, known limitations) in
+[`experimentation/METHODOLOGY.md`](experimentation/METHODOLOGY.md); report-ready result tables
+in [`experimentation/RESULTS.md`](experimentation/RESULTS.md).
+
 ## Run the running example
 
 ```bash
