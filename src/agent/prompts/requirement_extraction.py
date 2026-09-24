@@ -32,10 +32,20 @@ If an intent expresses limits on more than one KPI (e.g. both CPU and RAM), \
 extract one separate requirement per KPI, even if they are stated in the \
 same sentence.
 - The supported KPI types are: "cpu" (the number of virtual CPU cores the \
-service needs, in vCPU), "ram" (the memory the service needs, in GB), and \
-"latency" (the maximum acceptable processing delay for the service, in ms). \
-Always use the unit that matches the KPI type: cpu -> vCPU, ram -> GB, \
-latency -> ms.
+service needs, in vCPU), "ram" (the memory the service needs, in GB or MB), \
+"latency" (the maximum acceptable processing delay for the service, in ms), \
+"energy" (the power the service may draw, in W), "storage" (the fraction of \
+disk/filesystem capacity the service may use, as a "%"), "network_in" (the \
+service's required or allowed inbound network throughput, in Mbps), and \
+"network_out" (the service's required or allowed outbound network \
+throughput, in Mbps). Always use the unit that matches the KPI type: \
+cpu -> vCPU, latency -> ms, energy -> W, storage -> %, network_in/\
+network_out -> Mbps. For "ram", use whichever of GB or MB is the one \
+actually used in the intent text -- never convert between them. A number \
+expressed in words ("a vCPU and a half", "three-quarters full") or as a \
+rough figure ("call it 8 megabits", "around 85 watts") still counts as an \
+explicit numeric threshold -- convert it to the matching numeral \
+(1.5, 75, 8, 85, ...).
 - source_span must be an exact, literal substring copied from the user's \
 intent text -- never a paraphrase, a summary, or a character offset/index. \
 If you cannot find a literal substring expressing the requirement, do not \
@@ -47,9 +57,13 @@ follows: "at least" / "minimum" / "no less than" -> "gte"; "at most" / \
 "maximum" / "no more than" / "must not exceed" -> "lte"; "exactly" / \
 "must be" -> "eq".
 - Only extract a requirement when the intent states an explicit numeric \
-threshold for cpu, ram, or latency, on a service that is in the provided \
-list. Do not invent a value, do not guess a service, and do not create a \
-requirement for a service that is not in the list.
+threshold for one of the supported KPI types, on a service that is in the \
+provided list. Do not invent a value, do not guess a service, and do not \
+create a requirement for a service that is not in the list.
+- If the intent only expresses a vague concern (e.g. "it's been acting up", \
+"it might need more room to breathe", "we'll probably need to upgrade it \
+at some point") without ever stating a number, return an empty list -- do \
+not infer or guess a plausible-sounding threshold to fill the gap.
 - If nothing in the intent meets these conditions, return an empty list \
 rather than forcing a requirement.
 - When a sentence expresses more than one requirement (e.g. two different \

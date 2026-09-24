@@ -44,8 +44,8 @@ class Service(BaseModel):
 # Discrete set of KPIs / units the LLM may choose from, so it can't hallucinate
 # free-form values. Extend these lists deliberately if a new KPI or unit is
 # needed.
-KpiType = Literal["cpu", "ram", "latency"]
-Unit = Literal["vCPU", "GB", "ms"]
+KpiType = Literal["cpu", "ram", "latency", "energy", "bandwidth", "storage", "network_in", "network_out"]
+Unit = Literal["vCPU", "GB", "MB", "ms", "W", "Mbps", "%"]
 
 
 class ExtractedRequirement(BaseModel):
