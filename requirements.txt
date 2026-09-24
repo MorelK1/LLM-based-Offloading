@@ -10,3 +10,4 @@ ortools>=9.10.0
 pytest>=8.0.0
 jupyter>=1.0.0
 ipykernel>=6.29.0
+matplotlib>=3.9.0
