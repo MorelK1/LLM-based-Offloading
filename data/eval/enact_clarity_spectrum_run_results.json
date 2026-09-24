@@ -1,0 +1,1429 @@
+[
+  {
+    "id": "enact-201",
+    "tier": 1,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C1",
+        "cpu",
+        "gte",
+        0.4,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "C1",
+        "cpu",
+        "gte",
+        0.4,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 2.01
+  },
+  {
+    "id": "enact-201",
+    "tier": 1,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C1",
+        "cpu",
+        "gte",
+        0.4,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "C1",
+        "cpu",
+        "gte",
+        0.4,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.31
+  },
+  {
+    "id": "enact-201",
+    "tier": 1,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C1",
+        "cpu",
+        "gte",
+        0.4,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "C1",
+        "cpu",
+        "gte",
+        0.4,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.18
+  },
+  {
+    "id": "enact-202",
+    "tier": 1,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2",
+        "energy",
+        "lte",
+        90.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "F2",
+        "energy",
+        "lte",
+        90.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.31
+  },
+  {
+    "id": "enact-202",
+    "tier": 1,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2",
+        "energy",
+        "lte",
+        90.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "F2",
+        "energy",
+        "lte",
+        90.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.31
+  },
+  {
+    "id": "enact-202",
+    "tier": 1,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2",
+        "energy",
+        "lte",
+        90.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "F2",
+        "energy",
+        "lte",
+        90.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.24
+  },
+  {
+    "id": "enact-203",
+    "tier": 1,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "P1",
+        "storage",
+        "lte",
+        80.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "storage",
+        "lte",
+        80.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.98
+  },
+  {
+    "id": "enact-203",
+    "tier": 1,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "P1",
+        "storage",
+        "lte",
+        80.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "storage",
+        "lte",
+        80.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.25
+  },
+  {
+    "id": "enact-203",
+    "tier": 1,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "P1",
+        "storage",
+        "lte",
+        80.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "storage",
+        "lte",
+        80.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.17
+  },
+  {
+    "id": "enact-204",
+    "tier": 1,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2",
+        "network_in",
+        "gte",
+        0.3,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "C2",
+        "network_in",
+        "gte",
+        0.3,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.9
+  },
+  {
+    "id": "enact-204",
+    "tier": 1,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2",
+        "network_in",
+        "gte",
+        0.3,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "C2",
+        "network_in",
+        "gte",
+        0.3,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.27
+  },
+  {
+    "id": "enact-204",
+    "tier": 1,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2",
+        "network_in",
+        "gte",
+        0.3,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "C2",
+        "network_in",
+        "gte",
+        0.3,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.09
+  },
+  {
+    "id": "enact-205",
+    "tier": 2,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F1",
+        "cpu",
+        "lte",
+        0.5,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "F1",
+        "cpu",
+        "lte",
+        0.5,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "reconfiguration_required",
+    "decision": "NO_VALID_PLACEMENT",
+    "elapsed_s": 2.53
+  },
+  {
+    "id": "enact-205",
+    "tier": 2,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F1",
+        "cpu",
+        "lte",
+        0.5,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "F1",
+        "cpu",
+        "lte",
+        0.5,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "reconfiguration_required",
+    "decision": "NO_VALID_PLACEMENT",
+    "elapsed_s": 2.57
+  },
+  {
+    "id": "enact-205",
+    "tier": 2,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F1",
+        "cpu",
+        "lte",
+        0.5,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "F1",
+        "cpu",
+        "lte",
+        0.5,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "reconfiguration_required",
+    "decision": "NO_VALID_PLACEMENT",
+    "elapsed_s": 2.98
+  },
+  {
+    "id": "enact-206",
+    "tier": 2,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2-v2",
+        "energy",
+        "lte",
+        100.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "F2-v2",
+        "energy",
+        "lte",
+        100.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.27
+  },
+  {
+    "id": "enact-206",
+    "tier": 2,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2-v2",
+        "energy",
+        "lte",
+        100.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "F2-v2",
+        "energy",
+        "lte",
+        100.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.54
+  },
+  {
+    "id": "enact-206",
+    "tier": 2,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2-v2",
+        "energy",
+        "lte",
+        100.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "F2-v2",
+        "energy",
+        "lte",
+        100.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.27
+  },
+  {
+    "id": "enact-207",
+    "tier": 2,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2-v2",
+        "network_out",
+        "lte",
+        1.0,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "C2-v2",
+        "network_out",
+        "lte",
+        1.0,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.22
+  },
+  {
+    "id": "enact-207",
+    "tier": 2,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2-v2",
+        "network_out",
+        "lte",
+        1.0,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "C2-v2",
+        "network_out",
+        "lte",
+        1.0,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.71
+  },
+  {
+    "id": "enact-207",
+    "tier": 2,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2-v2",
+        "network_out",
+        "lte",
+        1.0,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "C2-v2",
+        "network_out",
+        "lte",
+        1.0,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 2.14
+  },
+  {
+    "id": "enact-208",
+    "tier": 2,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "P1",
+        "storage",
+        "gte",
+        60.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "storage",
+        "gte",
+        60.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.44
+  },
+  {
+    "id": "enact-208",
+    "tier": 2,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "P1",
+        "storage",
+        "gte",
+        60.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "storage",
+        "gte",
+        60.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.27
+  },
+  {
+    "id": "enact-208",
+    "tier": 2,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "P1",
+        "storage",
+        "gte",
+        60.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "storage",
+        "gte",
+        60.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 2.0
+  },
+  {
+    "id": "enact-209",
+    "tier": 3,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C1",
+        "energy",
+        "lte",
+        85.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "C1",
+        "energy",
+        "lte",
+        85.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.92
+  },
+  {
+    "id": "enact-209",
+    "tier": 3,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C1",
+        "energy",
+        "lte",
+        85.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "C1",
+        "energy",
+        "lte",
+        85.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.17
+  },
+  {
+    "id": "enact-209",
+    "tier": 3,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C1",
+        "energy",
+        "lte",
+        85.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "C1",
+        "energy",
+        "lte",
+        85.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.09
+  },
+  {
+    "id": "enact-210",
+    "tier": 3,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2",
+        "cpu",
+        "gte",
+        1.5,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "F2",
+        "cpu",
+        "gte",
+        1.5,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.37
+  },
+  {
+    "id": "enact-210",
+    "tier": 3,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2",
+        "cpu",
+        "gte",
+        1.5,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "F2",
+        "cpu",
+        "gte",
+        1.5,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.23
+  },
+  {
+    "id": "enact-210",
+    "tier": 3,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2",
+        "cpu",
+        "gte",
+        1.5,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "F2",
+        "cpu",
+        "gte",
+        1.5,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.13
+  },
+  {
+    "id": "enact-211",
+    "tier": 3,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2",
+        "storage",
+        "lte",
+        75.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "C2",
+        "storage",
+        "lte",
+        75.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.13
+  },
+  {
+    "id": "enact-211",
+    "tier": 3,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2",
+        "storage",
+        "lte",
+        75.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "C2",
+        "storage",
+        "lte",
+        75.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.4
+  },
+  {
+    "id": "enact-211",
+    "tier": 3,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2",
+        "storage",
+        "lte",
+        75.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "C2",
+        "storage",
+        "lte",
+        75.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.25
+  },
+  {
+    "id": "enact-212",
+    "tier": 3,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F1",
+        "network_in",
+        "gte",
+        0.25,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "F1",
+        "network_in",
+        "gte",
+        0.25,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.15
+  },
+  {
+    "id": "enact-212",
+    "tier": 3,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F1",
+        "network_in",
+        "gte",
+        0.25,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "F1",
+        "network_in",
+        "gte",
+        0.25,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.18
+  },
+  {
+    "id": "enact-212",
+    "tier": 3,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F1",
+        "network_in",
+        "gte",
+        0.25,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "F1",
+        "network_in",
+        "gte",
+        0.25,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.26
+  },
+  {
+    "id": "enact-213",
+    "tier": 4,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "P1",
+        "energy",
+        "lte",
+        95.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "energy",
+        "lte",
+        95.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.74
+  },
+  {
+    "id": "enact-213",
+    "tier": 4,
+    "run": 2,
+    "extraction_ok": false,
+    "extracted": [
+      [
+        "P1",
+        "energy",
+        "lte",
+        95.0,
+        "W"
+      ],
+      [
+        "P1",
+        "storage",
+        "lte",
+        95.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "energy",
+        "lte",
+        95.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.69
+  },
+  {
+    "id": "enact-213",
+    "tier": 4,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "P1",
+        "energy",
+        "lte",
+        95.0,
+        "W"
+      ]
+    ],
+    "expected": [
+      [
+        "P1",
+        "energy",
+        "lte",
+        95.0,
+        "W"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.18
+  },
+  {
+    "id": "enact-214",
+    "tier": 4,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2-v2",
+        "cpu",
+        "gte",
+        2.0,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "C2-v2",
+        "cpu",
+        "gte",
+        2.0,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.13
+  },
+  {
+    "id": "enact-214",
+    "tier": 4,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2-v2",
+        "cpu",
+        "gte",
+        2.0,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "C2-v2",
+        "cpu",
+        "gte",
+        2.0,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.74
+  },
+  {
+    "id": "enact-214",
+    "tier": 4,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "C2-v2",
+        "cpu",
+        "gte",
+        2.0,
+        "vCPU"
+      ]
+    ],
+    "expected": [
+      [
+        "C2-v2",
+        "cpu",
+        "gte",
+        2.0,
+        "vCPU"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.13
+  },
+  {
+    "id": "enact-215",
+    "tier": 4,
+    "run": 1,
+    "extraction_ok": false,
+    "extracted": [
+      [
+        "F2",
+        "network_out",
+        "lte",
+        8.0,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "F2-v2",
+        "network_out",
+        "lte",
+        8.0,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.67
+  },
+  {
+    "id": "enact-215",
+    "tier": 4,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2-v2",
+        "network_out",
+        "lte",
+        8.0,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "F2-v2",
+        "network_out",
+        "lte",
+        8.0,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.81
+  },
+  {
+    "id": "enact-215",
+    "tier": 4,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [
+      [
+        "F2-v2",
+        "network_out",
+        "lte",
+        8.0,
+        "Mbps"
+      ]
+    ],
+    "expected": [
+      [
+        "F2-v2",
+        "network_out",
+        "lte",
+        8.0,
+        "Mbps"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.34
+  },
+  {
+    "id": "enact-216",
+    "tier": 4,
+    "run": 1,
+    "extraction_ok": false,
+    "extracted": [
+      [
+        "F1",
+        "storage",
+        "lte",
+        65.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "F1",
+        "storage",
+        "gte",
+        65.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.12
+  },
+  {
+    "id": "enact-216",
+    "tier": 4,
+    "run": 2,
+    "extraction_ok": false,
+    "extracted": [
+      [
+        "F1",
+        "storage",
+        "lte",
+        65.0,
+        "%"
+      ]
+    ],
+    "expected": [
+      [
+        "F1",
+        "storage",
+        "gte",
+        65.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.33
+  },
+  {
+    "id": "enact-216",
+    "tier": 4,
+    "run": 3,
+    "extraction_ok": false,
+    "extracted": [],
+    "expected": [
+      [
+        "F1",
+        "storage",
+        "gte",
+        65.0,
+        "%"
+      ]
+    ],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.33
+  },
+  {
+    "id": "enact-217",
+    "tier": 5,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.54
+  },
+  {
+    "id": "enact-217",
+    "tier": 5,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.02
+  },
+  {
+    "id": "enact-217",
+    "tier": 5,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.23
+  },
+  {
+    "id": "enact-218",
+    "tier": 5,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.02
+  },
+  {
+    "id": "enact-218",
+    "tier": 5,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.13
+  },
+  {
+    "id": "enact-218",
+    "tier": 5,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.02
+  },
+  {
+    "id": "enact-219",
+    "tier": 5,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.25
+  },
+  {
+    "id": "enact-219",
+    "tier": 5,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 0.99
+  },
+  {
+    "id": "enact-219",
+    "tier": 5,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.15
+  },
+  {
+    "id": "enact-220",
+    "tier": 5,
+    "run": 1,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 0.88
+  },
+  {
+    "id": "enact-220",
+    "tier": 5,
+    "run": 2,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.26
+  },
+  {
+    "id": "enact-220",
+    "tier": 5,
+    "run": 3,
+    "extraction_ok": true,
+    "extracted": [],
+    "expected": [],
+    "necessity_status": "no_action_needed",
+    "decision": {},
+    "elapsed_s": 1.12
+  }
+]

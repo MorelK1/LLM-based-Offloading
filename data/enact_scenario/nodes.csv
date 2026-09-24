@@ -1,0 +1,7 @@
+node_id,node_name,tier,node_type,cpu_cores,cpu_freq_ghz,ram_gb,storage_gb,mobility
+rpi4,RaspberryPi4-Enact,edge,embedded_edge,4,1.5,4,32,static
+vm-node,CloudVM-Enact,cloud,cloud_vm,8,2.8,16,200,static
+iot-gw1,WeatherStationGateway,iot,iot_gateway,2,1.0,1,8,static
+edge-srv1,EdgeMiniServer,edge,mini_server,6,2.4,8,128,static
+fog-node1,FogAggregator,fog,fog_node,8,3.0,16,256,static
+cloud-vm2,CloudVM-Large,cloud,cloud_vm,16,3.2,32,500,static

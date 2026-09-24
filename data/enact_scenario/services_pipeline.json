@@ -1,0 +1,55 @@
+{
+  "application_context": {
+    "services": [
+      {
+        "service_id": "C1",
+        "name": "Weather Collector (Thessaloniki)",
+        "description": "Retrieves weather data for Thessaloniki from the OpenWeather API",
+        "current_node": "rpi4",
+        "next_services": []
+      },
+      {
+        "service_id": "C2",
+        "name": "Weather Collector (Berlin)",
+        "description": "Retrieves weather data for Berlin from the OpenWeather API",
+        "current_node": "rpi4",
+        "next_services": ["F1", "F2"]
+      },
+      {
+        "service_id": "F1",
+        "name": "Weather Forecaster (Berlin, Edge)",
+        "description": "AI-based weather forecasting model instance running on the edge node",
+        "current_node": "rpi4",
+        "next_services": []
+      },
+      {
+        "service_id": "F2",
+        "name": "Weather Forecaster (Berlin, Cloud)",
+        "description": "AI-based weather forecasting model instance running on the cloud node",
+        "current_node": "vm-node",
+        "next_services": ["P1"]
+      },
+      {
+        "service_id": "P1",
+        "name": "Forecaster Tenant Pool",
+        "description": "Shared resource pool backing the cloud-based forecasting service",
+        "current_node": "vm-node",
+        "next_services": []
+      },
+      {
+        "service_id": "C2-v2",
+        "name": "Weather Collector (Berlin) v2 -- Multi-source ingestion",
+        "description": "Updated Berlin collector that ingests from several weather data providers concurrently instead of one, heavier CPU footprint than C2. Initially deployed alongside C2 on the same node it replaces, before any reconfiguration.",
+        "current_node": "rpi4",
+        "next_services": []
+      },
+      {
+        "service_id": "F2-v2",
+        "name": "Weather Forecaster (Berlin, Cloud) v2 -- Ensemble model",
+        "description": "Updated cloud Berlin forecaster that runs a multi-member ensemble model instead of a single model, heavier RAM footprint than F2. Initially deployed alongside F2 on the same node it replaces, before any reconfiguration.",
+        "current_node": "vm-node",
+        "next_services": []
+      }
+    ]
+  }
+}

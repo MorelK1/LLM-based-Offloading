@@ -1,0 +1,9 @@
+link_id,source_node,target_node,link_type,bandwidth_mbps,latency_ms,packet_loss_rate,reliability
+L1,iot-gw1,rpi4,WiFi,100,10,0.02,0.93
+L2,iot-gw1,edge-srv1,WiFi,100,12,0.02,0.93
+L3,rpi4,edge-srv1,WiFi/Ethernet,500,6,0.01,0.96
+L4,rpi4,vm-node,WAN,8000,22,0.005,0.98
+L5,edge-srv1,fog-node1,Ethernet,1000,4,0.003,0.98
+L6,fog-node1,vm-node,WAN,9000,24,0.002,0.99
+L7,fog-node1,cloud-vm2,WAN,9000,24,0.002,0.99
+L8,vm-node,cloud-vm2,Ethernet,10000,2,0.001,0.995

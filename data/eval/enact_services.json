@@ -1,0 +1,41 @@
+{
+  "application_context": {
+    "services": [
+      {
+        "service_id": "C1",
+        "name": "Weather Collector (Thessaloniki)",
+        "description": "Retrieves weather data for Thessaloniki from the OpenWeather API",
+        "current_node": "rpi4",
+        "next_services": []
+      },
+      {
+        "service_id": "C2",
+        "name": "Weather Collector (Berlin)",
+        "description": "Retrieves weather data for Berlin from the OpenWeather API",
+        "current_node": "rpi4",
+        "next_services": []
+      },
+      {
+        "service_id": "F1",
+        "name": "Weather Forecaster (Berlin, Edge)",
+        "description": "AI-based weather forecasting model instance running on the edge node",
+        "current_node": "rpi4",
+        "next_services": []
+      },
+      {
+        "service_id": "F2",
+        "name": "Weather Forecaster (Berlin, Cloud)",
+        "description": "AI-based weather forecasting model instance running on the cloud node",
+        "current_node": "vm-node",
+        "next_services": []
+      },
+      {
+        "service_id": "P1",
+        "name": "Forecaster Tenant Pool",
+        "description": "Shared resource pool backing the forecasting service",
+        "current_node": "vm-node",
+        "next_services": []
+      }
+    ]
+  }
+}
