@@ -33,6 +33,11 @@ class Service(BaseModel):
     name: str
     description: str
     current_node: str
+    # This service's own static resource footprint on current_node, keyed like
+    # Node's fields ("cpu_cores", "ram_gb") -- i.e. what it reserves on that
+    # node, used by necessity_checker.py to compute capacity still available
+    # to co-located services for "gte" (floor) requirements. Not to be confused
+    # with Requirement/ExtractedRequirement (an intent-derived constraint).
     requirements: dict[str, float] | None = None
     # Downstream service(s) this service sends its output to, forming the
     # application's pipeline as a DAG. Empty for a terminal service (e.g. the
