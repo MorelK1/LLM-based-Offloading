@@ -1,0 +1,99 @@
+{
+  "benchmark": "public_safety_e2e",
+  "version": "v2",
+  "parent_benchmark_file": "outputs/evaluation/e2e/e2e_samples.json",
+  "source_scenario_file": "outputs/public_safety_multi_instance.json",
+  "sample_count": 600,
+  "technical_change_count": 174,
+  "seed": 42,
+  "evaluation_scope": "natural_language_intent_to_structured_requirement_to_necessity_check_to_reconfiguration",
+  "input": {
+    "natural_language_intent": true,
+    "application_state": true,
+    "infrastructure_nodes": true,
+    "infrastructure_links": true
+  },
+  "expected_outputs": {
+    "structured_requirement": true,
+    "outcome": [
+      "STAY",
+      "OFFLOAD",
+      "INFEASIBLE"
+    ],
+    "target_placement": "required only when outcome=OFFLOAD"
+  },
+  "outcome_semantics": {
+    "STAY": "The current placement P0 already satisfies the updated requirement. No new placement is required.",
+    "OFFLOAD": "P0 does not satisfy the updated requirement, but at least one feasible placement P1 exists.",
+    "INFEASIBLE": "P0 does not satisfy the updated requirement and no feasible P1 exists under the benchmark constraints."
+  },
+  "placement_evaluation_semantics": {
+    "exact_match": false,
+    "primary_criterion": "A predicted P1 must be independently validated for feasibility against the grounded requirement, application constraints, infrastructure capacities, network constraints, and eligible tiers.",
+    "resource_offload": "reference_candidate_placements are known feasible target-service-only reconfigurations. They are reference solutions, not the only placements that may be accepted.",
+    "e2e_offload": "reference_placement is the placement returned by the differential solver, which minimizes moved services first. It is an optimization reference and not necessarily the unique acceptable placement.",
+    "quality_metric": "Compare the number of moved services of a feasible predicted placement against minimum_moves."
+  },
+  "feasibility_model": {
+    "placement_search_space": {
+      "eligible_service_tiers": [
+        "EDGE",
+        "CLOUD"
+      ],
+      "all_services_are_placed": true,
+      "one_node_per_service": true
+    },
+    "resource_model": {
+      "capacity_semantics": "Node resources are total capacities.",
+      "aggregation": "Resource requirements of all services placed on a node are summed.",
+      "feasibility_condition": "For each node and each resource, the sum of service requirements must not exceed node capacity.",
+      "updated_resource_requirement": "For RESOURCE scenarios, the target service baseline requirement for the target KPI is replaced by the new structured requirement value."
+    },
+    "network_delay_model": {
+      "graph": "directed",
+      "same_node_communication_delay": 0,
+      "per_link_transmission_delay": "ceil(data_size / bandwidth)",
+      "multi_hop_communication_delay": "Shortest-path sum of per-link transmission delays.",
+      "propagation_delay": "ignored_in_benchmark_v1"
+    },
+    "e2e_delay_model": {
+      "processing_delay": "Sum of wcet[0] for all services belonging to the flow path.",
+      "communication_delay": "Sum of shortest-path communication delays for all application flow hops.",
+      "total_delay": "processing_delay + communication_delay",
+      "target_flow_constraint": "For an E2E scenario, the target flow uses the new structured requirement value.",
+      "non_target_flow_constraint": "Other flows retain their current_e2e_max constraint."
+    },
+    "outcome_derivation": {
+      "STAY": "P0 is feasible under the updated requirements.",
+      "OFFLOAD": "P0 is infeasible but at least one feasible P1 exists.",
+      "INFEASIBLE": "P0 is infeasible and no feasible placement exists in the placement search space."
+    },
+    "optimization_objective": {
+      "primary": "minimize number of moved services",
+      "move_count": "Number of services whose P1 node differs from their P0 node."
+    }
+  },
+  "outcome_distribution": {
+    "INFEASIBLE": 41,
+    "OFFLOAD": 394,
+    "STAY": 165
+  },
+  "change_type_distribution": {
+    "E2E": 124,
+    "RESOURCE": 476
+  },
+  "offload_ground_truth_type_distribution": {
+    "DIFFERENTIAL_ORACLE_REFERENCE": 13,
+    "TARGET_SERVICE_CANDIDATE_PLACEMENTS": 381
+  },
+  "offload_minimum_move_distribution": {
+    "1": 381,
+    "3": 13
+  },
+  "notes": [
+    "The exact same 600 samples selected for E2E V1 are preserved.",
+    "STAY/OFFLOAD/INFEASIBLE are workflow outcomes, not direct solver classification outputs.",
+    "The solver is responsible for computing a feasible P1 when reconfiguration is required.",
+    "Exact placement matching must not be used as the primary placement metric because multiple feasible P1 placements may exist."
+  ]
+}

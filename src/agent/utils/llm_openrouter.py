@@ -21,8 +21,8 @@ _DEFAULT_TEMPERATURE = 0
 _DEFAULT_MAX_TOKENS = 4096
 
 
-def _build_openrouter_chat_model(env_var: str) -> BaseChatModel:
-    model = os.environ.get(env_var)
+def _build_openrouter_chat_model(env_var: str, override: str | None = None) -> BaseChatModel:
+    model = override or os.environ.get(env_var)
     if not model:
         raise RuntimeError(f"{env_var} is missing from the environment (.env)")
     if not os.environ.get("OPENROUTER_API_KEY"):
@@ -38,5 +38,7 @@ def _build_openrouter_chat_model(env_var: str) -> BaseChatModel:
     )
 
 
-def get_openrouter_gpt_llm() -> BaseChatModel:
-    return _build_openrouter_chat_model("OPENROUTER_MODEL")
+def get_openrouter_gpt_llm(model: str | None = None) -> BaseChatModel:
+    """model overrides OPENROUTER_MODEL (.env) for this call when given --
+    None keeps today's behavior exactly (reads the env var)."""
+    return _build_openrouter_chat_model("OPENROUTER_MODEL", override=model)

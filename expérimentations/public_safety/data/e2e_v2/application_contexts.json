@@ -1,0 +1,2176 @@
+{
+  "benchmark_id": "public-safety-decision-v1",
+  "context_count": 10,
+  "contexts": [
+    {
+      "application_context_id": "PS-I001-APP",
+      "infrastructure_id": "PS-I001",
+      "infrastructure_seed": 42,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_0"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_0"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 29.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 23.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I002-APP",
+      "infrastructure_id": "PS-I002",
+      "infrastructure_seed": 43,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "1"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_1"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "1"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_1"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 28.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 23.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I003-APP",
+      "infrastructure_id": "PS-I003",
+      "infrastructure_seed": 44,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_0"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_0"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 29.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 24.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I004-APP",
+      "infrastructure_id": "PS-I004",
+      "infrastructure_seed": 45,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_0"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_0"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 29.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 24.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I005-APP",
+      "infrastructure_id": "PS-I005",
+      "infrastructure_seed": 46,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_0"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_0"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "0"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 29.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 23.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I006-APP",
+      "infrastructure_id": "PS-I006",
+      "infrastructure_seed": 47,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_0"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_0"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 29.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 23.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I007-APP",
+      "infrastructure_id": "PS-I007",
+      "infrastructure_seed": 48,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_0"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_0"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 29.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 24.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I008-APP",
+      "infrastructure_id": "PS-I008",
+      "infrastructure_seed": 49,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "1"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_1"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "1"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_1"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 29.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 24.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I009-APP",
+      "infrastructure_id": "PS-I009",
+      "infrastructure_seed": 50,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "0"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_0"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_0"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 29.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 23.0
+        }
+      ]
+    },
+    {
+      "application_context_id": "PS-I010-APP",
+      "infrastructure_id": "PS-I010",
+      "infrastructure_seed": 51,
+      "application_id": "publicSafety",
+      "unit_system": "benchmark_normalized_v1",
+      "source_unit_system": "edgeflow_abstract",
+      "services": [
+        {
+          "id": "C1",
+          "name": "Motion Detection Service",
+          "description": "Detects motion in the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "motion detection",
+            "motion detector",
+            "movement detection",
+            "movement detector",
+            "motion detection module",
+            "motion analysis service"
+          ],
+          "functional_tags": [
+            "motion_detection",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 7.0,
+            "ram": 6.0,
+            "hdd": 5.0
+          },
+          "wcet": [
+            5.0,
+            9.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 60.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_1"
+        },
+        {
+          "id": "C2",
+          "name": "Face Recognition Service",
+          "description": "Performs face recognition as part of the Public Safety analysis pipeline.",
+          "aliases": [
+            "face recognition",
+            "face recognizer",
+            "facial recognition",
+            "facial recognition service",
+            "face recognition module",
+            "face analysis service"
+          ],
+          "functional_tags": [
+            "face_recognition",
+            "video_analytics",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 15.0,
+            "ram": 13.0,
+            "hdd": 7.0
+          },
+          "wcet": [
+            20.0,
+            35.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 90.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "edge_1"
+        },
+        {
+          "id": "C3",
+          "name": "Environment Analysis Service",
+          "description": "Analyzes the monitored environment as part of the Public Safety application.",
+          "aliases": [
+            "environment analysis",
+            "environment analyzer",
+            "environment monitoring",
+            "environment analysis module",
+            "environment monitoring service"
+          ],
+          "functional_tags": [
+            "environment_analysis",
+            "environment_monitoring",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 13.0,
+            "ram": 10.0,
+            "hdd": 10.0
+          },
+          "wcet": [
+            15.0,
+            25.0
+          ],
+          "input_ports": [],
+          "output_ports": [
+            {
+              "id": "OUT",
+              "data_size": 75.0,
+              "period": 2.0
+            }
+          ],
+          "current_node": "1"
+        },
+        {
+          "id": "C4",
+          "name": "Alarm Service",
+          "description": "Sends an alarm after the relevant analysis performed by the Public Safety application.",
+          "aliases": [
+            "send alarm",
+            "alarm service",
+            "alarm module",
+            "alert service",
+            "alerting service",
+            "notification service"
+          ],
+          "functional_tags": [
+            "alarm",
+            "alerting",
+            "notification",
+            "sink",
+            "public_safety"
+          ],
+          "requirements": {
+            "cpu": 2.0,
+            "ram": 3.0,
+            "hdd": 3.0
+          },
+          "wcet": [
+            2.0,
+            4.0
+          ],
+          "input_ports": [],
+          "output_ports": [],
+          "current_node": "edge_1"
+        }
+      ],
+      "flows": [
+        {
+          "id": "f1",
+          "name": "Face Recognition Alert Path",
+          "description": "End-to-end processing path from motion detection through face recognition to alarm delivery.",
+          "aliases": [
+            "face recognition alert path",
+            "face recognition alarm path",
+            "face recognition alert chain",
+            "face recognition notification path",
+            "face recognition flow"
+          ],
+          "path": [
+            "C1",
+            "C2",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C2",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C2",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 40.0,
+          "current_e2e_delay": 27.0
+        },
+        {
+          "id": "f2",
+          "name": "Environment Analysis Alert Path",
+          "description": "End-to-end processing path from motion detection through environment analysis to alarm delivery.",
+          "aliases": [
+            "environment analysis alert path",
+            "environment analysis alarm path",
+            "environment analysis alert chain",
+            "environment monitoring alarm path",
+            "environment analysis flow"
+          ],
+          "path": [
+            "C1",
+            "C3",
+            "C4"
+          ],
+          "hops": [
+            {
+              "source": "C1",
+              "target": "C3",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            },
+            {
+              "source": "C3",
+              "target": "C4",
+              "source_output_port": "OUT",
+              "target_input_port": "IN"
+            }
+          ],
+          "current_e2e_max": 33.0,
+          "current_e2e_delay": 24.0
+        }
+      ]
+    }
+  ]
+}

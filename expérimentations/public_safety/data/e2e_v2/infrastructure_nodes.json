@@ -1,0 +1,1616 @@
+{
+  "benchmark_id": "public-safety-decision-v1",
+  "infrastructure_count": 10,
+  "infrastructures": [
+    {
+      "infrastructure_id": "PS-I001",
+      "infrastructure_seed": 42,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 5.84,
+            "ram": 2.15,
+            "hdd": 7.3
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 42,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 3.34,
+            "ram": 6.42,
+            "hdd": 12.12
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 42,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 28.38,
+            "ram": 16.3,
+            "hdd": 21.33
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 42,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 15.45,
+            "ram": 18.28,
+            "hdd": 22.58
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 42,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 61.59,
+            "ram": 71.93,
+            "hdd": 98.99
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 42,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I002",
+      "infrastructure_seed": 43,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 2.23,
+            "ram": 6.18,
+            "hdd": 5.73
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 43,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 4.78,
+            "ram": 6.03,
+            "hdd": 13.52
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 43,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 21.8,
+            "ram": 22.47,
+            "hdd": 15.29
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 43,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 21.49,
+            "ram": 20.59,
+            "hdd": 27.78
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 43,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 92.82,
+            "ram": 105.32,
+            "hdd": 86.04
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 43,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I003",
+      "infrastructure_seed": 44,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 4.45,
+            "ram": 5.25,
+            "hdd": 14.34
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 44,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 3.06,
+            "ram": 3.35,
+            "hdd": 4.35
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 44,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 16.75,
+            "ram": 15.13,
+            "hdd": 17.35
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 44,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.71,
+            "ram": 29.84,
+            "hdd": 25.4
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 44,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 82.71,
+            "ram": 84.3,
+            "hdd": 101.48
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 44,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I004",
+      "infrastructure_seed": 45,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 3.63,
+            "ram": 4.93,
+            "hdd": 4.98
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 45,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 4.03,
+            "ram": 2.43,
+            "hdd": 4.13
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 45,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 19.26,
+            "ram": 16.77,
+            "hdd": 19.67
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 45,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 26.15,
+            "ram": 15.54,
+            "hdd": 24.37
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 45,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 68.1,
+            "ram": 107.7,
+            "hdd": 104.22
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 45,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I005",
+      "infrastructure_seed": 46,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 7.33,
+            "ram": 4.4,
+            "hdd": 11.06
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 46,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 7.16,
+            "ram": 3.37,
+            "hdd": 10.19
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 46,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 23.76,
+            "ram": 29.21,
+            "hdd": 15.48
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 46,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 16.03,
+            "ram": 19.8,
+            "hdd": 27.38
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 46,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 110.59,
+            "ram": 68.12,
+            "hdd": 115.17
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 46,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I006",
+      "infrastructure_seed": 47,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 4.11,
+            "ram": 4.58,
+            "hdd": 9.44
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 47,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 4.06,
+            "ram": 5.07,
+            "hdd": 8.71
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 47,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 15.61,
+            "ram": 21.28,
+            "hdd": 15.35
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 47,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 16.54,
+            "ram": 18.96,
+            "hdd": 29.48
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 47,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 88.89,
+            "ram": 92.8,
+            "hdd": 115.04
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 47,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I007",
+      "infrastructure_seed": 48,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 5.29,
+            "ram": 2.79,
+            "hdd": 12.54
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 48,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 3.81,
+            "ram": 7.63,
+            "hdd": 6.31
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 48,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 26.43,
+            "ram": 17.48,
+            "hdd": 29.49
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 48,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 28.1,
+            "ram": 16.61,
+            "hdd": 24.74
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 48,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 73.08,
+            "ram": 90.7,
+            "hdd": 111.02
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 48,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I008",
+      "infrastructure_seed": 49,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 2.4,
+            "ram": 4.48,
+            "hdd": 5.33
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 49,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 6.51,
+            "ram": 5.07,
+            "hdd": 4.6
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 49,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 15.67,
+            "ram": 26.04,
+            "hdd": 17.32
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 49,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 26.01,
+            "ram": 24.46,
+            "hdd": 22.56
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 49,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 111.35,
+            "ram": 96.15,
+            "hdd": 94.4
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 49,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I009",
+      "infrastructure_seed": 50,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 4.99,
+            "ram": 3.6,
+            "hdd": 11.65
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 50,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 3.45,
+            "ram": 4.84,
+            "hdd": 15.64
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 50,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 16.28,
+            "ram": 19.76,
+            "hdd": 25.15
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 50,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 16.28,
+            "ram": 17.3,
+            "hdd": 27.38
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 50,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 118.78,
+            "ram": 79.16,
+            "hdd": 71.34
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 50,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I010",
+      "infrastructure_seed": 51,
+      "unit_system": "benchmark_normalized_v1",
+      "nodes": [
+        {
+          "id": "0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 22.0,
+            "ram": 20.0,
+            "hdd": 15.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 22.0,
+              "ram": 20.0,
+              "hdd": 15.0
+            }
+          }
+        },
+        {
+          "id": "1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 30.0,
+            "ram": 17.0,
+            "hdd": 18.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 30.0,
+              "ram": 17.0,
+              "hdd": 18.0
+            }
+          }
+        },
+        {
+          "id": "2",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.0,
+            "ram": 15.0,
+            "hdd": 16.0
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "source": "EdgeFlow",
+            "continuum_annotation_source": "edgeflow_context_derived",
+            "continuum_profile_id": "public_safety_edge_profile_v1",
+            "original_resources": {
+              "cpu": 25.0,
+              "ram": 15.0,
+              "hdd": 16.0
+            }
+          }
+        },
+        {
+          "id": "iot_0",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 3.46,
+            "ram": 5.01,
+            "hdd": 5.94
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 51,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "iot_1",
+          "tier": "IOT",
+          "resources": {
+            "cpu": 6.93,
+            "ram": 3.39,
+            "hdd": 10.63
+          },
+          "capabilities": [
+            "lightweight_compute",
+            "sensing"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 51,
+            "generated_tier": "IOT"
+          }
+        },
+        {
+          "id": "edge_0",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 28.9,
+            "ram": 20.96,
+            "hdd": 29.52
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 51,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "edge_1",
+          "tier": "EDGE",
+          "resources": {
+            "cpu": 25.97,
+            "ram": 23.22,
+            "hdd": 24.43
+          },
+          "capabilities": [
+            "general_compute"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 51,
+            "generated_tier": "EDGE"
+          }
+        },
+        {
+          "id": "cloud_0",
+          "tier": "CLOUD",
+          "resources": {
+            "cpu": 95.16,
+            "ram": 81.61,
+            "hdd": 119.8
+          },
+          "capabilities": [
+            "general_compute",
+            "high_capacity"
+          ],
+          "metadata": {
+            "origin": "benchmark_generated",
+            "generation_seed": 51,
+            "generated_tier": "CLOUD"
+          }
+        }
+      ]
+    }
+  ]
+}

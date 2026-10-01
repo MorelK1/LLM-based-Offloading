@@ -1,0 +1,2596 @@
+{
+  "benchmark_id": "public-safety-decision-v1",
+  "infrastructure_count": 10,
+  "infrastructures": [
+    {
+      "infrastructure_id": "PS-I001",
+      "infrastructure_seed": 42,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 62.7,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 62.7,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 43.23,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 43.23,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 13.84,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 13.84,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 17.14,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 17.14,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 20.26,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 20.26,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 52.23,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 52.23,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 47.93,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 47.93,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 33.61,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 33.61,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 26.22,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 26.22,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I002",
+      "infrastructure_seed": 43,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 40.57,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 40.57,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 81.05,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 81.05,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 17.3,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 17.3,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 10.64,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 10.64,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 23.83,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 23.83,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 40.5,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 40.5,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 39.84,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 39.84,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 50.89,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 50.89,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 43.89,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 43.89,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I003",
+      "infrastructure_seed": 44,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 49.57,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 49.57,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 34.41,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 34.41,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 17.62,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 17.62,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 14.26,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 14.26,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 24.48,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 24.48,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 22.8,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 22.8,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 23.79,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 23.79,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 58.36,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 58.36,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 24.31,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 24.31,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I004",
+      "infrastructure_seed": 45,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 42.66,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 42.66,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 80.88,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 80.88,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 15.76,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 15.76,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 6.12,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 6.12,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 36.33,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 36.33,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 48.02,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 48.02,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 56.92,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 56.92,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 26.89,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 26.89,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 30.07,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 30.07,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I005",
+      "infrastructure_seed": 46,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 61.67,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 61.67,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 88.07,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 88.07,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 19.02,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 19.02,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 6.39,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 6.39,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 58.97,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 58.97,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 39.15,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 39.15,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 26.24,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 26.24,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 38.62,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 38.62,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 22.97,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 22.97,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I006",
+      "infrastructure_seed": 47,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 83.92,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 83.92,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 64.05,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 64.05,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 8.45,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 8.45,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 12.85,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 12.85,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 34.36,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 34.36,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 58.31,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 58.31,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 21.33,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 21.33,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 34.97,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 34.97,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 47.5,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 47.5,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I007",
+      "infrastructure_seed": 48,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 39.29,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 39.29,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 43.03,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 43.03,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 6.1,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 6.1,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 5.95,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 5.95,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 39.96,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 39.96,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 26.52,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 26.52,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 25.15,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 25.15,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 47.93,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 47.93,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 31.67,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 31.67,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I008",
+      "infrastructure_seed": 49,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 54.0,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 54.0,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 44.92,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 44.92,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 7.07,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 7.07,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 11.35,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 11.35,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 35.04,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 35.04,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 50.9,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 50.9,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 30.73,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 30.73,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 35.94,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 35.94,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 57.84,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 57.84,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I009",
+      "infrastructure_seed": 50,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 88.34,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 88.34,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 49.74,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 49.74,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 14.06,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 14.06,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 14.11,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 14.11,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 45.4,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 45.4,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 56.62,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 56.62,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 58.5,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 58.5,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 47.73,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 47.73,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 53.0,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 53.0,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    },
+    {
+      "infrastructure_id": "PS-I010",
+      "infrastructure_seed": 51,
+      "unit_system": "benchmark_normalized_v1",
+      "links": [
+        {
+          "source": "0",
+          "target": "1",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "0",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "0",
+          "bandwidth": 10.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "1",
+          "target": "2",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "0",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "2",
+          "target": "1",
+          "bandwidth": 15.0,
+          "propagation_delay": null,
+          "metadata": {
+            "source": "EdgeFlow"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "0",
+          "bandwidth": 54.23,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "edge_0",
+          "bandwidth": 54.23,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "1",
+          "bandwidth": 89.03,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "edge_1",
+          "bandwidth": 89.03,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "iot_0",
+          "target": "0",
+          "bandwidth": 17.79,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "0",
+          "target": "iot_0",
+          "bandwidth": 17.79,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "iot_1",
+          "target": "1",
+          "bandwidth": 5.43,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "IOT",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "iot_1",
+          "bandwidth": 5.43,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "IOT"
+          }
+        },
+        {
+          "source": "0",
+          "target": "cloud_0",
+          "bandwidth": 30.33,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "0",
+          "bandwidth": 30.33,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "1",
+          "target": "cloud_0",
+          "bandwidth": 39.11,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "1",
+          "bandwidth": 39.11,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "2",
+          "target": "cloud_0",
+          "bandwidth": 52.58,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "2",
+          "bandwidth": 52.58,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_0",
+          "target": "cloud_0",
+          "bandwidth": 27.11,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_0",
+          "bandwidth": 27.11,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        },
+        {
+          "source": "edge_1",
+          "target": "cloud_0",
+          "bandwidth": 44.63,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "EDGE",
+            "target_tier": "CLOUD"
+          }
+        },
+        {
+          "source": "cloud_0",
+          "target": "edge_1",
+          "bandwidth": 44.63,
+          "propagation_delay": null,
+          "metadata": {
+            "origin": "benchmark_generated",
+            "source_tier": "CLOUD",
+            "target_tier": "EDGE"
+          }
+        }
+      ]
+    }
+  ]
+}

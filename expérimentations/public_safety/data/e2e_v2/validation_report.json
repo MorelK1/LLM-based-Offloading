@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "samples_checked": 600,
+  "infrastructures_checked": 10,
+  "baseline_flow_checks": 20,
+  "total_placement_feasibility_checks": 61815,
+  "expected_outcome_distribution": {
+    "INFEASIBLE": 41,
+    "OFFLOAD": 394,
+    "STAY": 165
+  },
+  "recomputed_outcome_distribution": {
+    "INFEASIBLE": 41,
+    "OFFLOAD": 394,
+    "STAY": 165
+  },
+  "expected_minimum_move_distribution": {
+    "0": 165,
+    "1": 381,
+    "3": 13
+  },
+  "recomputed_minimum_move_distribution": {
+    "0": 165,
+    "1": 381,
+    "3": 13
+  },
+  "resource_reference_candidates": {
+    "checked": 808,
+    "independently_feasible": 808
+  },
+  "e2e_reference_placements": {
+    "checked": 13,
+    "independently_feasible": 13
+  },
+  "failure_counts": {
+    "V1 preservation failures": 0,
+    "Source trace failures": 0,
+    "Context failures": 0,
+    "Baseline model failures": 0,
+    "Reference placement failures": 0,
+    "RESOURCE candidate failures": 0,
+    "Independent outcome mismatches": 0,
+    "Minimum-move mismatches": 0
+  },
+  "errors": [],
+  "details": {
+    "V1 preservation failures": [],
+    "Source trace failures": [],
+    "Context failures": [],
+    "Baseline model failures": [],
+    "Reference placement failures": [],
+    "RESOURCE candidate failures": [],
+    "Independent outcome mismatches": [],
+    "Minimum-move mismatches": []
+  }
+}
