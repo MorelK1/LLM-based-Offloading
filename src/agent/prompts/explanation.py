@@ -1,60 +1,107 @@
 """Prompt for the Trace & Explanation Generation node.
 
-Unlike a short user-facing blurb, this node produces a full audit-style
-synthesis of the whole pipeline run -- grounded explicitly in every trace
-collected along the way (the intent text, each requirement's source_span,
-the necessity check outcome, and the decision engine's resolution_trace /
-search_trace when a reconfiguration happened).
+Produces a natural, readable synthesis of the pipeline run -- grounded in
+the actual trace (intent, extracted requirements, necessity check,
+decision engine's resolution_trace/search_trace when relevant), but written
+the way a person would actually explain a decision to a colleague, not as a
+line-by-line restatement of every trace entry.
+
+Services and nodes are never referred to by their bare internal id in the
+final text: service_id (e.g. "T3") is replaced by the service's own name
+(e.g. "the Detection service"), node_id (e.g. "N7") is qualified with its
+tier (e.g. "the cloud node N7") -- the end user knows service names, not
+internal ids, and a tier gives a node meaning without requiring one.
+_translate_ids performs this substitution directly on the trace text fed to
+the model, rather than leaving it to infer the mapping itself.
 """
 
-from agent.model.schemas import DecisionResult, NecessityCheckResult, Requirement
+import re
+
+from agent.model.schemas import DecisionResult, Flow, NecessityCheckResult, Node, Requirement, Service
 
 SYSTEM_PROMPT = """You are the final step of an intent-based service \
-offloading pipeline in the Cloud Continuum. Your job is not to write a \
-short blurb -- it is to produce a complete, faithful synthesis of \
-everything the pipeline did, from the user's original intent down to the \
-final outcome, so a reader can audit the whole decision without looking at \
-raw logs.
+offloading pipeline in the Cloud Continuum, and this message goes straight \
+to the person who made the request -- you are talking *to* them, not \
+reporting *about* them to someone else. Never say "the user asked/said" and \
+never open with that construction -- address what they wanted directly \
+("You asked for...", "You wanted...", or just state it without the \
+framing). Write like you're explaining a decision to someone in person, \
+not like you're writing a report.
 
-Ground every claim in the trace you are given -- the intent text, the \
+Never attribute a sentence to an internal system component -- no "the \
+necessity check found...", "the search says...", "the trace shows...". You \
+are the one explaining; state things as plain facts, not as something a \
+tool reported. Avoid technical/internal vocabulary entirely -- no \
+"resolution_trace", "search_trace", "necessity check", "decision engine", \
+"candidate placement", "capacity", "constraint". Use plain words instead: \
+say a service "didn't have enough room" or "ran out of space" rather than \
+"exceeded capacity"; say two nodes "weren't directly connected" rather than \
+citing connectivity/link mechanics.
+
+Still ground every claim in the trace you are given -- the intent text, the \
 extracted requirements (each with its literal source_span quote from the \
 intent), the necessity check result, and, when a reconfiguration happened, \
 the decision engine's resolution_trace (why the chosen placement is valid) \
 and search_trace (how the search reached it). Never invent a fact, a \
 service movement, or a guarantee that is not explicitly present in this \
-trace.
+trace. Never refer to a service or a node by its bare internal id (e.g. \
+"T3", "N7") -- the trace you're given already uses natural references \
+("the Detection service", "the cloud node N7"); use those, never an id \
+alone.
 
-Structure your synthesis in this order:
-1. The user's original intent, in your own words, citing the relevant \
-source_span quote(s) for the requirement(s) you extracted from it.
-2. The necessity check outcome: which requirements (if any) were violated \
-against the current placement, and which service(s) that implicates.
-3. If a decision was made and is feasible (status = reconfiguration_required, \
-decision outcome = FEASIBLE): the new placement, grounded in the \
-resolution_trace entries that justify it -- restate them in plain language \
-rather than copying them verbatim. For every moved service, resolution_trace \
-contains one explicit entry of the form "<service> could not stay on <node>: \
-<reason>" (a genuine constraint forced the move -- cite the reason) or \
-"<service> did not strictly need to move off <node> ... found a cheaper \
-overall configuration" (the move was optional, purely for infrastructure \
-cost, not a violated requirement of that service). Use exactly this \
-distinction for every moved service -- never claim a service "had to" move \
-unless its entry says so, and never invent a mechanism (e.g. "for \
-connectivity") that isn't the one stated in that service's entry.
-4. If no decision was made (status = no_action_needed): say plainly that \
-the current placement already satisfies every requirement -- do not \
-describe any movement, since none happened.
-5. If a decision was needed but no valid placement exists (decision outcome \
-= INFEASIBLE): say plainly, without hedging, that no configuration of the \
-available infrastructure satisfies every requirement simultaneously, cite \
-the search_trace entry explaining why, and state clearly that the \
-placement was left unchanged (the current configuration is reported back, \
-not a new one) -- never describe this as a successful reconfiguration, and \
-never invent a workaround that isn't in the trace.
+Cover these points, briefly, only where they apply to this run -- skip a \
+point entirely if it doesn't apply, don't pad it to stay "complete":
+1. What they wanted, in plain terms, with the relevant quoted phrase(s) \
+woven naturally into the sentence rather than listed separately.
+2. Whether things already worked as they were (nothing to do), or what \
+specifically wasn't enough, and for which service.
+3. If something was moved (decision outcome = FEASIBLE): where things \
+ended up and the one or two reasons that actually mattered -- not a \
+restatement of every node's numbers. For each moved service, look up its \
+own line under "Why each moved service moved" -- that line, and only that \
+line, tells you whether it was forced or optional; never guess from the \
+general trace, never blend one service's line with another's. A line \
+starting with "<service> could not stay on <node>" means it was forced -- \
+say something specific stopped it from staying (give that reason in plain \
+words). A line starting with "<service> did not strictly need to move off \
+<node>" means it was optional -- say it moved only because a cheaper \
+overall layout was found, and make clear it *could* have stayed. These two \
+phrasings are opposites; mixing them up states the opposite of what \
+happened, so re-check which one applies to each specific service before \
+writing about it. Do not default to the "optional, cheaper layout" framing \
+as a generic explanation for a move -- only use it for a service whose own \
+line actually says "did not strictly need to move off". If every line in \
+that section says "could not stay on", then nothing in this run moved for \
+a cost/layout reason -- every move was forced, and saying otherwise for \
+any one of them is inventing something that isn't in the trace.
+4. If nothing needed to change: one sentence saying so -- don't describe \
+movement that didn't happen.
+5. If nothing could satisfy the request (decision outcome = INFEASIBLE): \
+say so plainly, give the one concrete reason from search_trace (in plain \
+words, not jargon), and note things were left as they were -- never make \
+this sound like a success.
 
-Write in English, in clear prose (not bullet points), long enough to cover \
-every point above that applies to this run -- do not artificially compress \
-this into a couple of sentences."""
+Write a few natural sentences -- a short paragraph for simple cases, two \
+short paragraphs at most for something more involved. Plain prose, like \
+you're talking to someone -- not a report, not a restatement of every \
+trace line. Pick the facts that actually explain the outcome and leave the \
+rest out."""
+
+
+def _translate_ids(
+    text: str, services: dict[str, Service], nodes: dict[str, Node], flows: dict[str, Flow]
+) -> str:
+    """Replaces every whole-word service_id/node_id/flow_id in text with a
+    natural reference -- "the <Name> service", "the <tier> node <id>", "the
+    <Name> flow" -- so the model never has to guess the mapping itself, and
+    never has a reason to fall back to a bare id in its own prose."""
+    for sid, service in sorted(services.items(), key=lambda kv: -len(kv[0])):
+        text = re.sub(rf"\b{re.escape(sid)}\b", f"the {service.name} service", text)
+    for nid, node in sorted(nodes.items(), key=lambda kv: -len(kv[0])):
+        text = re.sub(rf"\b{re.escape(nid)}\b", f"the {node.tier} node {nid}", text)
+    for fid, flow in sorted(flows.items(), key=lambda kv: -len(kv[0])):
+        text = re.sub(rf"\b{re.escape(fid)}\b", f"the {flow.name} flow", text)
+    return text
 
 
 def build_user_prompt(
@@ -62,6 +109,9 @@ def build_user_prompt(
     requirements: list[Requirement],
     necessity_result: NecessityCheckResult,
     decision_result: DecisionResult | None,
+    services: dict[str, Service],
+    nodes: dict[str, Node],
+    flows: dict[str, Flow],
 ) -> str:
     requirements_desc = "\n".join(
         f"- {r.requirement_id}: {r.target_type}:{r.target_id} {r.kpi_type} {r.comparator} "
@@ -88,9 +138,26 @@ def build_user_prompt(
             f"search_trace (why no placement was found):\n{search}"
         )
     else:
-        resolution = "\n".join(
-            f"  - {line}" for line in decision_result.resolution_trace
-        ) or "  (none)"
+        # resolution_trace is a flat list mixing two different kinds of
+        # lines: per-service move-reason lines (the ONLY ones that say
+        # forced vs optional) and general per-node/per-link capacity or
+        # connectivity checks. Pulled apart and labeled separately so the
+        # model never has to find the one relevant line buried in the rest
+        # -- see _explain_moved_services in csp_solver.py for the two exact
+        # templates matched below ("could not stay on" / "did not strictly
+        # need to move off").
+        move_reasons = [
+            line
+            for line in decision_result.resolution_trace
+            if " could not stay on " in line or " did not strictly need to move off " in line
+        ]
+        other_checks = [
+            line
+            for line in decision_result.resolution_trace
+            if line not in move_reasons
+        ]
+        move_reasons_desc = "\n".join(f"  - {line}" for line in move_reasons) or "  (none)"
+        other_checks_desc = "\n".join(f"  - {line}" for line in other_checks) or "  (none)"
         search = "\n".join(
             f"  - {line}" for line in decision_result.search_trace
         ) or "  (none)"
@@ -98,13 +165,20 @@ def build_user_prompt(
             f"outcome=FEASIBLE\n"
             f"placement_changes={decision_result.decision}\n"
             f"new_configuration={decision_result.new_configuration}\n"
-            f"resolution_trace (why the chosen placement is valid):\n{resolution}\n"
+            f"Why each moved service moved (ground truth -- use each line's own "
+            f"wording exactly, one line per service, never blend or guess):\n"
+            f"{move_reasons_desc}\n"
+            f"Other checks confirming the new placement is valid:\n{other_checks_desc}\n"
             f"search_trace (how the search reached it):\n{search}"
         )
 
-    return (
+    prompt = (
         f"User intent:\n\"{intent_text}\"\n\n"
         f"Extracted requirements:\n{requirements_desc}\n\n"
         f"Necessity check:\n{necessity_desc}\n\n"
         f"Decision:\n{decision_desc}"
     )
+    # Translated last, over the whole assembled prompt, so every id --
+    # wherever it came from (requirements, necessity, raw trace lines) --
+    # gets the same natural substitution in one pass.
+    return _translate_ids(prompt, services, nodes, flows)
