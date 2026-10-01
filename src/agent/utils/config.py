@@ -23,6 +23,7 @@ class DataConfig(BaseModel):
     nodes_csv: str
     links_csv: str
     app_state_json: str
+    flows_json: str
 
 
 class ScenarioConfig(BaseModel):

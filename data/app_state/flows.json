@@ -1,0 +1,15 @@
+{
+  "application_context": {
+    "flows": [
+      {
+        "flow_id": "F1",
+        "name": "Real-time video analysis pipeline",
+        "description": "Capture -> Preprocessing -> Detection -> Tracking -> Storage/Big Data Analysis",
+        "path": ["T1", "T2", "T3", "T4", "T5"],
+        "requirements": {
+          "latency": 150
+        }
+      }
+    ]
+  }
+}

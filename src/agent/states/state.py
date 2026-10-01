@@ -4,6 +4,7 @@ from typing import TypedDict
 
 from agent.model.schemas import (
     DecisionResult,
+    Flow,
     Link,
     NecessityCheckResult,
     Node,
@@ -17,6 +18,7 @@ class AgentState(TypedDict):
 
     intent_text: str
     services: dict[str, Service]
+    flows: dict[str, Flow]
     nodes: dict[str, Node]
     links: list[Link]
     requirements: list[Requirement]

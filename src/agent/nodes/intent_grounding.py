@@ -17,7 +17,7 @@ def intent_grounding_node(state: AgentState) -> dict:
     # proved too unreliable for iterating on prompt strategies -- see testbench.
     model = get_openrouter_gpt_llm().with_structured_output(ExtractedRequirementList)
 
-    user_prompt = build_user_prompt(state["intent_text"], state["services"])
+    user_prompt = build_user_prompt(state["intent_text"], state["services"], state["flows"])
     result: ExtractedRequirementList = model.invoke(
         [("system", ACTIVE_SYSTEM_PROMPT), ("human", user_prompt)]
     )
@@ -28,8 +28,13 @@ def intent_grounding_node(state: AgentState) -> dict:
         for i, extracted in enumerate(result.requirements, start=1)
     ]
 
-    # Matching: keep only requirements whose service exists in the app_context.
-    # TODO: handle approximate matching (natural-language service name rather than exact ID).
-    matched = [r for r in requirements if r.service in state["services"]]
+    # Matching: keep only requirements whose target actually exists in the
+    # app_context -- a service for target_type="service", a flow for "flow".
+    # TODO: handle approximate matching (natural-language name rather than exact ID).
+    matched = [
+        r for r in requirements
+        if (r.target_type == "service" and r.target_id in state["services"])
+        or (r.target_type == "flow" and r.target_id in state["flows"])
+    ]
 
     return {"requirements": matched}

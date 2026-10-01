@@ -23,8 +23,23 @@ def decision_engine_node(state: AgentState) -> dict:
     requirements = state["requirements"]
 
     best_candidate, resolution_trace, search_trace = solve_placement(
-        services, state["nodes"], state["links"], requirements
+        services, state["nodes"], state["links"], requirements, state["flows"]
     )
+
+    if best_candidate is None:
+        # No candidate placement satisfies every constraint -- surfaced as an
+        # explicit INFEASIBLE outcome (see explanation_node) rather than
+        # letting the pipeline crash with an unhandled exception.
+        decision_result = DecisionResult(
+            outcome="INFEASIBLE",
+            decision={},
+            eligible_nodes_considered=sorted(state["nodes"].keys()),
+            requirements_satisfied=[],
+            new_configuration={sid: s.current_node for sid, s in services.items()},
+            resolution_trace=resolution_trace,
+            search_trace=search_trace,
+        )
+        return {"decision_result": decision_result}
 
     decision = {
         s: n for s, n in best_candidate.items() if n != services[s].current_node
@@ -39,6 +54,7 @@ def decision_engine_node(state: AgentState) -> dict:
     ]
 
     decision_result = DecisionResult(
+        outcome="FEASIBLE",
         decision=decision,
         eligible_nodes_considered=sorted(state["nodes"].keys()),
         requirements_satisfied=requirements_satisfied,

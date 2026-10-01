@@ -10,6 +10,7 @@ data:
   nodes_csv: "data/infra/nodes.csv"
   links_csv: "data/infra/links.csv"
   app_state_json: "data/app_state/services.json"
+  flows_json: "data/app_state/flows.json"
 
 scenario:
   # End-to-end constraint of scenario 1 (real-time video analysis)

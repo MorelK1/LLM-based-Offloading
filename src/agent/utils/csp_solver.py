@@ -12,9 +12,9 @@ in nodes/decision_engine_cp_sat.py / utils/csp_constraints_cp_sat.py.
 
 import itertools
 
-from agent.model.schemas import Link, Node, Requirement, Service
-from agent.utils.csp_checks import check_connectivity, check_cpu, check_latency, check_ram
-from agent.utils.pipeline import build_predecessor_map, cumulative_latency_ms
+from agent.model.schemas import Flow, Link, Node, Requirement, Service
+from agent.utils.csp_checks import check_connectivity
+from agent.utils.pipeline import all_flow_pairs, capacity_satisfied, latency_satisfied
 
 _TIER_ORDER = {"iot": 0, "edge": 1, "fog": 2, "cloud": 3}
 
@@ -25,44 +25,30 @@ def _check_candidate(
     nodes: dict[str, Node],
     links: list[Link],
     requirements: list[Requirement],
-    predecessors: dict[str, str],
+    flows: dict[str, Flow],
 ) -> tuple[bool, list[tuple[bool, str]]]:
     """Run every check against one full candidate placement.
+
+    Unlike before, cpu/ram and latency are no longer checked per-requirement
+    -- capacity_satisfied/latency_satisfied are permanent invariants, checked
+    for every service/flow regardless of whether the current intent (requirements)
+    names it, using that service/flow's baseline (Service.requirements /
+    Flow.requirements) unless the current intent overrides it. This is what
+    stops the search from "fixing" the targeted requirement while silently
+    breaking an untouched one -- see pipeline.py.
 
     Returns (is_valid, checks) -- checks is the full (ok, reason) pair per
     verification, always collected in full even for an invalid candidate, so
     a rejected placement can be explained too.
     """
     checks: list[tuple[bool, str]] = []
-    valid = True
+    checks.extend(capacity_satisfied(nodes, services, requirements, candidate))
+    checks.extend(latency_satisfied(flows, services, links, requirements, candidate))
 
-    for req in requirements:
-        node = nodes[candidate[req.service]]
-        if req.kpi_type == "cpu":
-            ok, reason = check_cpu(node, req)
-        elif req.kpi_type == "ram":
-            ok, reason = check_ram(node, req)
-        elif req.kpi_type == "latency":
-            try:
-                actual_ms = cumulative_latency_ms(req.service, services, links, candidate)
-            except ValueError as exc:
-                # A candidate placement routinely breaks connectivity during
-                # brute-force search (unlike necessity_checker, which only
-                # ever evaluates the one real, already-deployed placement) --
-                # that's just an invalid candidate here, not an error.
-                ok, reason = False, f"cannot evaluate latency for {req.service}: {exc}"
-            else:
-                ok, reason = check_latency(actual_ms, req)
-        else:
-            continue
-        checks.append((ok, reason))
-        valid = valid and ok
+    for upstream, downstream in all_flow_pairs(list(flows.values())):
+        checks.append(check_connectivity(candidate[upstream], candidate[downstream], links))
 
-    for downstream, upstream in predecessors.items():
-        ok, reason = check_connectivity(candidate[upstream], candidate[downstream], links)
-        checks.append((ok, reason))
-        valid = valid and ok
-
+    valid = all(ok for ok, _ in checks)
     return valid, checks
 
 
@@ -71,7 +57,8 @@ def solve_placement(
     nodes: dict[str, Node],
     links: list[Link],
     requirements: list[Requirement],
-) -> tuple[dict[str, str], list[str], list[str]]:
+    flows: dict[str, Flow],
+) -> tuple[dict[str, str] | None, list[str], list[str]]:
     """Search every candidate placement (len(nodes) ** len(services)
     combinations, trivial for the running example's size) and return
     (best_placement, resolution_trace, search_trace) for the cheapest valid
@@ -84,11 +71,12 @@ def solve_placement(
     len(nodes) ** len(services) attempts would be unreadable noise; only
     genuine improvements (a new best-so-far) are logged, plus a summary.
 
-    Raises ValueError if no candidate satisfies every constraint.
+    Returns (None, [], search_trace) if no candidate satisfies every
+    constraint -- never raises, so the caller can turn that into an
+    INFEASIBLE DecisionResult instead of the pipeline crashing outright.
     """
     service_ids = list(services.keys())
     node_ids = list(nodes.keys())
-    predecessors = build_predecessor_map(services)
 
     total = len(node_ids) ** len(service_ids)
     search_trace = [
@@ -107,7 +95,7 @@ def solve_placement(
         candidate = dict(zip(service_ids, node_choice))
 
         valid, checks = _check_candidate(
-            candidate, services, nodes, links, requirements, predecessors
+            candidate, services, nodes, links, requirements, flows
         )
         if not valid:
             continue
@@ -127,10 +115,11 @@ def solve_placement(
             best_reasons = [reason for _ok, reason in checks]
 
     if best_candidate is None:
-        search_trace.append(f"explored {tried} candidates, none valid")
-        raise ValueError(
-            "No placement satisfies the cpu/ram/connectivity/latency constraints."
+        search_trace.append(
+            f"explored {tried} candidates, none valid -- "
+            "no placement satisfies the cpu/ram/connectivity/latency constraints"
         )
+        return None, [], search_trace
 
     search_trace.append(
         f"explored {tried} candidates ({valid_count} valid), "
@@ -138,7 +127,7 @@ def solve_placement(
     )
 
     best_reasons += _explain_moved_services(
-        best_candidate, services, nodes, links, requirements, predecessors
+        best_candidate, services, nodes, links, requirements, flows
     )
 
     return best_candidate, best_reasons, search_trace
@@ -150,7 +139,7 @@ def _explain_moved_services(
     nodes: dict[str, Node],
     links: list[Link],
     requirements: list[Requirement],
-    predecessors: dict[str, str],
+    flows: dict[str, Flow],
 ) -> list[str]:
     """For every service the search actually moved, explain why -- including
     services with no violated requirement of their own (moved only to keep
@@ -172,7 +161,7 @@ def _explain_moved_services(
         counterfactual = dict(best_candidate)
         counterfactual[service_id] = current_node
         ok, checks = _check_candidate(
-            counterfactual, services, nodes, links, requirements, predecessors
+            counterfactual, services, nodes, links, requirements, flows
         )
         if ok:
             notes.append(
@@ -193,6 +182,7 @@ def diagnose_node_options(
     nodes: dict[str, Node],
     links: list[Link],
     requirements: list[Requirement],
+    flows: dict[str, Flow],
 ) -> dict:
     """Standalone diagnostic, independent of solve_placement's search: for
     one service, try every node as its hypothetical placement (holding every
@@ -205,7 +195,6 @@ def diagnose_node_options(
     connectivity/latency for a downstream service on this one's pipeline
     path.
     """
-    predecessors = build_predecessor_map(services)
     current_placement = {sid: s.current_node for sid, s in services.items()}
 
     trace: dict[str, dict] = {}
@@ -214,7 +203,7 @@ def diagnose_node_options(
     for node_id in nodes:
         candidate = {**current_placement, service_id: node_id}
         accepted, checks = _check_candidate(
-            candidate, services, nodes, links, requirements, predecessors
+            candidate, services, nodes, links, requirements, flows
         )
         trace[node_id] = {"accepted": accepted, "checks": checks}
         if accepted:

@@ -33,12 +33,45 @@ class Service(BaseModel):
     name: str
     description: str
     current_node: str
+    # Static resource footprint this service reserves on current_node, keyed
+    # like Node's fields ("cpu_cores", "ram_gb") -- see necessity_checker.py.
     requirements: dict[str, float] | None = None
-    # Downstream service(s) this service sends its output to, forming the
-    # application's pipeline as a DAG. Empty for a terminal service (e.g. the
-    # last stage). Used to compute cumulative (end-to-end) latency up to a
-    # given service -- see necessity_checker.py.
-    next_services: list[str] = Field(default_factory=list)
+    # Optional processing time (ms) this service adds to any flow it's part
+    # of -- None/absent means 0, additive and backward-compatible (the toy
+    # example and ENACT scenario don't declare it). See pipeline.py:flow_latency_ms.
+    wcet_ms: float | None = None
+    # Optional size (abstract unit matching Link.bandwidth_mbps) of the data
+    # this service sends downstream -- when set, the hop to its successor in
+    # a flow is costed as ceil(output_size / link.bandwidth_mbps) instead of
+    # the link's static latency_ms. None/absent keeps the static-latency
+    # model (the toy example and ENACT scenario don't declare it).
+    output_size: float | None = None
+
+
+class Flow(BaseModel):
+    """A directed, ordered chain of services forming one logical dataflow
+    through the application (e.g. capture -> detection -> alert). Several
+    flows may share services at their endpoints without that being a "merge"
+    at the flow level -- each flow is independently a simple path, so there
+    is never more than one predecessor/successor *within* a given flow.
+    Latency (cumulative_flow_latency_ms) is always computed by walking path,
+    never stored -- see utils/pipeline.py.
+    """
+
+    flow_id: str
+    name: str
+    description: str
+    path: list[str]  # service_ids, in order, root -> terminal
+    # Static baseline/contracted requirement for this flow (e.g. {"latency": 40.0}
+    # as an initial E2E ceiling), analogous to Service.requirements -- distinct
+    # from the actual latency, which is always computed dynamically.
+    requirements: dict[str, float] | None = None
+
+
+class Application(BaseModel):
+    application_id: str
+    name: str
+    flows: list[Flow]
 
 
 # Discrete set of KPIs / units the LLM may choose from, so it can't hallucinate
@@ -46,6 +79,7 @@ class Service(BaseModel):
 # needed.
 KpiType = Literal["cpu", "ram", "latency"]
 Unit = Literal["vCPU", "GB", "ms"]
+TargetType = Literal["service", "flow"]
 
 
 class ExtractedRequirement(BaseModel):
@@ -60,7 +94,8 @@ class ExtractedRequirement(BaseModel):
     comparator: Literal["gte", "lte", "eq"] = Field(description="Comparison operator applied to target_value")
     target_value: float = Field(description="Numeric threshold for the KPI")
     unit: Unit = Field(description="Unit of target_value")
-    service: str = Field(description="service_id of the affected service")
+    target_type: TargetType = Field(description="Whether the requirement targets a single service or a flow")
+    target_id: str = Field(description="service_id (if target_type=service) or flow_id (if target_type=flow)")
     source_span: str = Field(description="Exact excerpt from the source text expressing this requirement")
 
 
@@ -84,6 +119,11 @@ class NecessityCheckResult(BaseModel):
 
 
 class DecisionResult(BaseModel):
+    # FEASIBLE: a valid placement was found (decision may still be empty if
+    # the search converged back to the current one). INFEASIBLE: no
+    # candidate placement satisfies every constraint -- see
+    # utils/csp_solver.py:solve_placement / decision_engine_cp_sat.py.
+    outcome: Literal["FEASIBLE", "INFEASIBLE"] = "FEASIBLE"
     decision: dict[str, str]  # service_id -> new node_id
     eligible_nodes_considered: list[str]
     requirements_satisfied: list[str]

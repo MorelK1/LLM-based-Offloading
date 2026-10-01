@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from agent.model.schemas import Link, Node, Service
+from agent.model.schemas import Flow, Link, Node, Service
 
 
 def load_nodes(csv_path: str | Path) -> dict[str, Node]:
@@ -23,3 +23,10 @@ def load_services(json_path: str | Path) -> dict[str, Service]:
         raw = json.load(f)
     services = raw["application_context"]["services"]
     return {s["service_id"]: Service(**s) for s in services}
+
+
+def load_flows(json_path: str | Path) -> dict[str, Flow]:
+    with open(json_path) as f:
+        raw = json.load(f)
+    flows = raw["application_context"]["flows"]
+    return {f["flow_id"]: Flow(**f) for f in flows}

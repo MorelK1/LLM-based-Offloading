@@ -22,10 +22,9 @@ from ortools.sat.python import cp_model
 from agent.model.schemas import DecisionResult
 from agent.states.state import AgentState
 from agent.utils.csp_constraints_cp_sat import (
+    add_capacity_constraints_cp_sat,
     add_connectivity_constraints_cp_sat,
-    add_cpu_constraints_cp_sat,
     add_latency_constraints_cp_sat,
-    add_ram_constraints_cp_sat,
 )
 
 _TIER_ORDER = {"iot": 0, "edge": 1, "fog": 2, "cloud": 3}
@@ -41,6 +40,7 @@ def decision_engine_node_cp_sat(state: AgentState) -> dict:
     nodes = state["nodes"]
     links = state["links"]
     requirements = state["requirements"]
+    flows = state["flows"]
 
     service_ids = list(services.keys())
     node_ids = list(nodes.keys())
@@ -52,10 +52,9 @@ def decision_engine_node_cp_sat(state: AgentState) -> dict:
     for s in service_ids:
         model.Add(sum(x[s][n] for n in node_ids) == 1)
 
-    add_cpu_constraints_cp_sat(model, x, requirements, nodes)
-    add_ram_constraints_cp_sat(model, x, requirements, nodes)
-    add_connectivity_constraints_cp_sat(model, x, services, links, node_ids)
-    add_latency_constraints_cp_sat(model, x, services, links, requirements, node_ids)
+    add_capacity_constraints_cp_sat(model, x, nodes, services, requirements)
+    add_connectivity_constraints_cp_sat(model, x, flows, links, node_ids)
+    add_latency_constraints_cp_sat(model, x, flows, services, links, requirements, node_ids)
 
     # --- objective: minimize disruption first, infrastructure cost second ---
     disruption = sum(
@@ -69,9 +68,18 @@ def decision_engine_node_cp_sat(state: AgentState) -> dict:
     solver = cp_model.CpSolver()
     status = solver.Solve(model)
     if status not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
-        raise ValueError(
-            "No placement satisfies the cpu/ram/connectivity/latency constraints."
+        # No candidate placement satisfies every constraint -- surfaced as an
+        # explicit INFEASIBLE outcome (see explanation_node) rather than
+        # letting the pipeline crash with an unhandled exception.
+        decision_result = DecisionResult(
+            outcome="INFEASIBLE",
+            decision={},
+            eligible_nodes_considered=sorted(node_ids),
+            requirements_satisfied=[],
+            new_configuration={sid: s.current_node for sid, s in services.items()},
+            search_trace=[f"CP-SAT solver status: {solver.StatusName(status)}"],
         )
+        return {"decision_result": decision_result}
 
     new_configuration: dict[str, str] = {}
     decision: dict[str, str] = {}
@@ -90,6 +98,7 @@ def decision_engine_node_cp_sat(state: AgentState) -> dict:
     ]
 
     decision_result = DecisionResult(
+        outcome="FEASIBLE",
         decision=decision,
         eligible_nodes_considered=sorted(node_ids),
         requirements_satisfied=requirements_satisfied,

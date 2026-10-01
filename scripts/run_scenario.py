@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from agent.graph import build_graph  # noqa: E402
 from agent.utils.config import load_config  # noqa: E402
-from agent.utils.data_loader import load_links, load_nodes, load_services  # noqa: E402
+from agent.utils.data_loader import load_flows, load_links, load_nodes, load_services  # noqa: E402
 
 INTENT = (
     "The detection model has been updated to a more accurate version, "
@@ -25,12 +25,14 @@ def main() -> None:
     nodes = load_nodes(config.data.nodes_csv)
     links = load_links(config.data.links_csv)
     services = load_services(config.data.app_state_json)
+    flows = load_flows(config.data.flows_json)
 
     graph = build_graph()
     result = graph.invoke(
         {
             "intent_text": INTENT,
             "services": services,
+            "flows": flows,
             "nodes": nodes,
             "links": links,
             "requirements": [],
@@ -42,7 +44,7 @@ def main() -> None:
 
     print("=== Extracted requirements ===")
     for req in result["requirements"]:
-        print(f"  {req.requirement_id}: {req.service} {req.kpi_type} {req.comparator} {req.target_value}{req.unit}")
+        print(f"  {req.requirement_id}: {req.target_type}:{req.target_id} {req.kpi_type} {req.comparator} {req.target_value}{req.unit}")
 
     print("\n=== Necessity Checker ===")
     print(result["necessity_result"].model_dump_json(indent=2))

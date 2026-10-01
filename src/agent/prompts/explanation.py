@@ -29,25 +29,32 @@ Structure your synthesis in this order:
 source_span quote(s) for the requirement(s) you extracted from it.
 2. The necessity check outcome: which requirements (if any) were violated \
 against the current placement, and which service(s) that implicates.
-3. If a decision was made (status = reconfiguration_required): the new \
-placement, grounded in the resolution_trace entries that justify it -- \
-restate them in plain language rather than copying them verbatim. For \
-every moved service, resolution_trace contains one explicit entry of the \
-form "<service> could not stay on <node>: <reason>" (a genuine constraint \
-forced the move -- cite the reason) or "<service> did not strictly need to \
-move off <node> ... found a cheaper overall configuration" (the move was \
-optional, purely for infrastructure cost, not a violated requirement of \
-that service). Use exactly this distinction for every moved service -- \
-never claim a service "had to" move unless its entry says so, and never \
-invent a mechanism (e.g. "for connectivity") that isn't the one stated in \
-that service's entry.
+3. If a decision was made and is feasible (status = reconfiguration_required, \
+decision outcome = FEASIBLE): the new placement, grounded in the \
+resolution_trace entries that justify it -- restate them in plain language \
+rather than copying them verbatim. For every moved service, resolution_trace \
+contains one explicit entry of the form "<service> could not stay on <node>: \
+<reason>" (a genuine constraint forced the move -- cite the reason) or \
+"<service> did not strictly need to move off <node> ... found a cheaper \
+overall configuration" (the move was optional, purely for infrastructure \
+cost, not a violated requirement of that service). Use exactly this \
+distinction for every moved service -- never claim a service "had to" move \
+unless its entry says so, and never invent a mechanism (e.g. "for \
+connectivity") that isn't the one stated in that service's entry.
 4. If no decision was made (status = no_action_needed): say plainly that \
 the current placement already satisfies every requirement -- do not \
 describe any movement, since none happened.
+5. If a decision was needed but no valid placement exists (decision outcome \
+= INFEASIBLE): say plainly, without hedging, that no configuration of the \
+available infrastructure satisfies every requirement simultaneously, cite \
+the search_trace entry explaining why, and state clearly that the \
+placement was left unchanged (the current configuration is reported back, \
+not a new one) -- never describe this as a successful reconfiguration, and \
+never invent a workaround that isn't in the trace.
 
 Write in English, in clear prose (not bullet points), long enough to cover \
-all four points above -- do not artificially compress this into a couple \
-of sentences."""
+every point above that applies to this run -- do not artificially compress \
+this into a couple of sentences."""
 
 
 def build_user_prompt(
@@ -57,7 +64,7 @@ def build_user_prompt(
     decision_result: DecisionResult | None,
 ) -> str:
     requirements_desc = "\n".join(
-        f"- {r.requirement_id}: {r.service} {r.kpi_type} {r.comparator} "
+        f"- {r.requirement_id}: {r.target_type}:{r.target_id} {r.kpi_type} {r.comparator} "
         f"{r.target_value}{r.unit} (source: \"{r.source_span}\")"
         for r in requirements
     ) or "(none extracted)"
@@ -70,6 +77,16 @@ def build_user_prompt(
 
     if decision_result is None:
         decision_desc = "No reconfiguration was performed (necessity check found none needed)."
+    elif decision_result.outcome == "INFEASIBLE":
+        search = "\n".join(
+            f"  - {line}" for line in decision_result.search_trace
+        ) or "  (none)"
+        decision_desc = (
+            "outcome=INFEASIBLE: no candidate placement satisfies every "
+            "requirement simultaneously -- the configuration was left "
+            f"unchanged (current_configuration={decision_result.new_configuration}).\n"
+            f"search_trace (why no placement was found):\n{search}"
+        )
     else:
         resolution = "\n".join(
             f"  - {line}" for line in decision_result.resolution_trace
@@ -78,6 +95,7 @@ def build_user_prompt(
             f"  - {line}" for line in decision_result.search_trace
         ) or "  (none)"
         decision_desc = (
+            f"outcome=FEASIBLE\n"
             f"placement_changes={decision_result.decision}\n"
             f"new_configuration={decision_result.new_configuration}\n"
             f"resolution_trace (why the chosen placement is valid):\n{resolution}\n"
