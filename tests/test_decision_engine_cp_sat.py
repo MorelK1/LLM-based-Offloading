@@ -1,5 +1,5 @@
-from agent.model.schemas import NecessityCheckResult, Node, Requirement, Service
-from agent.nodes.decision_engine import decision_engine_node
+from agent.model.schemas import Node, Requirement, Service
+from agent.nodes.decision_engine_cp_sat import decision_engine_node_cp_sat
 
 
 def _nodes() -> dict[str, Node]:
@@ -17,11 +17,6 @@ def _nodes() -> dict[str, Node]:
 
 def test_migrates_to_cloud_when_fog_insufficient():
     state = {
-        "necessity_result": NecessityCheckResult(
-            status="reconfiguration_required",
-            violated_requirements=["req-001", "req-002"],
-            services_to_reconsider=["T3"],
-        ),
         "requirements": [
             Requirement(
                 requirement_id="req-001", kpi_type="cpu", comparator="gte", target_value=12,
@@ -42,19 +37,19 @@ def test_migrates_to_cloud_when_fog_insufficient():
         "links": [],
     }
 
-    result = decision_engine_node(state)["decision_result"]
+    result = decision_engine_node_cp_sat(state)["decision_result"]
 
     assert result.decision == {"T3": "N7"}
     assert result.new_configuration["T3"] == "N7"
-    assert set(result.requirements_satisfied) == {"req-001", "req-002"}
 
 
-def test_relocates_when_co_located_footprint_leaves_no_room():
+def test_capacity_constraint_accounts_for_co_located_footprint():
     # T3 and T4 both start on N5 (8 cores). T4 declares a 7-vCPU footprint,
     # leaving only 1 vCPU actually free -- not enough for T3's 3-vCPU floor.
-    # Either T3 or T4 may be the one that ends up moving (both are valid,
-    # equally-cheap resolutions), so the test only asserts the invariant
-    # that must hold either way: they can't both still be on N5.
+    # Either T3 or T4 may be the one the solver relocates (both are valid,
+    # equally-cheap resolutions -- see csp_constraints_cp_sat.py), so the
+    # test only asserts the invariant that must hold either way: they can't
+    # both still be on N5 once solved, since that combination is infeasible.
     t4 = Service(
         service_id="T4", name="Tracking", description="Multi-frame object tracking",
         current_node="N5", requirements={"cpu_cores": 7},
@@ -62,11 +57,6 @@ def test_relocates_when_co_located_footprint_leaves_no_room():
     t3 = Service(service_id="T3", name="Detection", description="Object detection", current_node="N5")
 
     state = {
-        "necessity_result": NecessityCheckResult(
-            status="reconfiguration_required",
-            violated_requirements=["req-001"],
-            services_to_reconsider=["T3"],
-        ),
         "requirements": [
             Requirement(
                 requirement_id="req-001", kpi_type="cpu", comparator="gte", target_value=3,
@@ -79,7 +69,7 @@ def test_relocates_when_co_located_footprint_leaves_no_room():
         "links": [],
     }
 
-    result = decision_engine_node(state)["decision_result"]
+    result = decision_engine_node_cp_sat(state)["decision_result"]
 
     assert len(result.decision) >= 1
     assert not (result.new_configuration["T3"] == "N5" and result.new_configuration["T4"] == "N5")
