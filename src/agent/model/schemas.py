@@ -116,6 +116,13 @@ class NecessityCheckResult(BaseModel):
     status: Literal["reconfiguration_required", "no_action_needed"]
     violated_requirements: list[str]
     services_to_reconsider: list[str]
+    # service_id -> node_id, the real placement this check was evaluated
+    # against -- always populated (necessity_checker_node already computes
+    # this for its own latency checks). Lets a consumer read "here is the
+    # confirmed-valid placement" directly off this result when
+    # status=="no_action_needed", without needing decision_engine_node to
+    # run at all (it never does in that case).
+    current_placement: dict[str, str] | None = None
 
 
 class DecisionResult(BaseModel):

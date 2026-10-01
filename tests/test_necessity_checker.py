@@ -88,6 +88,37 @@ def test_no_action_needed_when_requirements_satisfied():
 
     assert result.status == "no_action_needed"
     assert result.violated_requirements == []
+    # current_placement lets a consumer read the confirmed-valid placement
+    # directly off this result -- decision_engine_node is never called in
+    # this branch, so this is the only place it's available from.
+    assert result.current_placement == {"T3": "N5"}
+
+
+def test_current_placement_is_populated_even_when_reconfiguration_is_required():
+    # Not just the no_action_needed case -- current_placement always
+    # reflects the real placement this check was evaluated against.
+    state = {
+        "requirements": [
+            Requirement(
+                requirement_id="req-001",
+                kpi_type="cpu",
+                comparator="gte",
+                target_value=12,
+                unit="vCPU",
+                target_type="service",
+                target_id="T3",
+                source_span="12 vCPU",
+            ),
+        ],
+        "services": {"T3": _detection_service()},
+        "flows": {},
+        "nodes": {"N5": _fog_node()},
+    }
+
+    result = necessity_checker_node(state)["necessity_result"]
+
+    assert result.status == "reconfiguration_required"
+    assert result.current_placement == {"T3": "N5"}
 
 
 def test_latency_is_cumulative_across_the_flow():

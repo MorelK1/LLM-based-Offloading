@@ -68,5 +68,6 @@ def necessity_checker_node(state: AgentState) -> dict:
         status=status,
         violated_requirements=violated,
         services_to_reconsider=sorted(services_to_reconsider),
+        current_placement=current_placement,
     )
     return {"necessity_result": necessity_result}
