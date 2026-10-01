@@ -50,12 +50,19 @@ src/agent/
     llm.py                         NVIDIA chat model retrieval (ChatNVIDIA) -- available,
                                     not the default (see "Known limitations")
     llm_openrouter.py               OpenRouter chat model retrieval (ChatOpenAI) -- default
-    pipeline.py                     Flow helpers (flow_pairs/all_flow_pairs, end-to-end
-                                     latency, link lookup, co-located footprint
-                                     aggregation) shared by necessity_checker and the
-                                     CSP solvers
-    csp_checks.py                   Homemade solver: check_cpu/ram/connectivity/latency,
-                                     each returning (ok, reason)
+    pipeline.py                     Flow helpers (flow_pairs/all_flow_pairs, flow_latency_ms,
+                                     link lookup, co-located footprint aggregation) plus the
+                                     "baseline + override" model shared by necessity_checker
+                                     and the CSP solvers: effective_service_capacity/
+                                     effective_flow_latency_target resolve whether a given
+                                     service/flow uses its static baseline (Service.requirements/
+                                     Flow.requirements) or the current intent's value, and
+                                     capacity_satisfied/latency_satisfied check those as
+                                     permanent invariants over every service/flow, not just
+                                     the one the current intent names
+    csp_checks.py                   Homemade solver: check_connectivity only -- cpu/ram/latency
+                                     checks now live in pipeline.py's capacity_satisfied/
+                                     latency_satisfied (permanent invariants, not per-requirement)
     csp_solver.py                   Homemade solver: brute-force search (solve_placement),
                                      per-service diagnostic (diagnose_node_options),
                                      trace formatting (format_diagnosis)
@@ -116,11 +123,25 @@ pytest
   timeouts and unresponsive requests during development, confirmed via raw
   `curl` to independently rule out our own code/network. `intent_grounding.py`
   and `explanation.py` use `utils/llm_openrouter.py` instead as a result.
-- `necessity_checker.py`: `latency` requirements always target a `Flow`
-  (`target_type="flow"`), never a single service, and are evaluated as
-  cumulative network latency along the whole `Flow.path` (via
-  `utils/pipeline.py:flow_latency_ms` and `data/infra/links.csv`), not a
-  per-service processing/compute time -- no WCET-style delay is modeled yet.
+- **Every service and every flow has a permanent baseline requirement**
+  (`Service.requirements` for cpu/ram, `Flow.requirements["latency"]`),
+  checked on *every* candidate placement regardless of what the current
+  intent targets -- `utils/pipeline.py:capacity_satisfied`/`latency_satisfied`.
+  The current intent's `Requirement` *replaces* the baseline for the exact
+  `(target_type, target_id, kpi_type)` it names; every other service/flow
+  keeps its baseline. This is what stops the solver from "fixing" the
+  targeted requirement while silently breaking an untouched one. A service/
+  flow without a declared baseline contributes `0`/is skipped, never an
+  error. `necessity_checker.py` itself is unaffected by this -- it only ever
+  evaluates the current intent's own requirement(s), on the assumption the
+  real, already-deployed placement already satisfies every baseline.
+- `latency` requirements always target a `Flow` (`target_type="flow"`),
+  never a single service, and are evaluated as `processing_delay` (sum of
+  each service's `wcet_ms` along `Flow.path`, `0` if undeclared) +
+  `communication_delay` (per hop: `ceil(output_size / link.bandwidth_mbps)`
+  if the upstream service declares `output_size`, else the link's static
+  `latency_ms` -- the original, still-default model, since neither the
+  running example nor the ENACT scenario declare `output_size`/`wcet_ms`).
   Several flows may freely share services at their endpoints (no merge-point
   restriction: that was a limitation of the previous `Service.next_services`
   model, resolved by moving topology to `Flow.path`), but every pair of
@@ -128,13 +149,12 @@ pytest
   or on two directly linked nodes — multi-hop routing between non-adjacent
   nodes is not supported (an error for `necessity_checker`'s real placement,
   an invalid candidate for the CSP solvers evaluating hypothetical ones).
-- `cpu`/`ram` requirements with a `lte`/`eq` comparator are compared against
-  the service's own declared static footprint (`Service.requirements`), not
-  the node's capacity -- but in practice only `gte` is currently produced for
-  these two KPIs (see `prompts/requirement_extraction.py`), so this path is
-  defensive/untriggered rather than exercised. A service without a declared
-  footprint contributes `0` wherever one is expected (co-location aggregation
-  for others' `gte` checks, or its own `lte`/`eq` check), never an error.
+- `decision_engine.py`/`decision_engine_cp_sat.py` never raise when no
+  placement satisfies every constraint -- `DecisionResult.outcome` is
+  `"FEASIBLE"` or `"INFEASIBLE"` (`csp_solver.py:solve_placement` returns
+  `None` instead of raising), and `explanation_node` has an explicit case for
+  `INFEASIBLE` (placement left unchanged, never described as a successful
+  reconfiguration).
 - `decision_engine.py`'s brute-force solver is `O(len(nodes) ** len(services))`
   -- fine for the running example (5 services, 6-7 nodes), would need to
   switch to `decision_engine_cp_sat.py` (or a smarter search) if the
@@ -144,7 +164,7 @@ pytest
   matching on natural-language names.
 - Only `cpu`, `ram`, and `latency` are supported KPIs -- `bandwidth`,
   `packet_loss`, and `reliability` (link-level KPIs) are deferred: unlike
-  `latency`, which resolves to network hops via the pipeline DAG, these would
+  `latency`, which resolves to network hops via `Flow.path`, these would
   need the same kind of service-to-link mapping applied per intent, not yet
   designed.
 - Node `N6`, referenced in the links (L6, L7, L9) from the slides, does not
