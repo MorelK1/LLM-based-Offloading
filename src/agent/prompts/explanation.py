@@ -94,13 +94,30 @@ def _translate_ids(
     """Replaces every whole-word service_id/node_id/flow_id in text with a
     natural reference -- "the <Name> service", "the <tier> node <id>", "the
     <Name> flow" -- so the model never has to guess the mapping itself, and
-    never has a reason to fall back to a bare id in its own prose."""
+    never has a reason to fall back to a bare id in its own prose.
+
+    Some datasets (public_safety) use bare-digit node ids ("0", "1", "2").
+    \\b alone isn't enough there -- "\\b0\\b" also matches the "0" in a
+    decimal number like "32.0" or "0.5" (a period is a non-word character,
+    so a word boundary exists on either side of that digit too), corrupting
+    numbers in the resolution_trace text ("32.0" -> "32.the edge node 0").
+    The lookaround guards below exclude a match immediately preceded by
+    "<digit>." or followed by ".<digit>" -- i.e. the id looks like it's
+    actually a decimal's integer or fractional part, not a standalone id."""
+    def _sub(pattern_id: str, replacement: str, text: str) -> str:
+        pattern = rf"(?<!\d\.)\b{re.escape(pattern_id)}\b(?!\.\d)"
+        return re.sub(pattern, replacement, text)
+
     for sid, service in sorted(services.items(), key=lambda kv: -len(kv[0])):
-        text = re.sub(rf"\b{re.escape(sid)}\b", f"the {service.name} service", text)
+        # Some datasets (public_safety) name services "X Service" already --
+        # appending " service" unconditionally would read "the X Service
+        # service". Only append it when the name doesn't already end with it.
+        label = service.name if service.name.strip().lower().endswith("service") else f"{service.name} service"
+        text = _sub(sid, f"the {label}", text)
     for nid, node in sorted(nodes.items(), key=lambda kv: -len(kv[0])):
-        text = re.sub(rf"\b{re.escape(nid)}\b", f"the {node.tier} node {nid}", text)
+        text = _sub(nid, f"the {node.tier} node {nid}", text)
     for fid, flow in sorted(flows.items(), key=lambda kv: -len(kv[0])):
-        text = re.sub(rf"\b{re.escape(fid)}\b", f"the {flow.name} flow", text)
+        text = _sub(fid, f"the {flow.name} flow", text)
     return text
 
 
