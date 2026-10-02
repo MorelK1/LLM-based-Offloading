@@ -10,18 +10,23 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from agent.model.schemas import KpiType, TargetType, Unit
+from agent.model.schemas import ExtractedRequirement
 
 
 class BaselineResult(BaseModel):
-    target_type: TargetType = Field(description="Whether the requirement targets a service or a flow")
-    target_id: str = Field(description="service_id or flow_id from the provided lists")
-    kpi_type: KpiType = Field(description="KPI targeted by the requirement")
-    comparator: Literal["gte", "lte", "eq"] = Field(description="Comparison operator applied to target_value")
-    target_value: float = Field(description="Numeric threshold for the KPI")
-    unit: Unit = Field(description="Unit of target_value")
+    # Reuses the real pipeline's own ExtractedRequirement shape (kpi_type,
+    # comparator, target_value, unit, target_type, target_id, source_span)
+    # so the two are field-for-field comparable later. A plain intent states
+    # exactly one requirement; a compound one (e.g. "needs at least 12 vCPU
+    # and 24GB of RAM") states several at once -- one entry per explicit
+    # numeric threshold, not one entry per call.
+    requirements: list[ExtractedRequirement] = Field(
+        description="Every requirement explicitly stated in the intent -- one entry per distinct "
+        "target+KPI threshold. A compound intent (e.g. both a CPU and a RAM threshold for the same "
+        "service) produces more than one entry here, not one entry averaging/combining them."
+    )
     outcome: Literal["STAY", "OFFLOAD", "INFEASIBLE"] = Field(
-        description="STAY if the current placement already satisfies the new requirement and every "
+        description="STAY if the current placement already satisfies every new requirement and every "
         "other service/flow's own baseline requirement; OFFLOAD if a different full placement does; "
         "INFEASIBLE if no placement satisfies everything simultaneously"
     )

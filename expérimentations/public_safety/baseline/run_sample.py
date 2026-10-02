@@ -20,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))  # for prompt.py/runner
 from loader import load_links, load_nodes, load_sample, load_services_and_flows  # noqa: E402
 from prompt import DEFAULT_PROMPT_STRATEGY  # noqa: E402
 from runner import run_baseline  # noqa: E402
-from verifier import requirement_from_baseline, verify_placement  # noqa: E402
+from verifier import requirements_from_baseline, verify_placement  # noqa: E402
 
 _REQ_FIELDS = ("target_type", "target_id", "kpi_type", "comparator", "target_value", "unit")
 
@@ -50,6 +50,7 @@ def build_record(sample: dict, services: dict, outcome: dict, run_config: dict) 
         "infrastructure_id": sample["infrastructure_id"],
         "application_context_id": sample["application_context_id"],
         "expected": expected,
+        "model": outcome["model"],
         "elapsed_s": outcome["elapsed_s"],
         "token_usage": outcome["token_usage"],
         "parsing_error": outcome["parsing_error"],
@@ -63,7 +64,12 @@ def build_record(sample: dict, services: dict, outcome: dict, run_config: dict) 
         })
         return record
 
-    extracted = {f: getattr(result, f) for f in _REQ_FIELDS}
+    # A compound intent yields more than one entry here -- ground truth
+    # (expected, above) is still a single structured_requirement per
+    # public_safety sample, so scoring code (not written yet) decides later
+    # how to compare a list against a single expected entry; this just
+    # captures everything the model actually extracted, faithfully.
+    extracted = [{f: getattr(r, f) for f in _REQ_FIELDS} for r in result.requirements]
     placement_well_formed = set(result.new_placement.keys()) == set(services.keys())
     # Backfill any service the LLM omitted with its current_node -- an
     # incomplete placement is a formatting problem, not a reason to skip
@@ -102,8 +108,8 @@ def run(
     built = build_record(sample, services, outcome, run_config)
     if isinstance(built, tuple):
         record, full_placement = built
-        requirement = requirement_from_baseline(outcome["result"])
-        feasible, checks = verify_placement(nodes, services, flows, links, requirement, full_placement)
+        requirements = requirements_from_baseline(outcome["result"])
+        feasible, checks = verify_placement(nodes, services, flows, links, requirements, full_placement)
         record["placement_feasible"] = feasible
         record["placement_checks"] = [f"{'ok' if ok else 'FAIL'}: {reason}" for ok, reason in checks]
     else:

@@ -18,12 +18,19 @@ from agent.utils.pipeline import all_flow_pairs, capacity_satisfied, latency_sat
 from schema import BaselineResult  # noqa: E402
 
 
-def requirement_from_baseline(result: BaselineResult) -> Requirement:
-    return Requirement(
-        requirement_id="baseline-req-001", target_type=result.target_type, target_id=result.target_id,
-        kpi_type=result.kpi_type, comparator=result.comparator, target_value=result.target_value,
-        unit=result.unit, source_span="(baseline, no source_span)",
-    )
+def requirements_from_baseline(result: BaselineResult) -> list[Requirement]:
+    """One Requirement per entry in result.requirements, in order --
+    requirement_id is assigned deterministically here (same convention as
+    intent_grounding_node), never left to the model."""
+    return [
+        Requirement(
+            requirement_id=f"baseline-req-{i + 1:03d}",
+            target_type=r.target_type, target_id=r.target_id,
+            kpi_type=r.kpi_type, comparator=r.comparator, target_value=r.target_value,
+            unit=r.unit, source_span=r.source_span,
+        )
+        for i, r in enumerate(result.requirements)
+    ]
 
 
 def verify_placement(
@@ -31,7 +38,7 @@ def verify_placement(
     services: dict[str, Service],
     flows: dict[str, Flow],
     links: list[Link],
-    requirement: Requirement,
+    requirements: list[Requirement],
     placement: dict[str, str],
 ) -> tuple[bool, list[tuple[bool, str]]]:
     """placement: the LLM's proposed new_placement (service_id -> node_id),
@@ -39,8 +46,8 @@ def verify_placement(
     run_sample.py) -- an incomplete placement from the LLM is a formatting
     problem, not grounds to skip verification of what IS given."""
     checks: list[tuple[bool, str]] = []
-    checks.extend(capacity_satisfied(nodes, services, [requirement], placement))
-    checks.extend(latency_satisfied(flows, services, links, [requirement], placement))
+    checks.extend(capacity_satisfied(nodes, services, requirements, placement))
+    checks.extend(latency_satisfied(flows, services, links, requirements, placement))
     for upstream, downstream in all_flow_pairs(list(flows.values())):
         if upstream in placement and downstream in placement:
             checks.append(check_connectivity(placement[upstream], placement[downstream], links))

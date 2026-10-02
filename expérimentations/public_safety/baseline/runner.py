@@ -23,12 +23,24 @@ def run_baseline(
     model: str | None = None,
     prompt_strategy: str = DEFAULT_PROMPT_STRATEGY,
 ) -> dict:
-    """Returns {"result": BaselineResult | None, "elapsed_s": float,
-    "token_usage": dict | None, "parsing_error": str | None} -- same shape
-    convention as intent_grounding_node's telemetry, so scoring code can
-    treat both the same way."""
+    """Returns {"result": BaselineResult | None, "model": str, "elapsed_s":
+    float, "token_usage": dict | None, "parsing_error": str | None} -- same
+    shape convention as intent_grounding_node's telemetry, so scoring code
+    can treat both the same way. "model" is the actual resolved model name,
+    even when `model` (the param) is None (.env's OPENROUTER_MODEL
+    fallback) -- without this, a record from a None-override run can't say
+    which model actually ran it."""
     system_prompt = PROMPT_STRATEGIES[prompt_strategy]
-    llm = get_openrouter_gpt_llm(model).with_structured_output(BaselineResult, include_raw=True)
+    base_llm = get_openrouter_gpt_llm(model)
+    resolved_model = base_llm.model_name
+    # method="function_calling": the default "json_schema" mode (OpenAI
+    # strict structured outputs) rejects BaselineResult outright --
+    # new_placement is an open-ended dict[str, str], and strict mode requires
+    # every object schema to fully enumerate its properties, which an
+    # arbitrary service_id -> node_id mapping can't do. function_calling
+    # doesn't enforce that, at the cost of weaker guarantees (pydantic still
+    # validates the result after parsing, same as always).
+    llm = base_llm.with_structured_output(BaselineResult, include_raw=True, method="function_calling")
     user_prompt = build_user_prompt(intent_text, services, flows, nodes, links)
 
     start = time.perf_counter()
@@ -38,6 +50,7 @@ def run_baseline(
     token_usage = raw["raw"].usage_metadata
     return {
         "result": raw["parsed"],
+        "model": resolved_model,
         "elapsed_s": elapsed_s,
         "token_usage": dict(token_usage) if token_usage else None,
         "parsing_error": str(raw["parsing_error"]) if raw["parsing_error"] else None,
