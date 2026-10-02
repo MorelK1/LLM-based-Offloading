@@ -42,23 +42,53 @@ DEFAULT_RETRY_WAIT_S = 120.0  # OpenRouter's own Retry-After hint, observed
 RESULTS_DIR = Path(__file__).parent / "results"
 
 
-def _error_reason(exc: Exception) -> str | None:
-    """OpenRouter's 402 covers two unrelated situations, distinguished only
-    by this field -- conflating them wastes minutes retrying something
-    retrying can never fix (confirmed: retried "weight_exceeds_budget" twice,
-    240s, before giving up -- it needed credits added, not a wait)."""
-    if not (isinstance(exc, openai.APIStatusError) and exc.status_code == 402):
+def _retry_info(exc: Exception) -> tuple[str, float] | None:
+    """Returns (reason, wait_s) for a known RETRYABLE rate-limit shape, or
+    None if exc isn't one we know how to recover from (caller fails fast).
+
+    Two unrelated shapes observed in practice, both status-coded differently
+    from a genuine, non-retryable error:
+    - 402 in_flight_budget_exhausted: too many concurrent in-flight requests
+      -- waits for OpenRouter's own Retry-After hint.
+    - 429 new-account-rpm: a hard per-minute request cap tied to account age
+      (observed: 20 req/min for openai/gpt-5.4-mini, independent of credits
+      or --delay spacing when --delay is too low to stay under it) -- waits
+      until the window resets, per X-RateLimit-Reset (epoch ms).
+    402 weight_exceeds_budget (out of credits) is deliberately NOT retryable
+    here -- confirmed: retrying it twice (240s) before giving up, when it
+    needed credits added, not a wait.
+
+    A third, different shape: openai.APIConnectionError ("Connection
+    error.") -- a generic transient network failure (observed isolated,
+    non-recurring instances across several models/providers during a live
+    run), not status-coded at all since the request never got a response.
+    Short fixed wait, since there's no server-provided hint for how long to
+    back off."""
+    if isinstance(exc, openai.APIConnectionError):  # not a subclass of APIStatusError -- separate branch
+        return "connection_error", 15.0
+    if not isinstance(exc, openai.APIStatusError):
         return None
     body = exc.body if isinstance(exc.body, dict) else {}
-    return body.get("error", {}).get("metadata", {}).get("reason")
+    metadata = body.get("error", {}).get("metadata", {})
 
+    if exc.status_code == 402:
+        if metadata.get("reason") != "in_flight_budget_exhausted":
+            return None
+        retry_after = exc.response.headers.get("Retry-After") if exc.response is not None else None
+        try:
+            return "in_flight_budget_exhausted", float(retry_after)
+        except (TypeError, ValueError):
+            return "in_flight_budget_exhausted", DEFAULT_RETRY_WAIT_S
 
-def _retry_wait_seconds(exc: openai.APIStatusError) -> float:
-    retry_after = exc.response.headers.get("Retry-After") if exc.response is not None else None
-    try:
-        return float(retry_after)
-    except (TypeError, ValueError):
-        return DEFAULT_RETRY_WAIT_S
+    if exc.status_code == 429:
+        reset_ms = metadata.get("headers", {}).get("X-RateLimit-Reset")
+        try:
+            wait_s = max(0.0, float(reset_ms) / 1000 - time.time()) + 2.0  # +2s buffer past the reset instant
+        except (TypeError, ValueError):
+            wait_s = DEFAULT_RETRY_WAIT_S
+        return "rate_limit_rpm", wait_s
+
+    return None
 
 
 def run_with_retry(sample_id: str, graph, **run_kwargs) -> dict | None:
@@ -67,27 +97,42 @@ def run_with_retry(sample_id: str, graph, **run_kwargs) -> dict | None:
     for attempt in range(1, MAX_RETRIES_ON_RATE_LIMIT + 1):
         try:
             return run(sample_id, graph=graph, verbose=True, **run_kwargs)
-        except Exception as exc:  # noqa: BLE001 -- only a retryable 402 loops, anything else is fatal per-sample
-            reason = _error_reason(exc)
-            if reason == "in_flight_budget_exhausted" and attempt < MAX_RETRIES_ON_RATE_LIMIT:
-                wait_s = _retry_wait_seconds(exc)
-                print(f"{sample_id}: rate-limited (402, in_flight_budget_exhausted), "
+        except Exception as exc:  # noqa: BLE001 -- only a retryable rate-limit loops, anything else is fatal per-sample
+            info = _retry_info(exc)
+            if info and attempt < MAX_RETRIES_ON_RATE_LIMIT:
+                reason, wait_s = info
+                print(f"{sample_id}: rate-limited ({reason}), "
                       f"attempt {attempt}/{MAX_RETRIES_ON_RATE_LIMIT}, waiting {wait_s:.0f}s before retrying...")
                 time.sleep(wait_s)
                 continue
-            if reason == "weight_exceeds_budget":
-                print(f"{sample_id}: ERROR -- OpenRouter account out of credits "
-                      f"(weight_exceeds_budget) -- not retrying, add credits to proceed.")
-            else:
-                print(f"{sample_id}: ERROR -- {exc}")
+            if isinstance(exc, openai.APIStatusError) and exc.status_code == 402:
+                body = exc.body if isinstance(exc.body, dict) else {}
+                if body.get("error", {}).get("metadata", {}).get("reason") == "weight_exceeds_budget":
+                    print(f"{sample_id}: ERROR -- OpenRouter account out of credits "
+                          f"(weight_exceeds_budget) -- not retrying, add credits to proceed.")
+                    return None
+            print(f"{sample_id}: ERROR -- {exc}")
             return None
 
 
 def main(
     limit: int, delay_s: float, model: str | None, prompt_strategy: str,
-    explanation_model: str | None,
+    explanation_model: str | None, sample_ids_file: str | None,
 ) -> None:
-    samples = _read("e2e_samples.json")["samples"][:limit]
+    all_samples = _read("e2e_samples.json")["samples"]
+    if sample_ids_file:
+        # Fixed, reproducible subset (e.g. sample_subset_450.json) -- NOT a
+        # prefix of e2e_samples.json, which is grouped by outcome (all 41
+        # INFEASIBLE samples come first), so samples[:limit] would silently
+        # skew small/medium limits toward one outcome type. Also lets the
+        # baseline runs reuse the exact same sample_ids for a fair
+        # side-by-side comparison.
+        with open(sample_ids_file) as f:
+            wanted_ids = json.load(f)["sample_ids"]
+        by_id = {s["sample_id"]: s for s in all_samples}
+        samples = [by_id[sid] for sid in wanted_ids if sid in by_id][:limit]
+    else:
+        samples = all_samples[:limit]
     graph = build_graph(
         model=model, prompt_strategy=prompt_strategy, explanation_model=explanation_model
     )  # built once, reused
@@ -138,5 +183,9 @@ if __name__ == "__main__":
     parser.add_argument("--explanation-model", default=None,
                          help="Overrides the model for explanation_node independently "
                               "(defaults to --model if not given)")
+    parser.add_argument("--sample-ids-file", default=None,
+                         help="JSON file with a {'sample_ids': [...]} fixed subset to run "
+                              "(e.g. sample_subset_450.json) instead of the first N samples "
+                              "in e2e_samples.json, which is grouped by outcome")
     args = parser.parse_args()
-    main(args.n, args.delay, args.model, args.prompt_strategy, args.explanation_model)
+    main(args.n, args.delay, args.model, args.prompt_strategy, args.explanation_model, args.sample_ids_file)
