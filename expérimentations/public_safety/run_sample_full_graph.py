@@ -83,9 +83,11 @@ def build_record(sample: dict, state_result: dict, run_config: dict) -> dict:
         "decision_moved": sorted(dres.decision.keys()) if dres else None,
         "our_outcome": our_outcome,
         "explanation_text": state_result["explanation"],
+        "extraction_model": state_result.get("extraction_model"),
         "extraction_elapsed_s": state_result.get("extraction_elapsed_s"),
         "extraction_token_usage": state_result.get("extraction_token_usage"),
         "extraction_parsing_error": state_result.get("extraction_parsing_error"),
+        "explanation_model": state_result.get("explanation_model"),
         "explanation_elapsed_s": state_result.get("explanation_elapsed_s"),
         "explanation_token_usage": state_result.get("explanation_token_usage"),
     }
@@ -136,10 +138,12 @@ def run(
               f"-- {'MATCH' if record['our_outcome'] == exp['outcome'] else 'MISMATCH'}")
         if record["decision_moved"]:
             print(f"  moved: {record['decision_moved']}")
+        print(f"  models: extraction={record['extraction_model']} explanation={record['explanation_model']}")
         print(f"  timing: extraction={record['extraction_elapsed_s']:.2f}s "
               f"explanation={record['explanation_elapsed_s']:.2f}s")
         print(f"  tokens: extraction={record['extraction_token_usage']} "
               f"explanation={record['explanation_token_usage']}")
+        print(f"  explanation: {record['explanation_text']}")
 
     return record
 

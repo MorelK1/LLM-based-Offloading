@@ -41,8 +41,26 @@ def intent_grounding_node(
     # counts) instead of discarding it once structured parsing succeeds; it
     # also means a parsing failure is now a value ("parsed": None) rather
     # than an exception, handled below.
-    llm = get_openrouter_gpt_llm(model).with_structured_output(
-        ExtractedRequirementList, include_raw=True
+    base_llm = get_openrouter_gpt_llm(model)
+    resolved_model = base_llm.model_name  # the actual model used, even when `model` is None (.env fallback)
+    # method="function_calling" is NOT a safe universal default here, unlike
+    # for the baseline -- empirically model-dependent:
+    # - deepseek/deepseek-v3.2: the default "json_schema" mode sometimes
+    #   wraps its JSON in a markdown code fence ("```json\n[...]\n```"),
+    #   which fails Pydantic's strict JSON parsing outright (no retry,
+    #   sample lost) -- function_calling fixes this (validated: 3/3 OK on
+    #   samples that previously failed).
+    # - meta-llama/llama-4-scout: function_calling BREAKS IT COMPLETELY --
+    #   every available endpoint (deepinfra, novita) lacks tool-calling
+    #   support, so every call 404s ("No endpoints found").
+    # - mistralai/mistral-small-3.2-24b-instruct: function_calling silently
+    #   degrades extraction quality (returned empty requirements on samples
+    #   deepseek correctly extracted from) -- not a crash, worse: wrong data.
+    # So this is opt-in per model that's actually validated to need and
+    # tolerate it, not a blanket switch.
+    structured_output_method = "function_calling" if resolved_model.startswith("deepseek/") else "json_schema"
+    llm = base_llm.with_structured_output(
+        ExtractedRequirementList, include_raw=True, method=structured_output_method
     )
 
     user_prompt = build_user_prompt(state["intent_text"], state["services"], state["flows"])
@@ -71,6 +89,7 @@ def intent_grounding_node(
 
     return {
         "requirements": matched,
+        "extraction_model": resolved_model,
         "extraction_elapsed_s": elapsed_s,
         "extraction_token_usage": dict(token_usage) if token_usage else None,
         "extraction_parsing_error": str(parsing_error) if parsing_error else None,

@@ -32,6 +32,7 @@ def explanation_node(state: AgentState, model: str | None = None) -> dict:
     token_usage = response.usage_metadata
     return {
         "explanation": response.content,
+        "explanation_model": llm.model_name,  # actual model used, even when `model` is None (.env fallback)
         "explanation_elapsed_s": elapsed_s,
         "explanation_token_usage": dict(token_usage) if token_usage else None,
     }
