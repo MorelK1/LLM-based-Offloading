@@ -9,3 +9,4 @@ build/
 dist/
 testbench.ipynb
 state_space_prompt_permissive.py
+expérimentations/public_safety/logs
