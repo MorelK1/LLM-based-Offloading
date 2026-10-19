@@ -8,6 +8,7 @@ Used by both necessity_checker.py (checking the current placement) and
 decision_engine.py (the CSP model, checking candidate placements).
 """
 
+import heapq
 import math
 
 from agent.model.schemas import Flow, Link, Node, Requirement, Service
@@ -33,13 +34,54 @@ def all_flow_pairs(flows: list[Flow]) -> set[tuple[str, str]]:
     return pairs
 
 
-def to_native_unit(value: float, unit: str, kpi_type: str) -> float:
-    """Converts a requirement's target_value into the unit of Node's matching
-    field (cpu_cores: vCPU, ram_gb: GB) -- e.g. a 20 MB target must become 0.02
-    before being compared to a node's ram_gb (an int, in GB, never MB)."""
-    if kpi_type == "ram" and unit == "MB":
-        return value / 1024
-    return value
+# vCPU is the canonical cpu unit -- "CPU"/"core"/"cores" are 1:1 synonyms,
+# "millicore"/"mCPU"/"m" follow the Kubernetes convention (1000m = 1 vCPU).
+_CPU_UNIT_FACTORS = {
+    "vCPU": 1.0, "CPU": 1.0, "core": 1.0, "cores": 1.0,
+    "millicore": 1 / 1000, "mCPU": 1 / 1000, "m": 1 / 1000,
+}
+# GB is the canonical ram unit, decimal (1 GB = 1000 MB = 1_000_000 KB = ...).
+_RAM_UNIT_DECIMAL_FACTORS = {"KB": 1e-6, "MB": 1e-3, "GB": 1.0, "TB": 1e3}
+# Binary units (IEC prefixes, powers of 1024) convert through real bytes,
+# then down to decimal GB -- NOT a simple decimal factor (2048 MiB is
+# 2.147483648 GB, not 2.048 GB).
+_RAM_UNIT_BINARY_EXPONENTS = {"KiB": 10, "MiB": 20, "GiB": 30, "TiB": 40}
+# ms is the canonical latency unit.
+_LATENCY_UNIT_FACTORS = {"ms": 1.0, "µs": 1e-3, "us": 1e-3, "s": 1e3, "seconds": 1e3}
+
+
+def to_native_unit(value: float, unit: str, kpi_type: str) -> float | None:
+    """Converts a requirement's target_value into its KPI's canonical unit
+    (cpu -> vCPU, ram -> GB, latency -> ms) -- e.g. a 20 MB ram target becomes
+    0.02 GB before being compared to a node's ram_gb (an int, always in GB).
+
+    Returns None when (kpi_type, unit) isn't a recognized pairing (e.g.
+    unit="ms" with kpi_type="cpu") -- the caller's job to validate against,
+    not something this function silently guesses at. See intent_grounding_node,
+    which calls this immediately after extraction and drops any requirement
+    this returns None for, same "drop rather than guess" policy as grounding.
+    Idempotent on an already-canonical unit (factor 1.0), so later calls
+    elsewhere in the pipeline on an already-normalized requirement are safe
+    no-ops, not double conversions."""
+    if kpi_type == "cpu":
+        factor = _CPU_UNIT_FACTORS.get(unit)
+    elif kpi_type == "ram":
+        if unit in _RAM_UNIT_DECIMAL_FACTORS:
+            factor = _RAM_UNIT_DECIMAL_FACTORS[unit]
+        elif unit in _RAM_UNIT_BINARY_EXPONENTS:
+            factor = (2 ** _RAM_UNIT_BINARY_EXPONENTS[unit]) / 1e9
+        else:
+            factor = None
+    elif kpi_type == "latency":
+        factor = _LATENCY_UNIT_FACTORS.get(unit)
+    else:
+        factor = None
+    return value * factor if factor is not None else None
+
+
+# The canonical unit written back onto a requirement after normalization --
+# see intent_grounding_node.
+CANONICAL_UNIT = {"cpu": "vCPU", "ram": "GB", "latency": "ms"}
 
 
 def co_located_footprint(
@@ -69,35 +111,102 @@ def find_link(node_a: str, node_b: str, links: list[Link]) -> Link | None:
     return None
 
 
+def shortest_path_delays_ms(
+    source: str, output_size: float | None, links: list[Link]
+) -> dict[str, float]:
+    """Dijkstra from source over the links graph: the minimum-delay path
+    cost (transmission + propagation, summed per traversed link) to every
+    other reachable node -- Equation 2's p_ij, computed once from source
+    rather than once per (source, target) pair.
+
+    output_size is the data volume carried over this hop (the upstream
+    service's own output_size); 0/undeclared means only propagation delay
+    drives the weighting, consistent with every other quantity in this
+    model defaulting to its simplest behavior when absent. A direct link is
+    no longer required between two consecutive services -- only a node
+    missing from the returned dict is genuinely unreachable from source (a
+    disconnected infrastructure graph), which callers treat as infeasible."""
+    size = output_size or 0.0
+    adjacency: dict[str, list[tuple[str, float]]] = {}
+    for link in links:
+        cost = math.ceil(size / link.bandwidth_mbps) + link.propagation_delay_ms
+        adjacency.setdefault(link.source_node, []).append((link.target_node, cost))
+        adjacency.setdefault(link.target_node, []).append((link.source_node, cost))
+
+    best: dict[str, float] = {source: 0.0}
+    frontier: list[tuple[float, str]] = [(0.0, source)]
+    while frontier:
+        dist, node = heapq.heappop(frontier)
+        if dist > best.get(node, math.inf):
+            continue
+        for neighbor, cost in adjacency.get(node, []):
+            new_dist = dist + cost
+            if new_dist < best.get(neighbor, math.inf):
+                best[neighbor] = new_dist
+                heapq.heappush(frontier, (new_dist, neighbor))
+    return best
+
+
+def service_processing_delay_ms(service: Service, node: Node | None) -> float:
+    """A single service's own processing delay, in ms, under its placement on
+    node (None if unplaced/unknown -- treated the same as a node with no mips).
+
+    Three cases, in priority order:
+    1. service.wcet_ms set -- an explicit, placement-independent declared
+       time, used as-is (overrides everything else).
+    2. service.workload_mi set AND node.mips set -- the Latency Model's
+       Equation 1, t_exec(s, pi(s)) = w(s) / p(pi(s)): workload (millions of
+       instructions) divided by the hosting node's effective processing rate
+       (millions of instructions/second), converted from seconds to ms.
+       Assumes the node's full processing capacity is available to this one
+       service -- no explicit modeling of CPU contention/queueing with other
+       co-located services (same simplification the System Model states).
+    3. Neither available -- 0.0, the original behavior, unchanged for any
+       service/node that doesn't declare these (the toy example's earlier
+       state, the ENACT scenario, public_safety)."""
+    if service.wcet_ms is not None:
+        return service.wcet_ms
+    if service.workload_mi is not None and node is not None and node.mips:
+        return (service.workload_mi / node.mips) * 1000
+    return 0.0
+
+
 def flow_latency_ms(
     flow: Flow,
     links: list[Link],
     node_by_service: dict[str, str],
     services: dict[str, Service],
+    nodes: dict[str, Node],
 ) -> float:
     """Total end-to-end delay for the whole flow: processing_delay (sum of
-    each service's wcet_ms along flow.path, 0 if undeclared -- additive, no
-    behavior change for services that don't set it) + communication_delay
-    (sum of per-hop network delay, 0 for a co-located hop).
+    each service's own delay along flow.path, see service_processing_delay_ms
+    -- 0 if neither wcet_ms nor workload_mi/node.mips is available, additive,
+    no behavior change for services/nodes that don't set them) +
+    communication_delay (sum of per-hop network delay, 0 for a co-located hop).
 
-    Per-hop communication delay uses one of two models, chosen per hop based
-    on whether the UPSTREAM service declares output_size: if it does, the
-    hop is costed as ceil(output_size / link.bandwidth_mbps) (a data-size-
-    aware transmission-time model); otherwise it falls back to the link's
-    static latency_ms (the original model, still what the toy example and
-    ENACT scenario use, since neither declares output_size).
+    Per-hop communication delay is Equation 2's minimum-delay path cost (see
+    shortest_path_delays_ms): transmission (output_size/bandwidth, 0 if the
+    upstream service doesn't declare output_size) plus propagation
+    (link.propagation_delay_ms), summed over every link on the
+    cheapest path between the two services' nodes -- not just a direct link.
 
     node_by_service maps each service_id to the node it's hosted on --
     pass {sid: s.current_node for sid, s in services.items()} to evaluate the
     real, current placement, or a candidate/hypothetical placement (e.g. from
     the decision engine's search) to evaluate a placement being considered.
+    Unlike wcet_ms, a workload_mi-derived delay is placement-dependent: it
+    changes with node_by_service, since it depends on which node's mips is
+    looked up for each service -- and so is the communication delay now,
+    since the minimum-delay path depends on where both endpoints land.
 
-    Assumes consecutive services in the flow are hosted on the same node
-    (0ms hop) or on two directly linked nodes -- multi-hop routing is not
-    supported yet, see README "Known limitations".
+    Consecutive services no longer need to be hosted on the same node or on
+    directly linked nodes -- multi-hop routing is priced via
+    shortest_path_delays_ms. The only remaining failure is two nodes with no
+    path between them at all (a genuinely disconnected infrastructure graph).
     """
     processing_delay = sum(
-        (services[sid].wcet_ms or 0.0) for sid in flow.path if sid in services
+        service_processing_delay_ms(services[sid], nodes.get(node_by_service.get(sid, "")))
+        for sid in flow.path if sid in services
     )
 
     communication_delay = 0.0
@@ -107,19 +216,16 @@ def flow_latency_ms(
         if node_a == node_b:
             continue  # co-located, no network hop
 
-        link = find_link(node_a, node_b, links)
-        if link is None:
-            raise ValueError(
-                f"No direct link between {node_a!r} and {node_b!r} "
-                f"(consecutive services {upstream_id!r} -> {downstream_id!r}) -- "
-                "multi-hop routing is not supported yet."
-            )
-
         upstream_service = services.get(upstream_id)
-        if upstream_service is not None and upstream_service.output_size is not None:
-            communication_delay += math.ceil(upstream_service.output_size / link.bandwidth_mbps)
-        else:
-            communication_delay += link.latency_ms
+        output_size = upstream_service.output_size if upstream_service is not None else None
+        delays = shortest_path_delays_ms(node_a, output_size, links)
+        if node_b not in delays:
+            raise ValueError(
+                f"No path between {node_a!r} and {node_b!r} "
+                f"(consecutive services {upstream_id!r} -> {downstream_id!r}) -- "
+                "the infrastructure graph is disconnected between these nodes."
+            )
+        communication_delay += delays[node_b]
 
     return processing_delay + communication_delay
 
@@ -163,14 +269,24 @@ def capacity_satisfied(
     services: dict[str, Service],
     active_requirements: list[Requirement],
     node_by_service: dict[str, str],
+    node_ids: set[str] | None = None,
 ) -> list[tuple[bool, str]]:
-    """Permanent invariant, checked for every node regardless of which
-    service (if any) the current intent targets: the sum of every
-    co-located service's effective cpu/ram footprint must not exceed the
-    node's capacity. Returns one (ok, reason) pair per (node, resource) --
+    """Permanent invariant, checked for every node in node_ids (every node
+    in `nodes` if None, the default -- what the solvers use, since a search
+    over hypothetical placements can land a service on any node) regardless
+    of which service (if any) the current intent targets directly: the sum
+    of every co-located service's effective cpu/ram footprint must not
+    exceed the node's capacity. necessity_checker_node instead restricts
+    node_ids to only the nodes hosting a service an active requirement
+    targets -- the real, current placement can't develop a NEW capacity
+    violation anywhere else, since nothing about an unrelated node's hosted
+    services changed. Returns one (ok, reason) pair per (node, resource) --
     same shape as csp_checks.py's other checks, for resolution_trace."""
     checks: list[tuple[bool, str]] = []
-    for node_id, node in nodes.items():
+    for node_id in (nodes.keys() if node_ids is None else node_ids):
+        node = nodes.get(node_id)
+        if node is None:
+            continue
         hosted = sorted(sid for sid in services if node_by_service.get(sid) == node_id)
         for node_field in ("cpu_cores", "ram_gb"):
             capacity = getattr(node, node_field)
@@ -193,17 +309,29 @@ def latency_satisfied(
     links: list[Link],
     active_requirements: list[Requirement],
     node_by_service: dict[str, str],
+    nodes: dict[str, Node],
+    flow_ids: set[str] | None = None,
 ) -> list[tuple[bool, str]]:
-    """Permanent invariant, checked for every flow that has an effective
-    latency target (baseline or overridden by the current intent) --
-    regardless of whether the current intent targets that specific flow."""
+    """Permanent invariant, checked for every flow in flow_ids (every flow
+    in `flows` if None, the default -- the solvers' own use) that has an
+    effective latency target (baseline or overridden by the current intent)
+    -- regardless of whether the current intent targets that specific flow
+    directly. necessity_checker_node instead restricts flow_ids to flows an
+    active latency requirement targets, plus flows containing a service an
+    active cpu/ram requirement targets -- not relevant to latency under the
+    current execution-time model (workload/mips, independent of cpu_cores),
+    but scoped this way so a future cpu-affects-latency coupling doesn't
+    need this restriction touched again."""
     checks: list[tuple[bool, str]] = []
-    for flow_id, flow in flows.items():
+    for flow_id in (flows.keys() if flow_ids is None else flow_ids):
+        flow = flows.get(flow_id)
+        if flow is None:
+            continue
         target = effective_flow_latency_target(flow_id, flows, active_requirements)
         if target is None:
             continue
         try:
-            actual = flow_latency_ms(flow, links, node_by_service, services)
+            actual = flow_latency_ms(flow, links, node_by_service, services, nodes)
         except ValueError as exc:
             checks.append((False, f"flow {flow_id} latency: cannot evaluate -- {exc}"))
             continue
