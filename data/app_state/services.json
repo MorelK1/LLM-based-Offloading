@@ -5,13 +5,25 @@
         "service_id": "T1",
         "name": "Capture",
         "description": "Video stream acquisition",
-        "current_node": "N1"
+        "current_node": "N1",
+        "requirements": {
+          "cpu_cores": 1,
+          "ram_gb": 1
+        },
+        "workload_mi": 25,
+        "output_size": 30
       },
       {
         "service_id": "T2",
         "name": "Preprocessing",
         "description": "Resizing",
-        "current_node": "N1"
+        "current_node": "N1",
+        "requirements": {
+          "cpu_cores": 1,
+          "ram_gb": 2
+        },
+        "workload_mi": 40,
+        "output_size": 20
       },
       {
         "service_id": "T3",
@@ -21,19 +33,32 @@
         "requirements": {
           "cpu_cores": 4,
           "ram_gb": 8
-        }
+        },
+        "workload_mi": 600,
+        "output_size": 0.2
       },
       {
         "service_id": "T4",
         "name": "Tracking",
         "description": "Multi-frame object tracking",
-        "current_node": "N5"
+        "current_node": "N5",
+        "requirements": {
+          "cpu_cores": 2,
+          "ram_gb": 4
+        },
+        "workload_mi": 300,
+        "output_size": 0.5
       },
       {
         "service_id": "T5",
         "name": "Storage/Big Data Analysis",
         "description": "Archiving",
-        "current_node": "N7"
+        "current_node": "N7",
+        "requirements": {
+          "cpu_cores": 4,
+          "ram_gb": 8
+        },
+        "workload_mi": 200
       }
     ]
   }

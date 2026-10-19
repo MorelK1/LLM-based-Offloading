@@ -1,4 +1,4 @@
-link_id,source_node,target_node,link_type,bandwidth_mbps,latency_ms,packet_loss_rate,reliability
+link_id,source_node,target_node,link_type,bandwidth_mbps,propagation_delay_ms,packet_loss_rate,reliability
 L1,N1,N2,WiFi-Direct,150,6,0.01,0.95
 L2,N2,N3,WiFi/Ethernet,1000,4,0.005,0.97
 L3,N3,N4,WiFi/Ethernet,1000,4,0.002,0.98

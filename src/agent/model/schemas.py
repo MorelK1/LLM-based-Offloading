@@ -11,10 +11,9 @@ class Node(BaseModel):
     tier: Literal["iot", "edge", "fog", "cloud"]
     node_type: str
     cpu_cores: int
-    cpu_freq_ghz: float
     ram_gb: int
     storage_gb: int
-    mobility: Literal["static", "mobile"]
+    mips: float | None = None
 
 
 class Link(BaseModel):
@@ -23,7 +22,11 @@ class Link(BaseModel):
     target_node: str
     link_type: str
     bandwidth_mbps: int
-    latency_ms: float
+    # Pure signal-propagation delay (prop_uv), independent of data volume --
+    # distinct from transmission delay (output_size/bandwidth), which is
+    # computed per-service, not stored on the link. See
+    # utils/pipeline.py:shortest_path_delays_ms.
+    propagation_delay_ms: float
     packet_loss_rate: float
     reliability: float
 
@@ -33,18 +36,9 @@ class Service(BaseModel):
     name: str
     description: str
     current_node: str
-    # Static resource footprint this service reserves on current_node, keyed
-    # like Node's fields ("cpu_cores", "ram_gb") -- see necessity_checker.py.
     requirements: dict[str, float] | None = None
-    # Optional processing time (ms) this service adds to any flow it's part
-    # of -- None/absent means 0, additive and backward-compatible (the toy
-    # example and ENACT scenario don't declare it). See pipeline.py:flow_latency_ms.
     wcet_ms: float | None = None
-    # Optional size (abstract unit matching Link.bandwidth_mbps) of the data
-    # this service sends downstream -- when set, the hop to its successor in
-    # a flow is costed as ceil(output_size / link.bandwidth_mbps) instead of
-    # the link's static latency_ms. None/absent keeps the static-latency
-    # model (the toy example and ENACT scenario don't declare it).
+    workload_mi: float | None = None
     output_size: float | None = None
 
 
@@ -62,9 +56,6 @@ class Flow(BaseModel):
     name: str
     description: str
     path: list[str]  # service_ids, in order, root -> terminal
-    # Static baseline/contracted requirement for this flow (e.g. {"latency": 40.0}
-    # as an initial E2E ceiling), analogous to Service.requirements -- distinct
-    # from the actual latency, which is always computed dynamically.
     requirements: dict[str, float] | None = None
 
 
@@ -78,7 +69,21 @@ class Application(BaseModel):
 # free-form values. Extend these lists deliberately if a new KPI or unit is
 # needed.
 KpiType = Literal["cpu", "ram", "latency"]
-Unit = Literal["vCPU", "GB", "ms"]
+# Every unit the extraction LLM is allowed to emit, across all three KPI
+# types -- the model is expected to pick whichever one matches the intent's
+# OWN phrasing (e.g. "500 millicores" -> unit="millicore"), never to convert
+# units itself. utils/pipeline.py:to_native_unit() does the actual
+# validation + conversion to each KPI's canonical unit (vCPU / GB / ms)
+# immediately after extraction, before any downstream node sees the
+# requirement -- see intent_grounding_node.
+Unit = Literal[
+    # cpu -> vCPU
+    "vCPU", "CPU", "core", "cores", "millicore", "mCPU", "m",
+    # ram -> GB (decimal: KB/MB/GB/TB; binary: KiB/MiB/GiB/TiB)
+    "KB", "MB", "GB", "TB", "KiB", "MiB", "GiB", "TiB",
+    # latency -> ms
+    "µs", "us", "ms", "s", "seconds",
+]
 TargetType = Literal["service", "flow"]
 
 
@@ -113,15 +118,14 @@ class Requirement(ExtractedRequirement):
 
 
 class NecessityCheckResult(BaseModel):
-    status: Literal["reconfiguration_required", "no_action_needed"]
-    violated_requirements: list[str]
-    services_to_reconsider: list[str]
-    # service_id -> node_id, the real placement this check was evaluated
-    # against -- always populated (necessity_checker_node already computes
-    # this for its own latency checks). Lets a consumer read "here is the
-    # confirmed-valid placement" directly off this result when
-    # status=="no_action_needed", without needing decision_engine_node to
-    # run at all (it never does in that case).
+    status: Literal["reconfiguration_required", "reconfiguration_not_required"]
+    # Human-readable (ok=False) reasons from capacity_satisfied/latency_satisfied
+    # -- which node/flow failed and why, not which requirement_id "caused" it:
+    # a violation can come from several active requirements combined (e.g. two
+    # co-located services each getting a new cpu floor that together overflow
+    # their shared node), so attributing it to a single requirement would be
+    # arbitrary. See necessity_checker.py.
+    violated_constraints: list[str]
     current_placement: dict[str, str] | None = None
 
 
@@ -138,6 +142,4 @@ class DecisionResult(BaseModel):
     # Human-readable (ok/reason) trace of every check performed against the
     # chosen placement -- see utils/csp_checks.py.
     resolution_trace: list[str] = Field(default_factory=list)
-    # Trace of the search process itself (candidates tried, improvements
-    # found) -- see utils/csp_solver.py:solve_placement.
     search_trace: list[str] = Field(default_factory=list)
