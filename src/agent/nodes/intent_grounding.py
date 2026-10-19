@@ -2,7 +2,7 @@
 
 import time
 
-from agent.model.schemas import ExtractedRequirementList, Requirement
+from agent.model.schemas import ExtractedRequirementList
 from agent.prompts.requirement_extraction import (
     FEW_SHOT_SYSTEM_PROMPT,
     ONE_SHOT_SYSTEM_PROMPT,
@@ -11,10 +11,9 @@ from agent.prompts.requirement_extraction import (
 )
 from agent.states.state import AgentState
 from agent.utils.llm_openrouter import get_openrouter_gpt_llm
+from agent.utils.requirement_validation import validate_and_normalize
 
-# Default prompting strategy when intent_grounding_node is called without an
-# explicit prompt_strategy -- i.e. the production graph's current behavior,
-# unchanged. CoT variants are not implemented yet.
+
 PROMPT_STRATEGIES = {
     "zero_shot": ZERO_SHOT_SYSTEM_PROMPT,
     "one_shot": ONE_SHOT_SYSTEM_PROMPT,
@@ -34,13 +33,6 @@ def intent_grounding_node(
     parameterized). Both exist so experimentation scripts can vary them
     without touching this file -- see graph.py:build_graph."""
     system_prompt = PROMPT_STRATEGIES[prompt_strategy]
-    # OpenRouter (openai/gpt-5.4-mini by default) is used here: NVIDIA API
-    # Catalog's inference backend (utils/llm.py's get_openai_llm/get_mistral_llm)
-    # proved too unreliable for iterating on prompt strategies -- see testbench.
-    # include_raw=True: keeps the raw AIMessage (for usage_metadata -- token
-    # counts) instead of discarding it once structured parsing succeeds; it
-    # also means a parsing failure is now a value ("parsed": None) rather
-    # than an exception, handled below.
     base_llm = get_openrouter_gpt_llm(model)
     resolved_model = base_llm.model_name  # the actual model used, even when `model` is None (.env fallback)
     # method="function_calling" is NOT a safe universal default here, unlike
@@ -72,23 +64,21 @@ def intent_grounding_node(
     result: ExtractedRequirementList = raw_result["parsed"] or ExtractedRequirementList(requirements=[])
     token_usage = raw_result["raw"].usage_metadata  # UsageMetadata dict, or None if the provider didn't report it
 
-    # requirement_id is assigned here, deterministically, rather than left to the LLM.
-    requirements = [
-        Requirement(requirement_id=f"req-{i:03d}", **extracted.model_dump())
-        for i, extracted in enumerate(result.requirements, start=1)
-    ]
-
-    # Matching: keep only requirements whose target actually exists in the
-    # app_context -- a service for target_type="service", a flow for "flow".
-    # TODO: handle approximate matching (natural-language name rather than exact ID).
-    matched = [
-        r for r in requirements
-        if (r.target_type == "service" and r.target_id in state["services"])
-        or (r.target_type == "flow" and r.target_id in state["flows"])
-    ]
+    # Validation + normalization + grounding, before anything downstream
+    # sees a requirement -- comparator/target-type shape, target existence,
+    # source_span literalness, value sanity, and unit conversion to each
+    # KPI's canonical unit, all in one pass. requirement_id is assigned here
+    # too, deterministically, to every survivor. See
+    # utils/requirement_validation.py for the full "drop rather than guess"
+    # policy and each rejection reason.
+    # rejected isn't surfaced into AgentState yet -- available here for
+    # diagnostics if that's wanted later, not wired through today.
+    requirements, rejected = validate_and_normalize(
+        result.requirements, state["intent_text"], state["services"], state["flows"]
+    )
 
     return {
-        "requirements": matched,
+        "requirements": requirements,
         "extraction_model": resolved_model,
         "extraction_elapsed_s": elapsed_s,
         "extraction_token_usage": dict(token_usage) if token_usage else None,
