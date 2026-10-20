@@ -1,6 +1,6 @@
 # Intent-Based Service Offloading in the Cloud Continuum
 
-Implementation of the pipeline described in the slides (Intent Grounding →
+Implementation of the pipeline described (Intent Grounding →
 Necessity Checker → Decision Engine → Trace & Explanation Generation) as a
 **LangGraph** graph, on the "real-time video analysis" running example
 (scenario 1).
@@ -24,24 +24,30 @@ cp .env.example .env   # then fill in OPENROUTER_API_KEY at minimum
 
 ```
 config/                     Configuration (LLM base_url, data paths, scenario thresholds)
-data/infra/                 Available infrastructure (nodes, links) — nodes.csv, links.csv
+data/infra/                 Available infrastructure (nodes, links) — nodes.csv (cpu_cores,
+                              ram_gb, storage_gb, optional mips for execution-time calculation),
+                              links.csv (bandwidth_mbps, propagation_delay_ms)
 data/app_state/              Current application state: services.json (services T1-T5, their
-                              placement, static resource footprint) + flows.json (named,
-                              ordered chains of services, e.g. the end-to-end video pipeline)
+                              placement, static resource footprint, optional workload_mi/
+                              output_size) + flows.json (named, ordered chains of services,
+                              e.g. the end-to-end video pipeline)
 src/agent/
   graph.py                    StateGraph assembly (nodes + conditional routing)
   model/schemas.py             Domain schemas (Node, Link, Service, Flow, Application,
-                                Requirement, NecessityCheckResult, DecisionResult)
+                                ExtractedRequirement, Requirement, NecessityCheckResult,
+                                DecisionResult)
   states/state.py              AgentState (shared graph state)
   nodes/
-    intent_grounding.py          LLM node: requirement extraction + matching
+    intent_grounding.py          LLM node: requirement extraction, then validation and
+                                  normalization (utils/requirement_validation.py)
     necessity_checker.py         Structured node: is reconfiguration needed or not --
-                                  cpu/ram capacity (per service) + end-to-end latency
-                                  (per flow)
+                                  reuses utils/pipeline.py's capacity_satisfied/
+                                  latency_satisfied, restricted to the nodes/flows the
+                                  active requirements could possibly affect
     decision_engine.py           Homemade brute-force CSP solver -- the one wired
                                   into the graph (see utils/csp_solver.py)
     decision_engine_cp_sat.py    Same problem solved with CP-SAT (Google OR-Tools) --
-                                  kept as a reference, not used by the graph
+                                  a second solver backend for the same model
     explanation.py               LLM node: explanation generation
   prompts/                     System prompts used by the LLM nodes
   utils/
@@ -50,26 +56,44 @@ src/agent/
     llm.py                         NVIDIA chat model retrieval (ChatNVIDIA) -- available,
                                     not the default (see "Known limitations")
     llm_openrouter.py               OpenRouter chat model retrieval (ChatOpenAI) -- default
-    pipeline.py                     Flow helpers (flow_pairs/all_flow_pairs, flow_latency_ms,
-                                     link lookup, co-located footprint aggregation) plus the
-                                     "baseline + override" model shared by necessity_checker
-                                     and the CSP solvers: effective_service_capacity/
-                                     effective_flow_latency_target resolve whether a given
-                                     service/flow uses its static baseline (Service.requirements/
-                                     Flow.requirements) or the current intent's value, and
-                                     capacity_satisfied/latency_satisfied check those as
-                                     permanent invariants over every service/flow, not just
-                                     the one the current intent names
-    csp_checks.py                   Homemade solver: check_connectivity only -- cpu/ram/latency
-                                     checks now live in pipeline.py's capacity_satisfied/
-                                     latency_satisfied (permanent invariants, not per-requirement)
+    requirement_validation.py       validate_and_normalize: checks each extracted
+                                     requirement's kpi/target-type/comparator shape,
+                                     grounds its target_id against the application state,
+                                     checks source_span is a literal substring of the
+                                     intent, and converts its value to the KPI's
+                                     canonical unit -- a failing requirement carries a
+                                     reason, never silently dropped
+    pipeline.py                     Shared helpers. service_processing_delay_ms (a
+                                     service's own execution time -- workload_mi/
+                                     node.mips if both declared, else wcet_ms, else 0)
+                                     and shortest_path_delays_ms (Dijkstra over the
+                                     links graph: transmission + propagation per hop,
+                                     multi-hop, not just a direct link) feed
+                                     flow_latency_ms. effective_service_capacity/
+                                     effective_flow_latency_target resolve whether a
+                                     service/flow uses its static baseline
+                                     (Service.requirements/Flow.requirements) or the
+                                     current intent's override; capacity_satisfied/
+                                     latency_satisfied check those as permanent
+                                     invariants, optionally restricted to a subset of
+                                     nodes/flows (see necessity_checker.py).
+                                     to_native_unit converts an extracted value to its
+                                     KPI's canonical unit.
+    csp_checks.py                   check_connectivity -- direct-link-only
+                                     connectivity, kept only because
+                                     expérimentations/public_safety/baseline/verifier.py
+                                     still depends on its original semantics; the real
+                                     pipeline no longer uses it (multi-hop routing via
+                                     pipeline.py:shortest_path_delays_ms instead)
     csp_solver.py                   Homemade solver: brute-force search (solve_placement),
                                      per-service diagnostic (diagnose_node_options),
                                      trace formatting (format_diagnosis)
     csp_constraints_cp_sat.py       CP-SAT constraint builders, one per verification --
                                      used only by decision_engine_cp_sat.py
 scripts/run_scenario.py     Entry point: replays the running example from the slides
-tests/                        Tests for the structured nodes (necessity checker, decision engine)
+tests/                        Tests for the structured nodes (requirement validation,
+                               necessity checker, both decision engine backends) and
+                               the explanation prompt
 testbench.ipynb              Notebook for manually exercising individual nodes/components
 ```
 
@@ -77,27 +101,27 @@ testbench.ipynb              Notebook for manually exercising individual nodes/c
 
 ```
 Intent Grounding -> Necessity Checker --reconfiguration_required--> Decision Engine -\
-                                       \--no_action_needed---------------------------> Explanation -> END
+                                       \--reconfiguration_not_required----------------> Explanation -> END
 ```
 
 ## Decision Engine: two interchangeable solvers
 
 Service placement is modeled as a Constraint Satisfaction / Optimization
 Problem: every service is a variable (which node hosts it), constrained by
-cpu/ram capacity, connectivity between consecutive pipeline stages, and
-cumulative end-to-end latency, with an objective that prefers leaving
-services where they are (only moving what's strictly necessary), then the
-cheapest infrastructure tier.
+cpu/ram capacity and cumulative end-to-end latency -- computed over the
+minimum-delay path between two services' nodes, not just a direct link --
+with an objective that prefers leaving services where they are (only moving
+what's strictly necessary), then the cheapest infrastructure tier.
 
-Two implementations of that same model exist:
-- **`decision_engine.py` / `utils/csp_solver.py`** (used by the graph): a
-  homemade, dependency-free brute-force search -- enumerates every
+Two implementations of that same model exist, producing the identical
+`DecisionResult` shape:
+- **`decision_engine.py` / `utils/csp_solver.py`**: a homemade,
+  dependency-free brute-force search -- enumerates every
   `len(nodes) ** len(services)` candidate placement and keeps the best valid
-  one. Trivial for the running example's size; does not scale to a much
-  larger infrastructure/pipeline.
+  one. This is the one `graph.py` currently wires into the pipeline.
 - **`decision_engine_cp_sat.py` / `utils/csp_constraints_cp_sat.py`**: the
-  same problem solved with CP-SAT (Google OR-Tools). Kept as a reference/
-  alternative, not wired into the graph.
+  same problem solved with CP-SAT (Google OR-Tools), a genuine
+  constraint-propagation solver. Not called by `graph.py` yet.
 
 Both produce a `resolution_trace` (why the chosen placement is valid) and,
 for the homemade solver, a `search_trace` (how the search got there).
@@ -125,30 +149,32 @@ pytest
   and `explanation.py` use `utils/llm_openrouter.py` instead as a result.
 - **Every service and every flow has a permanent baseline requirement**
   (`Service.requirements` for cpu/ram, `Flow.requirements["latency"]`),
-  checked on *every* candidate placement regardless of what the current
-  intent targets -- `utils/pipeline.py:capacity_satisfied`/`latency_satisfied`.
-  The current intent's `Requirement` *replaces* the baseline for the exact
-  `(target_type, target_id, kpi_type)` it names; every other service/flow
-  keeps its baseline. This is what stops the solver from "fixing" the
-  targeted requirement while silently breaking an untouched one. A service/
-  flow without a declared baseline contributes `0`/is skipped, never an
-  error. `necessity_checker.py` itself is unaffected by this -- it only ever
-  evaluates the current intent's own requirement(s), on the assumption the
-  real, already-deployed placement already satisfies every baseline.
+  checked as a permanent invariant via `utils/pipeline.py:capacity_satisfied`/
+  `latency_satisfied`. The current intent's `Requirement` *replaces* the
+  baseline for the exact `(target_type, target_id, kpi_type)` it names;
+  every other service/flow keeps its baseline. A service/flow without a
+  declared baseline contributes `0`/is skipped, never an error.
+  `necessity_checker.py` restricts these checks to only the nodes/flows an
+  active requirement could possibly affect (the node hosting a targeted
+  service -- summed over everyone co-located there, including untouched
+  services' baselines; a targeted flow, or a flow containing a targeted
+  service), on the assumption the real, already-deployed placement already
+  satisfies every baseline elsewhere.
 - `latency` requirements always target a `Flow` (`target_type="flow"`),
-  never a single service, and are evaluated as `processing_delay` (sum of
-  each service's `wcet_ms` along `Flow.path`, `0` if undeclared) +
-  `communication_delay` (per hop: `ceil(output_size / link.bandwidth_mbps)`
-  if the upstream service declares `output_size`, else the link's static
-  `latency_ms` -- the original, still-default model, since neither the
-  running example nor the ENACT scenario declare `output_size`/`wcet_ms`).
+  never a single service, and are evaluated as the sum of each service's
+  own execution time (`workload_mi / node.mips` if both are declared, else
+  `wcet_ms` if declared, else `0` -- `pipeline.py:service_processing_delay_ms`)
+  plus per-hop communication delay. Communication delay is transmission
+  (`ceil(output_size / link.bandwidth_mbps)`, `0` if `output_size` isn't
+  declared) plus propagation (`link.propagation_delay_ms`), summed along the
+  *minimum-delay path* between the two services' nodes -- a Dijkstra search
+  over the links graph (`pipeline.py:shortest_path_delays_ms`), not just a
+  direct link. Consecutive services no longer need to be co-located or
+  directly linked; the only remaining failure is two nodes with no path
+  between them at all (a genuinely disconnected infrastructure graph).
   Several flows may freely share services at their endpoints (no merge-point
   restriction: that was a limitation of the previous `Service.next_services`
-  model, resolved by moving topology to `Flow.path`), but every pair of
-  consecutive services *within* a flow must still be hosted on the same node
-  or on two directly linked nodes — multi-hop routing between non-adjacent
-  nodes is not supported (an error for `necessity_checker`'s real placement,
-  an invalid candidate for the CSP solvers evaluating hypothetical ones).
+  model, resolved by moving topology to `Flow.path`).
 - `decision_engine.py`/`decision_engine_cp_sat.py` never raise when no
   placement satisfies every constraint -- `DecisionResult.outcome` is
   `"FEASIBLE"` or `"INFEASIBLE"` (`csp_solver.py:solve_placement` returns
@@ -166,13 +192,8 @@ pytest
   `packet_loss`, and `reliability` (link-level KPIs) are deferred: unlike
   `latency`, which resolves to network hops via `Flow.path`, these would
   need the same kind of service-to-link mapping applied per intent, not yet
-  designed.
-- Node `N6`, referenced in the links (L6, L7, L9) from the slides, does not
-  appear in the nodes table — an inconsistency present in the original
-  material. Harmless today (no service ever routes through N6), but would
-  need clarifying if the running example's topology is extended.
-- No evaluation benchmark yet for the extraction step (cf. the "Evaluation"
-  slide) — to be built. `prompts/requirement_extraction.py` already has
-  three prompting strategies (`ZERO_SHOT`/`ONE_SHOT`/`FEW_SHOT`) as fully
-  hardcoded constants for that future comparison; `ONE_SHOT` has not yet been
-  updated with the same multi-requirement lesson as `FEW_SHOT`.
+  designed. Each KPI accepts several unit spellings (e.g. `core`,
+  `millicore`, `MiB`, `seconds`) matching the intent's own phrasing --
+  `utils/requirement_validation.py` normalizes to each KPI's canonical unit
+  (`vCPU`, `GB`, `ms`) and rejects an unrecognized `(kpi_type, unit)` pairing
+  rather than guessing.
