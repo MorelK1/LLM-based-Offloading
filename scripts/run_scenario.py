@@ -19,6 +19,22 @@ INTENT = (
     "it now requires at least 12 vCPU and 24GB of RAM to run correctly."
 )
 
+# Same kind of requirement as INTENT, phrased with non-canonical unit
+# spellings (unit normalization/conversion is exercised downstream, not at
+# extraction) -- latency in "seconds" instead of "ms", and a flow target
+# instead of a service one.
+INTENT2 = (
+    "The whole pipeline must complete within 0.1 seconds from capture to storage."
+)
+
+# Same requirement as INTENT (same service, same cpu target), but the cpu
+# value phrased in millicores instead of vCPU -- exercises the cpu unit
+# conversion (1000 millicore = 1 vCPU) rather than the ram/latency ones.
+INTENT3 = (
+    "The detection model has been updated to a more accurate version, "
+    "it now requires at least 12000 millicores and 24GB of RAM to run correctly."
+)
+
 
 def main() -> None:
     config = load_config()
@@ -30,7 +46,7 @@ def main() -> None:
     graph = build_graph()
     result = graph.invoke(
         {
-            "intent_text": INTENT,
+            "intent_text": INTENT2,
             "services": services,
             "flows": flows,
             "nodes": nodes,
