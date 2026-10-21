@@ -6,7 +6,7 @@ User Input -> Intent Grounding -> Necessity Checker --Yes--> Decision Engine -\\
 
 from langgraph.graph import END, StateGraph
 
-from agent.nodes.decision_engine import decision_engine_node
+from agent.nodes.decision_engine_cp_sat import decision_engine_node_cp_sat
 from agent.nodes.explanation import explanation_node
 from agent.nodes.intent_grounding import intent_grounding_node
 from agent.nodes.necessity_checker import necessity_checker_node
@@ -57,7 +57,7 @@ def build_graph(
         lambda state: intent_grounding_node(state, model=model, prompt_strategy=prompt_strategy),
     )
     graph.add_node("necessity_checker", necessity_checker_node)
-    graph.add_node("decision_engine", decision_engine_node)
+    graph.add_node("decision_engine", decision_engine_node_cp_sat)
 
     graph.set_entry_point("intent_grounding")
     graph.add_edge("intent_grounding", "necessity_checker")
