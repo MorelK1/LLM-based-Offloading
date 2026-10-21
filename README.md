@@ -44,10 +44,13 @@ src/agent/
                                   reuses utils/pipeline.py's capacity_satisfied/
                                   latency_satisfied, restricted to the nodes/flows the
                                   active requirements could possibly affect
-    decision_engine.py           Homemade brute-force CSP solver -- the one wired
-                                  into the graph (see utils/csp_solver.py)
+    decision_engine.py           Homemade brute-force CSP solver (see
+                                  utils/csp_solver.py) -- an alternative backend, not
+                                  wired into the graph; used directly by the
+                                  already-recorded public_safety campaign
     decision_engine_cp_sat.py    Same problem solved with CP-SAT (Google OR-Tools) --
-                                  a second solver backend for the same model
+                                  the one wired into the graph (see
+                                  utils/csp_constraints_cp_sat.py)
     explanation.py               LLM node: explanation generation
   prompts/                     System prompts used by the LLM nodes
   utils/
@@ -115,18 +118,28 @@ what's strictly necessary), then the cheapest infrastructure tier.
 
 Two implementations of that same model exist, producing the identical
 `DecisionResult` shape:
+- **`decision_engine_cp_sat.py` / `utils/csp_constraints_cp_sat.py`**: the
+  same problem solved with CP-SAT (Google OR-Tools), a genuine
+  constraint-propagation solver. This is the one `graph.py` currently wires
+  into the pipeline. Only ever accepts a proven-`OPTIMAL` solution -- an
+  unproven `FEASIBLE`, `UNKNOWN`, or `MODEL_INVALID` status raises rather
+  than silently returning an unoptimal placement (no search limit is
+  configured today, so in practice only `OPTIMAL`/`INFEASIBLE` are ever
+  reached).
 - **`decision_engine.py` / `utils/csp_solver.py`**: a homemade,
   dependency-free brute-force search -- enumerates every
   `len(nodes) ** len(services)` candidate placement and keeps the best valid
-  one. This is the one `graph.py` currently wires into the pipeline.
-- **`decision_engine_cp_sat.py` / `utils/csp_constraints_cp_sat.py`**: the
-  same problem solved with CP-SAT (Google OR-Tools), a genuine
-  constraint-propagation solver. Not called by `graph.py` yet.
+  one. Not called by `graph.py` anymore; kept as an alternative backend and
+  used directly (bypassing the graph) by the already-recorded
+  `public_safety` campaign.
 
-Both produce a `resolution_trace` (why the chosen placement is valid) and,
-for the homemade solver, a `search_trace` (how the search got there).
-`utils/csp_solver.py:diagnose_node_options` additionally answers "why not
-node X for this one service?" independently of a full solve.
+Both produce a `resolution_trace` (why the chosen placement is valid, and
+why each moved service had to move -- `utils/pipeline.py:
+check_candidate_placement`/`explain_moved_services`, shared by both
+backends so the explanation is identical regardless of which one ran) and a
+`search_trace` (how the search got there). `utils/csp_solver.py:
+diagnose_node_options` additionally answers "why not node X for this one
+service?" independently of a full solve.
 
 ## Run the running example
 
