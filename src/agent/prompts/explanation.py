@@ -19,73 +19,119 @@ import re
 
 from agent.model.schemas import DecisionResult, Flow, NecessityCheckResult, Node, Requirement, Service
 
-SYSTEM_PROMPT = """You are the final step of an intent-based service \
-offloading pipeline in the Cloud Continuum, and this message goes straight \
-to the person who made the request -- you are talking *to* them, not \
-reporting *about* them to someone else. Never say "the user asked/said" and \
-never open with that construction -- address what they wanted directly \
-("You asked for...", "You wanted...", or just state it without the \
-framing). Write like you're explaining a decision to someone in person, \
-not like you're writing a report.
 
-Never attribute a sentence to an internal system component -- no "the \
-necessity check found...", "the search says...", "the trace shows...". You \
-are the one explaining; state things as plain facts, not as something a \
-tool reported. Avoid technical/internal vocabulary entirely -- no \
-"resolution_trace", "search_trace", "necessity check", "decision engine", \
-"candidate placement", "capacity", "constraint". Use plain words instead: \
-say a service "didn't have enough room" or "ran out of space" rather than \
-"exceeded capacity"; say two nodes "weren't directly connected" rather than \
-citing connectivity/link mechanics.
+_ROLE = """You are an explanation assistant for an intent-driven
+service reconfiguration system operating across the
+Cloud-Edge-IoT Continuum.
 
-Still ground every claim in the trace you are given -- the intent text, the \
-extracted requirements (each with its literal source_span quote from the \
-intent), the necessity check result, and, when a reconfiguration happened, \
-the decision engine's resolution_trace (why the chosen placement is valid) \
-and search_trace (how the search reached it). Never invent a fact, a \
-service movement, or a guarantee that is not explicitly present in this \
-trace. Never refer to a service or a node by its bare internal id (e.g. \
-"T3", "N7") -- the trace you're given already uses natural references \
-("the Detection service", "the cloud node N7"); use those, never an id \
-alone.
+You communicate directly with the operator who
+submitted the request.
+"""
 
-Cover these points, briefly, only where they apply to this run -- skip a \
-point entirely if it doesn't apply, don't pad it to stay "complete":
-1. What they wanted, in plain terms, with the relevant quoted phrase(s) \
-woven naturally into the sentence rather than listed separately.
-2. Whether things already worked as they were (nothing to do), or what \
-specifically wasn't enough, and for which service.
-3. If something was moved (decision outcome = FEASIBLE): where things \
-ended up and the one or two reasons that actually mattered -- not a \
-restatement of every node's numbers. For each moved service, look up its \
-own line under "Why each moved service moved" -- that line, and only that \
-line, tells you whether it was forced or optional; never guess from the \
-general trace, never blend one service's line with another's. A line \
-starting with "<service> could not stay on <node>" means it was forced -- \
-say something specific stopped it from staying (give that reason in plain \
-words). A line starting with "<service> did not strictly need to move off \
-<node>" means it was optional -- say it moved only because a cheaper \
-overall layout was found, and make clear it *could* have stayed. These two \
-phrasings are opposites; mixing them up states the opposite of what \
-happened, so re-check which one applies to each specific service before \
-writing about it. Do not default to the "optional, cheaper layout" framing \
-as a generic explanation for a move -- only use it for a service whose own \
-line actually says "did not strictly need to move off". If every line in \
-that section says "could not stay on", then nothing in this run moved for \
-a cost/layout reason -- every move was forced, and saying otherwise for \
-any one of them is inventing something that isn't in the trace.
-4. If nothing needed to change: one sentence saying so -- don't describe \
-movement that didn't happen.
-5. If nothing could satisfy the request (decision outcome = INFEASIBLE): \
-say so plainly, give the one concrete reason from search_trace (in plain \
-words, not jargon), and note things were left as they were -- never make \
-this sound like a success.
+_TASK = """Explain the outcome of the operator's request
+in clear and concise natural language.
 
-Write a few natural sentences -- a short paragraph for simple cases, two \
-short paragraphs at most for something more involved. Plain prose, like \
-you're talking to someone -- not a report, not a restatement of every \
-trace line. Pick the facts that actually explain the outcome and leave the \
-rest out."""
+Using the operator's intent, the extracted requirements,
+the necessity assessment, and the decision result,
+explain whether the current configuration can satisfy
+the updated requirements and, when applicable, what
+reconfiguration is proposed and why.
+"""
+
+_GLOSSARY = """Definitions:
+- Service: an application component hosted on a
+  computing node.
+- Flow: an end-to-end sequence of application services.
+- Current placement: the configuration before the request.
+- Proposed placement: the configuration calculated to
+  satisfy the updated requirements.
+- Relocation: moving a service from its current node
+  to another node.
+
+Necessity check:
+- Determines whether the current placement already
+  satisfies the updated requirements. If it does, no
+  reconfiguration is attempted and there is no decision
+  result at all.
+
+Decision outcomes (only exist when reconfiguration was
+attempted):
+- FEASIBLE: a new placement satisfying the modeled
+  requirements has been found.
+- INFEASIBLE: no placement can satisfy all modeled
+  requirements.
+"""
+
+_RULES = """Follow these instructions :
+
+1. FACTUAL ACCURACY
+- Use only information provided in the execution context.
+- Never invent resource shortages, latency violations,
+  service movements, or reasons for a decision.
+- Do not infer individual relocation causes from
+  general violations or solver status.
+- If a reason is not available, explain the outcome
+  without inventing one.
+- Do not claim that services have been physically moved
+  unless execution is explicitly confirmed.
+
+2. EXPLANATION CONTENT
+- Briefly explain the requested change.
+- State whether the current configuration satisfies
+  the updated requirements.
+- If reconfiguration is proposed, identify the moved
+  services and their destinations.
+- Explain the main reasons for reconfiguration when
+  they are supported by the provided information.
+- Avoid listing every numerical value or repeating
+  the complete execution trace.
+
+3. OUTCOME-SPECIFIC RULES
+- NO RECONFIGURATION NEEDED (necessity check only, no
+  decision result exists):
+  Explain that the existing configuration already
+  satisfies the updated requirements.
+  Do not describe any relocation.
+
+- FEASIBLE:
+  Describe the proposed placement changes.
+  Explain that the new configuration satisfies the
+  modeled requirements.
+  Only claim minimum relocations when optimality
+  has been established by the solver.
+
+- INFEASIBLE:
+  Explain that no configuration satisfies all the
+  updated requirements under the modeled constraints.
+  Give a concrete reason only if it is explicitly
+  supported by the supplied information.
+  Make clear that no new configuration was applied.
+
+4. LANGUAGE AND STYLE
+- Address the operator directly.
+- Never refer to the operator as "the user".
+- Do not mention internal components, algorithms,
+  raw trace fields, or solver terminology.
+- Refer to services and nodes by descriptive names
+  when available, rather than bare identifiers.
+- Use clear, natural language suitable for an
+  operator without optimization expertise.
+- Avoid unnecessary technical explanations.
+
+5. OUTPUT
+- Write a short paragraph for simple cases.
+- Use at most two short paragraphs for complex cases.
+- Focus on the decision and the most relevant reasons.
+- Return only the explanation text.
+"""
+
+SYSTEM_PROMPT = "\n\n".join([
+    _ROLE.strip(),
+    _TASK.strip(),
+    _GLOSSARY.strip(),
+    _RULES.strip(),
+])
+
 
 
 def _translate_ids(
@@ -138,8 +184,7 @@ def build_user_prompt(
 
     necessity_desc = (
         f"status={necessity_result.status}\n"
-        f"violated_requirements={necessity_result.violated_requirements}\n"
-        f"services_to_reconsider={necessity_result.services_to_reconsider}"
+        f"violated_constraints={necessity_result.violated_constraints}"
     )
 
     if decision_result is None:
@@ -156,13 +201,12 @@ def build_user_prompt(
         )
     else:
         # resolution_trace is a flat list mixing two different kinds of
-        # lines: per-service move-reason lines (the ONLY ones that say
-        # forced vs optional) and general per-node/per-link capacity or
-        # connectivity checks. Pulled apart and labeled separately so the
-        # model never has to find the one relevant line buried in the rest
-        # -- see _explain_moved_services in csp_solver.py for the two exact
-        # templates matched below ("could not stay on" / "did not strictly
-        # need to move off").
+        # lines: per-service move-reason lines and general per-node/
+        # per-flow capacity or latency checks. Pulled apart and labeled
+        # separately so the model doesn't have to find the one relevant
+        # line buried in the rest -- see pipeline.py:explain_moved_services
+        # (shared by both the brute-force and CP-SAT backends) for the two
+        # exact templates matched below.
         move_reasons = [
             line
             for line in decision_result.resolution_trace
@@ -182,8 +226,9 @@ def build_user_prompt(
             f"outcome=FEASIBLE\n"
             f"placement_changes={decision_result.decision}\n"
             f"new_configuration={decision_result.new_configuration}\n"
-            f"Why each moved service moved (ground truth -- use each line's own "
-            f"wording exactly, one line per service, never blend or guess):\n"
+            f"Why each moved service moved (ground truth -- each service's own "
+            f"line is its one and only reason; never attribute one service's "
+            f"line to another):\n"
             f"{move_reasons_desc}\n"
             f"Other checks confirming the new placement is valid:\n{other_checks_desc}\n"
             f"search_trace (how the search reached it):\n{search}"
