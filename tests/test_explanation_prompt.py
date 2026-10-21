@@ -9,10 +9,8 @@ def _node(node_id: str, tier: str) -> Node:
         tier=tier,
         node_type=f"{tier}_node",
         cpu_cores=8,
-        cpu_freq_ghz=2.0,
         ram_gb=16,
         storage_gb=100,
-        mobility="static",
     )
 
 
@@ -60,7 +58,7 @@ def test_forced_move_reason_is_separated_from_other_checks():
         "intent text",
         [],
         necessity_result=NecessityCheckResult(
-            status="reconfiguration_required", violated_requirements=["req-001"], services_to_reconsider=["T2"]
+            status="reconfiguration_required", violated_constraints=["req-001"]
         ),
         decision_result=decision,
         services={"T2": _service("T2", "Preprocessing", "N1"), "T3": _service("T3", "Detection", "N7")},
@@ -98,7 +96,7 @@ def test_optional_move_reason_is_labeled_distinctly_from_forced():
         "intent text",
         [],
         necessity_result=NecessityCheckResult(
-            status="reconfiguration_required", violated_requirements=["req-001"], services_to_reconsider=["T2"]
+            status="reconfiguration_required", violated_constraints=["req-001"]
         ),
         decision_result=decision,
         services={"T2": _service("T2", "Preprocessing", "N1")},

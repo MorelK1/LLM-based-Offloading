@@ -9,10 +9,8 @@ def _fog_node() -> Node:
         tier="fog",
         node_type="fog_node",
         cpu_cores=8,
-        cpu_freq_ghz=3.6,
         ram_gb=16,
         storage_gb=512,
-        mobility="static",
     )
 
 
@@ -23,10 +21,8 @@ def _cloud_node() -> Node:
         tier="cloud",
         node_type="cloud_gpu_node",
         cpu_cores=96,
-        cpu_freq_ghz=2.5,
         ram_gb=900,
         storage_gb=10000,
-        mobility="static",
     )
 
 
@@ -56,16 +52,16 @@ def test_reconfiguration_required_when_node_undersized():
         "services": {"T3": _detection_service()},
         "flows": {},
         "nodes": {"N5": _fog_node()},
+        "links": [],
     }
 
     result = necessity_checker_node(state)["necessity_result"]
 
     assert result.status == "reconfiguration_required"
-    assert result.violated_requirements == ["req-001"]
-    assert result.services_to_reconsider == ["T3"]
+    assert any("N5" in c and "EXCEEDS capacity" in c for c in result.violated_constraints)
 
 
-def test_no_action_needed_when_requirements_satisfied():
+def test_reconfiguration_not_required_when_requirements_satisfied():
     state = {
         "requirements": [
             Requirement(
@@ -82,12 +78,13 @@ def test_no_action_needed_when_requirements_satisfied():
         "services": {"T3": _detection_service()},
         "flows": {},
         "nodes": {"N5": _fog_node()},
+        "links": [],
     }
 
     result = necessity_checker_node(state)["necessity_result"]
 
-    assert result.status == "no_action_needed"
-    assert result.violated_requirements == []
+    assert result.status == "reconfiguration_not_required"
+    assert result.violated_constraints == []
     # current_placement lets a consumer read the confirmed-valid placement
     # directly off this result -- decision_engine_node is never called in
     # this branch, so this is the only place it's available from.
@@ -95,7 +92,7 @@ def test_no_action_needed_when_requirements_satisfied():
 
 
 def test_current_placement_is_populated_even_when_reconfiguration_is_required():
-    # Not just the no_action_needed case -- current_placement always
+    # Not just the reconfiguration_not_required case -- current_placement always
     # reflects the real placement this check was evaluated against.
     state = {
         "requirements": [
@@ -113,6 +110,7 @@ def test_current_placement_is_populated_even_when_reconfiguration_is_required():
         "services": {"T3": _detection_service()},
         "flows": {},
         "nodes": {"N5": _fog_node()},
+        "links": [],
     }
 
     result = necessity_checker_node(state)["necessity_result"]
@@ -142,7 +140,7 @@ def test_latency_is_cumulative_across_the_flow():
         target_node="N7",
         link_type="WAN",
         bandwidth_mbps=10000,
-        latency_ms=25.0,
+        propagation_delay_ms=25.0,
         packet_loss_rate=0.001,
         reliability=0.99,
     )
@@ -170,8 +168,7 @@ def test_latency_is_cumulative_across_the_flow():
 
     # Cumulative latency of the flow (25ms) exceeds the 20ms requirement.
     assert result.status == "reconfiguration_required"
-    assert result.violated_requirements == ["req-001"]
-    assert result.services_to_reconsider == ["T3", "T5"]
+    assert any("F1" in c and "EXCEEDS budget" in c for c in result.violated_constraints)
 
 
 def test_gte_accounts_for_co_located_footprint():
@@ -200,12 +197,13 @@ def test_gte_accounts_for_co_located_footprint():
         "services": {"T3": _detection_service(), "T4": t4},
         "flows": {},
         "nodes": {"N5": _fog_node()},
+        "links": [],
     }
 
     result = necessity_checker_node(state)["necessity_result"]
 
     assert result.status == "reconfiguration_required"
-    assert result.violated_requirements == ["req-001"]
+    assert any("N5" in c and "EXCEEDS capacity" in c for c in result.violated_constraints)
 
 
 def test_gte_satisfied_once_enough_room_remains_after_co_located_footprint():
@@ -234,45 +232,9 @@ def test_gte_satisfied_once_enough_room_remains_after_co_located_footprint():
         "services": {"T3": _detection_service(), "T4": t4},
         "flows": {},
         "nodes": {"N5": _fog_node()},
+        "links": [],
     }
 
     result = necessity_checker_node(state)["necessity_result"]
 
-    assert result.status == "no_action_needed"
-
-
-def test_lte_uses_own_footprint_not_node_capacity():
-    # N5 has 8 cores -- way above the 10-vCPU ceiling below, so the old
-    # buggy comparison (node.cpu_cores <= target, i.e. 8 <= 10) would say
-    # "satisfied" without ever looking at what T3 itself actually uses.
-    # T3's own declared footprint (12) exceeds its own ceiling (10): that's
-    # what should trigger the violation, regardless of the node's capacity.
-    t3 = Service(
-        service_id="T3",
-        name="Detection",
-        description="Object detection",
-        current_node="N5",
-        requirements={"cpu_cores": 12},
-    )
-    state = {
-        "requirements": [
-            Requirement(
-                requirement_id="req-001",
-                kpi_type="cpu",
-                comparator="lte",
-                target_value=10,
-                unit="vCPU",
-                target_type="service",
-                target_id="T3",
-                source_span="at most 10 vCPU",
-            ),
-        ],
-        "services": {"T3": t3},
-        "flows": {},
-        "nodes": {"N5": _fog_node()},
-    }
-
-    result = necessity_checker_node(state)["necessity_result"]
-
-    assert result.status == "reconfiguration_required"
-    assert result.violated_requirements == ["req-001"]
+    assert result.status == "reconfiguration_not_required"

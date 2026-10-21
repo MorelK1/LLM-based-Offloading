@@ -6,11 +6,11 @@ def _nodes() -> dict[str, Node]:
     return {
         "N5": Node(
             node_id="N5", node_name="IntelNUC_Fog", tier="fog", node_type="fog_node",
-            cpu_cores=8, cpu_freq_ghz=3.6, ram_gb=16, storage_gb=512, mobility="static",
+            cpu_cores=8, ram_gb=16, storage_gb=512,
         ),
         "N7": Node(
             node_id="N7", node_name="Cloud_A100", tier="cloud", node_type="cloud_gpu_node",
-            cpu_cores=96, cpu_freq_ghz=2.5, ram_gb=900, storage_gb=10000, mobility="static",
+            cpu_cores=96, ram_gb=900, storage_gb=10000,
         ),
     }
 
