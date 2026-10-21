@@ -11,7 +11,15 @@ cpu/ram and latency checks used to live here too (check_cpu/check_ram/
 check_latency), but they're now permanent invariants checked for every
 service/flow regardless of the current intent -- see
 pipeline.py:capacity_satisfied/latency_satisfied, used directly by
-csp_solver.py. Only connectivity remains a per-candidate check here.
+csp_solver.py.
+
+check_connectivity's direct-link-only notion of connectivity is no longer
+what the real pipeline uses (csp_solver.py now relies on
+pipeline.py:flow_latency_ms's multi-hop routing instead, via
+shortest_path_delays_ms) -- this function is kept only because
+expérimentations/public_safety/baseline/verifier.py still depends on its
+original, stricter semantics to score the already-evaluated baseline
+campaign the way it was actually run.
 """
 
 from agent.model.schemas import Link
@@ -25,4 +33,4 @@ def check_connectivity(node_a: str, node_b: str, links: list[Link]) -> tuple[boo
     link = find_link(node_a, node_b, links)
     if link is None:
         return False, f"no direct link between {node_a} and {node_b}"
-    return True, f"{node_a} <-> {node_b} linked via {link.link_id} ({link.latency_ms}ms)"
+    return True, f"{node_a} <-> {node_b} linked via {link.link_id} ({link.propagation_delay_ms}ms)"

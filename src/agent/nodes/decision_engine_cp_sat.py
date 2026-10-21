@@ -1,20 +1,25 @@
 """LangGraph node: Decision Engine (CSP solver, structured module).
 
-CP-SAT (Google OR-Tools) implementation, kept as a reference/alternative
-alongside the homemade brute-force solver in decision_engine.py, which is
-the one currently wired into the graph. Not used by the graph for now.
+CP-SAT (Google OR-Tools) implementation -- the one wired into the graph
+(see graph.py). The homemade brute-force solver in decision_engine.py /
+utils/csp_solver.py remains available as an alternative backend (and is
+what the already-recorded public_safety campaign used).
 
 Models service placement as a Constraint Satisfaction / Optimization Problem:
 every service is a variable (which node hosts it). The hard constraints
-themselves (cpu, ram, connectivity, latency) live in
-utils/csp_constraints_cp_sat.py, one function per verification -- this node
-only builds the assignment variables, applies each constraint family, sets
-the objective, solves, and turns the solution back into a DecisionResult.
+themselves (cpu, ram, latency) live in utils/csp_constraints_cp_sat.py, one
+function per verification -- this node only builds the assignment
+variables, applies each constraint family, sets the objective, solves, and
+turns the solution back into a DecisionResult. Connectivity is no longer a
+modeled requirement in its own right: add_latency_constraints_cp_sat
+forbids, inline, a placement across two genuinely disconnected nodes (no
+path at all) as part of pricing each hop, rather than as a separate
+constraint family.
 
-The objective strongly prefers leaving each service on its current node --
-the solver only moves a service when a constraint actually forces it to,
-among possibly several services at once if that's what satisfying every
-constraint jointly requires.
+The objective minimizes disruption alone -- the number of services moved
+away from their current node. Ties between equally-disruptive placements
+are not broken by anything (no infrastructure-tier preference): which one
+CP-SAT returns in that case depends on its own search order.
 """
 
 from ortools.sat.python import cp_model
@@ -23,16 +28,11 @@ from agent.model.schemas import DecisionResult
 from agent.states.state import AgentState
 from agent.utils.csp_constraints_cp_sat import (
     add_capacity_constraints_cp_sat,
-    add_connectivity_constraints_cp_sat,
     add_latency_constraints_cp_sat,
 )
+from agent.utils.pipeline import check_candidate_placement, explain_moved_services
 
-_TIER_ORDER = {"iot": 0, "edge": 1, "fog": 2, "cloud": 3}
 _KPI_TYPES_MODELED = ("cpu", "ram", "latency")
-# Weight of "this service moved from its current node" in the objective --
-# large enough to always dominate the tier-cost tie-breaker below, so the
-# solver never relocates a service unless a constraint forces it to.
-_STABILITY_WEIGHT = 1000
 
 
 def decision_engine_node_cp_sat(state: AgentState) -> dict:
@@ -53,24 +53,19 @@ def decision_engine_node_cp_sat(state: AgentState) -> dict:
         model.Add(sum(x[s][n] for n in node_ids) == 1)
 
     add_capacity_constraints_cp_sat(model, x, nodes, services, requirements)
-    add_connectivity_constraints_cp_sat(model, x, flows, links, node_ids)
-    add_latency_constraints_cp_sat(model, x, flows, services, links, requirements, node_ids)
+    add_latency_constraints_cp_sat(model, x, flows, services, links, requirements, node_ids, nodes)
 
-    # --- objective: minimize disruption first, infrastructure cost second ---
-    disruption = sum(
-        _STABILITY_WEIGHT * (1 - x[s][services[s].current_node]) for s in service_ids
-    )
-    infra_cost = sum(
-        _TIER_ORDER[nodes[n].tier] * x[s][n] for s in service_ids for n in node_ids
-    )
-    model.Minimize(disruption + infra_cost)
+    # --- objective: minimize disruption, the number of services moved ---
+    disruption = sum(1 - x[s][services[s].current_node] for s in service_ids)
+    model.Minimize(disruption)
 
     solver = cp_model.CpSolver()
     status = solver.Solve(model)
-    if status not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
-        # No candidate placement satisfies every constraint -- surfaced as an
-        # explicit INFEASIBLE outcome (see explanation_node) rather than
-        # letting the pipeline crash with an unhandled exception.
+
+    if status == cp_model.INFEASIBLE:
+        # Proven infeasibility -- no candidate placement satisfies every
+        # constraint, surfaced as an explicit INFEASIBLE outcome (see
+        # explanation_node) rather than letting the pipeline crash outright.
         decision_result = DecisionResult(
             outcome="INFEASIBLE",
             decision={},
@@ -80,6 +75,32 @@ def decision_engine_node_cp_sat(state: AgentState) -> dict:
             search_trace=[f"CP-SAT solver status: {solver.StatusName(status)}"],
         )
         return {"decision_result": decision_result}
+    if status == cp_model.UNKNOWN:
+        # Genuinely different from INFEASIBLE: the solver reached no
+        # conclusion at all (e.g. a time/work limit was hit first, not
+        # modeled today but a real risk once the problem grows). Reporting
+        # this as INFEASIBLE would be a false claim of proven infeasibility,
+        # so this fails loudly instead of silently mislabeling it.
+        raise RuntimeError(
+            "CP-SAT returned UNKNOWN: no conclusive result (neither a "
+            "solution nor proven infeasibility) -- not the same as INFEASIBLE."
+        )
+    if status == cp_model.MODEL_INVALID:
+        raise RuntimeError(f"Invalid CP-SAT model: {model.Validate()}")
+    if status != cp_model.OPTIMAL:
+        # FEASIBLE: a valid placement was found, but the solver could not
+        # prove it's the best one (e.g. a time/work limit cut the search
+        # short before closing the optimality gap -- not configured today,
+        # but a real risk once the problem grows). Unlike the brute-force
+        # solver, which is exhaustive by construction and therefore always
+        # optimal, CP-SAT's FEASIBLE is not an optimality guarantee -- so
+        # this fails loudly rather than silently returning an unproven
+        # placement as if it were the best one.
+        raise RuntimeError(
+            f"CP-SAT returned {solver.StatusName(status)}, not OPTIMAL: a "
+            "valid placement was found but optimality was not proven."
+        )
+    # status is OPTIMAL from here on.
 
     new_configuration: dict[str, str] = {}
     decision: dict[str, str] = {}
@@ -97,11 +118,29 @@ def decision_engine_node_cp_sat(state: AgentState) -> dict:
         r.requirement_id for r in requirements if r.kpi_type in _KPI_TYPES_MODELED
     ]
 
+    # resolution_trace: CP-SAT's model never evaluates a chosen assignment
+    # against capacity_satisfied/latency_satisfied the way brute-force's own
+    # search does (its constraints are implicit in the model, not checked
+    # post hoc) -- so without this, explanation_node would get an empty
+    # trace for every CP-SAT-produced decision. Reusing pipeline.py's
+    # solver-agnostic helpers against the final new_configuration gives the
+    # exact same human-readable trace brute-force produces, including the
+    # per-moved-service forced/not-strictly-needed explanation.
+    _valid, checks = check_candidate_placement(
+        new_configuration, services, nodes, links, requirements, flows
+    )
+    resolution_trace = [reason for _ok, reason in checks]
+    resolution_trace += explain_moved_services(
+        new_configuration, services, nodes, links, requirements, flows
+    )
+
     decision_result = DecisionResult(
         outcome="FEASIBLE",
         decision=decision,
         eligible_nodes_considered=sorted(node_ids),
         requirements_satisfied=requirements_satisfied,
         new_configuration=new_configuration,
+        resolution_trace=resolution_trace,
+        search_trace=[f"CP-SAT solver status: {solver.StatusName(status)}"],
     )
     return {"decision_result": decision_result}

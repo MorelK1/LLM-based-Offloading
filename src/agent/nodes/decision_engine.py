@@ -3,12 +3,16 @@
 Thin wrapper around the homemade brute-force CSP solver in
 utils/csp_solver.py: this node only extracts state, calls the solver, and
 turns the result into a DecisionResult. See utils/csp_solver.py for the
-search itself, and utils/csp_checks.py for the individual cpu/ram/
-connectivity/latency verifications.
+search itself, and utils/pipeline.py for the individual cpu/ram/latency
+verifications (connectivity is no longer a separate check -- multi-hop
+routing means only a fully disconnected infrastructure graph is infeasible,
+which latency_satisfied already catches).
 
-A CP-SAT/OR-Tools implementation of the same problem is kept as a reference
-in decision_engine_cp_sat.py / utils/csp_constraints_cp_sat.py -- not used
-by the graph for now.
+decision_engine_cp_sat.py / utils/csp_constraints_cp_sat.py is the CP-SAT
+(Google OR-Tools) implementation of the same problem, and the one wired
+into the graph (see graph.py) -- this brute-force backend remains available
+as an alternative, and is what the already-recorded public_safety campaign
+used.
 """
 
 from agent.model.schemas import DecisionResult

@@ -341,3 +341,73 @@ def latency_satisfied(
             f"flow {flow_id} latency: {actual}ms (budget {target}ms) {'ok' if ok else 'EXCEEDS budget'}",
         ))
     return checks
+
+
+def check_candidate_placement(
+    candidate: dict[str, str],
+    services: dict[str, Service],
+    nodes: dict[str, Node],
+    links: list[Link],
+    requirements: list[Requirement],
+    flows: dict[str, Flow],
+) -> tuple[bool, list[tuple[bool, str]]]:
+    """Runs every permanent invariant (capacity_satisfied, latency_satisfied)
+    against one full candidate placement. Solver-agnostic -- used by
+    csp_solver.py's brute-force search to validate a candidate during its
+    own enumeration, and by decision_engine_cp_sat.py to explain CP-SAT's
+    chosen solution the exact same way, after the fact. Returns (is_valid,
+    checks); checks is the full (ok, reason) list, always collected in full
+    even for an invalid candidate, so a rejected placement can be explained
+    too."""
+    checks: list[tuple[bool, str]] = []
+    checks.extend(capacity_satisfied(nodes, services, requirements, candidate))
+    checks.extend(latency_satisfied(flows, services, links, requirements, candidate, nodes))
+    valid = all(ok for ok, _ in checks)
+    return valid, checks
+
+
+def explain_moved_services(
+    candidate: dict[str, str],
+    services: dict[str, Service],
+    nodes: dict[str, Node],
+    links: list[Link],
+    requirements: list[Requirement],
+    flows: dict[str, Flow],
+) -> list[str]:
+    """For every service candidate actually moves off its current node,
+    explain why -- including services with no violated requirement of their
+    own (moved only to keep another service's latency budget or a node's
+    capacity satisfied).
+
+    Checks the counterfactual: could this one service have stayed on its
+    current node, given every OTHER service's placement in candidate? This
+    is the evidence resolution_trace is otherwise missing -- it only ever
+    records checks against the winning candidate, never against a rejected
+    alternative, so without this a downstream consumer (e.g. explanation_node)
+    has no grounded fact to cite for "why didn't it just stay put".
+
+    Solver-agnostic: candidate can come from csp_solver.py's brute-force
+    search or from decision_engine_cp_sat.py's solved assignment -- both
+    produce a final, full service->node mapping, which is all this needs."""
+    notes: list[str] = []
+    for service_id in candidate:
+        current_node = services[service_id].current_node
+        if candidate[service_id] == current_node:
+            continue  # didn't move, nothing to explain
+
+        counterfactual = dict(candidate)
+        counterfactual[service_id] = current_node
+        ok, checks = check_candidate_placement(
+            counterfactual, services, nodes, links, requirements, flows
+        )
+        if ok:
+            notes.append(
+                f"{service_id} did not strictly need to move off {current_node} "
+                f"(staying would still satisfy every constraint) -- it moved only "
+                f"because the search found a cheaper overall configuration"
+            )
+        else:
+            failing = "; ".join(reason for check_ok, reason in checks if not check_ok)
+            notes.append(f"{service_id} could not stay on {current_node}: {failing}")
+
+    return notes
