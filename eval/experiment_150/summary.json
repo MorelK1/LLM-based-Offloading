@@ -1,0 +1,78 @@
+{
+  "total": 150,
+  "seed": 42,
+  "requested_ratios": {
+    "STAY": 0.35,
+    "OFFLOAD": 0.45,
+    "INFEASIBLE": 0.2
+  },
+  "target_counts": {
+    "STAY": 52,
+    "OFFLOAD": 68,
+    "INFEASIBLE": 30
+  },
+  "actual_counts": {
+    "STAY": 52,
+    "OFFLOAD": 68,
+    "INFEASIBLE": 30
+  },
+  "candidate_attempts": 178,
+  "unique_candidate_signatures": 178,
+  "selection": "stratified after independent classification; NOT an unbiased estimate of real-world frequency",
+  "categories": {
+    "single_service": {
+      "STAY": 10,
+      "OFFLOAD": 5
+    },
+    "cross_service": {
+      "OFFLOAD": 11,
+      "STAY": 10
+    },
+    "multiservice": {
+      "STAY": 6,
+      "OFFLOAD": 7,
+      "INFEASIBLE": 1
+    },
+    "single_flow": {
+      "STAY": 5,
+      "OFFLOAD": 13,
+      "INFEASIBLE": 6
+    },
+    "both_flows": {
+      "INFEASIBLE": 3,
+      "OFFLOAD": 6,
+      "STAY": 3
+    },
+    "service_plus_flow": {
+      "OFFLOAD": 16,
+      "STAY": 16,
+      "INFEASIBLE": 12
+    },
+    "multi_service_both_flows": {
+      "INFEASIBLE": 8,
+      "OFFLOAD": 10,
+      "STAY": 2
+    }
+  },
+  "baseline_p0": {
+    "C1": 12,
+    "C2": 4,
+    "C3": 6,
+    "C4": 4,
+    "C5": 8
+  },
+  "baseline_budgets_ms": {
+    "f1": 500.0,
+    "f2": 500.0
+  },
+  "baseline_latencies_ms": {
+    "f1": 473.101999,
+    "f2": 481.686668
+  },
+  "latency_formula": "processing: 1000*workload_mi/mips; networking: shortest path by sum(1000*output_size_Mb/bandwidth_mbps + RTT_ms/2)",
+  "background_applications": [
+    2,
+    3,
+    4
+  ]
+}

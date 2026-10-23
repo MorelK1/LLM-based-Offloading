@@ -1,0 +1,15 @@
+{
+  "model_name": "ARVR Edge–Cloud benchmark with C2 on Edge",
+  "initial_placement": "P0 with C2=N4 Edge, C3=N6 Cloud, C4=N4 Edge",
+  "flow_budgets_ms": {
+    "f1": 500,
+    "f2": 500
+  },
+  "resource_units": "vCPU, RAM GB (decimal), storage GB, MIPS, MI",
+  "data_unit": "Mb; bandwidth Mbps; RTT input seconds, one-way propagation RTT/2",
+  "latency_model": "shortest path by per-link payload/bandwidth + RTT/2; CPU workload MI / node MIPS",
+  "source_files": "latest ECSP-Sim files and fixed GA version IDs",
+  "application_2_3_4": "kept as background at GA placements",
+  "source_placement_filename": "initial_placement.json",
+  "selection_note": "Intentional diverse P0, not the GA optimum"
+}

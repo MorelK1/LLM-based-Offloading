@@ -1,0 +1,8575 @@
+[
+  {
+    "category": "both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 387.146,
+        "unit": "ms",
+        "budget_factor": 0.77429
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 453.022,
+        "unit": "ms",
+        "budget_factor": 0.90604
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 387.146,
+      "f2": 453.022
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000001"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 8.38546,
+        "unit": "vCPU",
+        "factor": 2.60418
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 7.949577721,
+        "unit": "GB",
+        "factor": 2.69887
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 307.475,
+        "unit": "ms",
+        "budget_factor": 0.61495
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 422.62,
+        "unit": "ms",
+        "budget_factor": 0.84524
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 307.475,
+      "f2": 422.62
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000002"
+  },
+  {
+    "category": "single_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.693199177,
+        "unit": "GB",
+        "factor": 1.23023
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000003"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.946391197,
+        "unit": "GB",
+        "factor": 1.31457
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 461.421,
+        "unit": "ms",
+        "budget_factor": 0.92284
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 461.421,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 7,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000004"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.065462713,
+        "unit": "GB",
+        "factor": 1.41547
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 468.153,
+        "unit": "ms",
+        "budget_factor": 0.93631
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 468.153
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000005"
+  },
+  {
+    "category": "single_service",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 11.469289,
+        "unit": "vCPU",
+        "factor": 3.40942
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 6,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000006"
+  },
+  {
+    "category": "cross_service",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 7.84978,
+        "unit": "vCPU",
+        "factor": 2.43782
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 13.018023728,
+        "unit": "GB",
+        "factor": 4.4196
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000007"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 4.272393,
+        "unit": "vCPU",
+        "factor": 1.32683
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 501.454,
+        "unit": "ms",
+        "budget_factor": 1.00291
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 501.454,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 16,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000008"
+  },
+  {
+    "category": "cross_service",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 15.108912,
+        "unit": "vCPU",
+        "factor": 3.53177
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 6.344700232,
+        "unit": "GB",
+        "factor": 2.92965
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 7,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000009"
+  },
+  {
+    "category": "single_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 5.057837,
+        "unit": "vCPU",
+        "factor": 1.18229
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000010"
+  },
+  {
+    "category": "both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 427.997,
+        "unit": "ms",
+        "budget_factor": 0.85599
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 429.957,
+        "unit": "ms",
+        "budget_factor": 0.85991
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 427.997,
+      "f2": 429.957
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000011"
+  },
+  {
+    "category": "single_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.264466104,
+        "unit": "GB",
+        "factor": 1.44778
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000012"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 5.02189959,
+        "unit": "GB",
+        "factor": 2.31885
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 436.022,
+        "unit": "ms",
+        "budget_factor": 0.87204
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 436.022
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000013"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 6.808097,
+        "unit": "vCPU",
+        "factor": 2.02381
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 5.205589455,
+        "unit": "GB",
+        "factor": 1.76729
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000014"
+  },
+  {
+    "category": "cross_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.412478454,
+        "unit": "GB",
+        "factor": 1.13672
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.29049385,
+        "unit": "GB",
+        "factor": 1.05763
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000015"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 496.838,
+        "unit": "ms",
+        "budget_factor": 0.99368
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 496.838
+    },
+    "decision": "STAY",
+    "feasible_placements": 10,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000016"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 3.454577,
+        "unit": "vCPU",
+        "factor": 1.07285
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.425733368,
+        "unit": "GB",
+        "factor": 1.50253
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 456.151,
+        "unit": "ms",
+        "budget_factor": 0.9123
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 465.812,
+        "unit": "ms",
+        "budget_factor": 0.93162
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 456.151,
+      "f2": 465.812
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 1,
+    "minimum_migrations": 3,
+    "moved_components": [
+      2,
+      3,
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 7,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 457.895727
+    },
+    "id": "ARVR-000017"
+  },
+  {
+    "category": "both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 478.589,
+        "unit": "ms",
+        "budget_factor": 0.95718
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 479.246,
+        "unit": "ms",
+        "budget_factor": 0.95849
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 478.589,
+      "f2": 479.246
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 2,
+    "minimum_migrations": 3,
+    "moved_components": [
+      2,
+      3,
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 7,
+      "C4": 7,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 463.14219,
+      "f2": 457.895727
+    },
+    "id": "ARVR-000018"
+  },
+  {
+    "category": "multiservice",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 3.847256,
+        "unit": "vCPU",
+        "factor": 1.1948
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.454388973,
+        "unit": "GB",
+        "factor": 1.17276
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 4.356529847,
+        "unit": "GB",
+        "factor": 1.45119
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000019"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 8.173275,
+        "unit": "vCPU",
+        "factor": 2.42963
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.899273249,
+        "unit": "GB",
+        "factor": 1.80048
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 418.661,
+        "unit": "ms",
+        "budget_factor": 0.83732
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 431.049,
+        "unit": "ms",
+        "budget_factor": 0.8621
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 418.661,
+      "f2": 431.049
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000020"
+  },
+  {
+    "category": "multiservice",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 4.560413688,
+        "unit": "GB",
+        "factor": 2.10576
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 10.441999,
+        "unit": "vCPU",
+        "factor": 2.44086
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 6.115334788,
+        "unit": "GB",
+        "factor": 2.03706
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 10,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000021"
+  },
+  {
+    "category": "single_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 7.416598873,
+        "unit": "GB",
+        "factor": 2.47052
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000022"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 11.321855,
+        "unit": "vCPU",
+        "factor": 2.64653
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 9.42031,
+        "unit": "vCPU",
+        "factor": 2.80033
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 2,
+    "minimum_migrations": 3,
+    "moved_components": [
+      2,
+      3,
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 7,
+      "C4": 3,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 463.14219,
+      "f2": 494.770417
+    },
+    "id": "ARVR-000023"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 4.43111,
+        "unit": "vCPU",
+        "factor": 1.03579
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.459958732,
+        "unit": "GB",
+        "factor": 1.13588
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 492.902,
+        "unit": "ms",
+        "budget_factor": 0.9858
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 456.99,
+        "unit": "ms",
+        "budget_factor": 0.91398
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 492.902,
+      "f2": 456.99
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 1,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000024"
+  },
+  {
+    "category": "single_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 514.53,
+        "unit": "ms",
+        "budget_factor": 1.02906
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 514.53
+    },
+    "decision": "STAY",
+    "feasible_placements": 18,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000025"
+  },
+  {
+    "category": "single_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 519.788,
+        "unit": "ms",
+        "budget_factor": 1.03958
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 519.788
+    },
+    "decision": "STAY",
+    "feasible_placements": 20,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000026"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 5.797929639,
+        "unit": "GB",
+        "factor": 2.67718
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 7.434010702,
+        "unit": "GB",
+        "factor": 2.47632
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000027"
+  },
+  {
+    "category": "both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 479.133,
+        "unit": "ms",
+        "budget_factor": 0.95827
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 469.149,
+        "unit": "ms",
+        "budget_factor": 0.9383
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 479.133,
+      "f2": 469.149
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000028"
+  },
+  {
+    "category": "multiservice",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.288154909,
+        "unit": "GB",
+        "factor": 1.05655
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.024195661,
+        "unit": "GB",
+        "factor": 1.02671
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 4.370489331,
+        "unit": "GB",
+        "factor": 1.45584
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000029"
+  },
+  {
+    "category": "single_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.847255,
+        "unit": "vCPU",
+        "factor": 1.44092
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000030"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 385.749,
+        "unit": "ms",
+        "budget_factor": 0.7715
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 385.749,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 485.450264
+    },
+    "id": "ARVR-000031"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 6.745596094,
+        "unit": "GB",
+        "factor": 2.29012
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 434.984,
+        "unit": "ms",
+        "budget_factor": 0.86997
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 434.984
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000032"
+  },
+  {
+    "category": "single_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 470.909,
+        "unit": "ms",
+        "budget_factor": 0.94182
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 470.909
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000033"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 8.092928374,
+        "unit": "GB",
+        "factor": 2.69581
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 436.259,
+        "unit": "ms",
+        "budget_factor": 0.87252
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 436.259
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000034"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 6.580976,
+        "unit": "vCPU",
+        "factor": 1.53833
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.820437067,
+        "unit": "GB",
+        "factor": 1.30233
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 464.432,
+        "unit": "ms",
+        "budget_factor": 0.92886
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 504.481,
+        "unit": "ms",
+        "budget_factor": 1.00896
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 464.432,
+      "f2": 504.481
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 10,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000035"
+  },
+  {
+    "category": "multiservice",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.395702846,
+        "unit": "GB",
+        "factor": 1.10621
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.331501846,
+        "unit": "GB",
+        "factor": 1.13104
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 4.178719042,
+        "unit": "GB",
+        "factor": 1.39196
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000036"
+  },
+  {
+    "category": "cross_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.321376523,
+        "unit": "GB",
+        "factor": 1.07189
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.022521025,
+        "unit": "GB",
+        "factor": 1.36564
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000037"
+  },
+  {
+    "category": "both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 454.599,
+        "unit": "ms",
+        "budget_factor": 0.9092
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 502.564,
+        "unit": "ms",
+        "budget_factor": 1.00513
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 454.599,
+      "f2": 502.564
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 7,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000038"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.118041,
+        "unit": "vCPU",
+        "factor": 1.22415
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 474.104,
+        "unit": "ms",
+        "budget_factor": 0.94821
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 474.104,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000039"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.290320595,
+        "unit": "GB",
+        "factor": 1.05755
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 475.886,
+        "unit": "ms",
+        "budget_factor": 0.95177
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 475.886,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000040"
+  },
+  {
+    "category": "cross_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.7025055,
+        "unit": "GB",
+        "factor": 1.23333
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.429440412,
+        "unit": "GB",
+        "factor": 1.16429
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000041"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 11.040662,
+        "unit": "vCPU",
+        "factor": 2.5808
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 8.938081,
+        "unit": "vCPU",
+        "factor": 2.65698
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 6,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000042"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.042376507,
+        "unit": "GB",
+        "factor": 1.40481
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 519.895,
+        "unit": "ms",
+        "budget_factor": 1.03979
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 519.895
+    },
+    "decision": "STAY",
+    "feasible_placements": 20,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000043"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 6.192319,
+        "unit": "vCPU",
+        "factor": 1.44748
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.378139138,
+        "unit": "GB",
+        "factor": 1.0981
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 458.466,
+        "unit": "ms",
+        "budget_factor": 0.91693
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 528.795,
+        "unit": "ms",
+        "budget_factor": 1.05759
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 458.466,
+      "f2": 528.795
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 12,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000044"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 4.97915,
+        "unit": "vCPU",
+        "factor": 1.54632
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 9.917473,
+        "unit": "vCPU",
+        "factor": 2.31825
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 11,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000045"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 383.609,
+        "unit": "ms",
+        "budget_factor": 0.76722
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 383.609,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 485.450264
+    },
+    "id": "ARVR-000046"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 8.710454,
+        "unit": "vCPU",
+        "factor": 2.70511
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 418.617,
+        "unit": "ms",
+        "budget_factor": 0.83723
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 418.617,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 5,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000047"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.113331,
+        "unit": "vCPU",
+        "factor": 1.22275
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 519.394,
+        "unit": "ms",
+        "budget_factor": 1.03879
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 519.394,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 21,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000048"
+  },
+  {
+    "category": "single_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 4.580181797,
+        "unit": "GB",
+        "factor": 1.52569
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000049"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.314397,
+        "unit": "vCPU",
+        "factor": 1.28252
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 464.468,
+        "unit": "ms",
+        "budget_factor": 0.92894
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 464.468,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 10,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000050"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.636467326,
+        "unit": "GB",
+        "factor": 1.67913
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 440.705,
+        "unit": "ms",
+        "budget_factor": 0.88141
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 440.705
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000051"
+  },
+  {
+    "category": "both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 436.927,
+        "unit": "ms",
+        "budget_factor": 0.87385
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 490.767,
+        "unit": "ms",
+        "budget_factor": 0.98153
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 436.927,
+      "f2": 490.767
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000052"
+  },
+  {
+    "category": "single_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 470.947,
+        "unit": "ms",
+        "budget_factor": 0.94189
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 470.947
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000053"
+  },
+  {
+    "category": "multiservice",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 12.052685,
+        "unit": "vCPU",
+        "factor": 3.74307
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 11.335502,
+        "unit": "vCPU",
+        "factor": 2.64972
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 13.564018,
+        "unit": "vCPU",
+        "factor": 4.03211
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000054"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 9.409377,
+        "unit": "vCPU",
+        "factor": 2.79708
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.274841178,
+        "unit": "GB",
+        "factor": 1.51215
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 7,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000055"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 9.317741,
+        "unit": "vCPU",
+        "factor": 2.17806
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 452.169,
+        "unit": "ms",
+        "budget_factor": 0.90434
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 452.169
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000056"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 387.11,
+        "unit": "ms",
+        "budget_factor": 0.77422
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 387.11,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 485.450264
+    },
+    "id": "ARVR-000057"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 6.711516,
+        "unit": "vCPU",
+        "factor": 1.9951
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 431.727,
+        "unit": "ms",
+        "budget_factor": 0.86345
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 431.727,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 5,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000058"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 10.531794,
+        "unit": "vCPU",
+        "factor": 2.46185
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 450.113,
+        "unit": "ms",
+        "budget_factor": 0.90023
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 450.113
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000059"
+  },
+  {
+    "category": "single_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 469.388,
+        "unit": "ms",
+        "budget_factor": 0.93878
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 469.388,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 10,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000060"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 8.847369,
+        "unit": "vCPU",
+        "factor": 2.74763
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.434128102,
+        "unit": "GB",
+        "factor": 1.50538
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 489.766,
+        "unit": "ms",
+        "budget_factor": 0.97953
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 413.058,
+        "unit": "ms",
+        "budget_factor": 0.82612
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 489.766,
+      "f2": 413.058
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000061"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.19762248,
+        "unit": "GB",
+        "factor": 1.06515
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 463.884,
+        "unit": "ms",
+        "budget_factor": 0.92777
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 463.884,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 10,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000062"
+  },
+  {
+    "category": "multiservice",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 7.989947,
+        "unit": "vCPU",
+        "factor": 2.48135
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 7.054593,
+        "unit": "vCPU",
+        "factor": 1.64904
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 7.676648,
+        "unit": "vCPU",
+        "factor": 2.282
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 9,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000063"
+  },
+  {
+    "category": "both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 446.294,
+        "unit": "ms",
+        "budget_factor": 0.89259
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 380.071,
+        "unit": "ms",
+        "budget_factor": 0.76014
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 446.294,
+      "f2": 380.071
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000064"
+  },
+  {
+    "category": "multiservice",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 4.822634876,
+        "unit": "GB",
+        "factor": 2.22684
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.45515912,
+        "unit": "GB",
+        "factor": 1.51252
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 6.920488,
+        "unit": "vCPU",
+        "factor": 2.05722
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000065"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 6.515437,
+        "unit": "vCPU",
+        "factor": 1.52301
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 8.422522302,
+        "unit": "GB",
+        "factor": 2.8056
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000066"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 5.081827,
+        "unit": "vCPU",
+        "factor": 1.51065
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.480727655,
+        "unit": "GB",
+        "factor": 1.14547
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 467.188,
+        "unit": "ms",
+        "budget_factor": 0.93438
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 514.992,
+        "unit": "ms",
+        "budget_factor": 1.02998
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 467.188,
+      "f2": 514.992
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 14,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000067"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 6.367589,
+        "unit": "vCPU",
+        "factor": 1.48845
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 4.299665166,
+        "unit": "GB",
+        "factor": 1.98536
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 414.585,
+        "unit": "ms",
+        "budget_factor": 0.82917
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 380.443,
+        "unit": "ms",
+        "budget_factor": 0.76089
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 414.585,
+      "f2": 380.443
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000068"
+  },
+  {
+    "category": "single_service",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 6.905829319,
+        "unit": "GB",
+        "factor": 3.18875
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 12,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000069"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 5.973388,
+        "unit": "vCPU",
+        "factor": 1.77568
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 5.080221498,
+        "unit": "GB",
+        "factor": 2.34578
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 457.408,
+        "unit": "ms",
+        "budget_factor": 0.91482
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 391.673,
+        "unit": "ms",
+        "budget_factor": 0.78335
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 457.408,
+      "f2": 391.673
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000070"
+  },
+  {
+    "category": "single_flow",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 314.288,
+        "unit": "ms",
+        "budget_factor": 0.62858
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 314.288
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000071"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 3.61297,
+        "unit": "vCPU",
+        "factor": 1.07401
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 518.772,
+        "unit": "ms",
+        "budget_factor": 1.03754
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 518.772
+    },
+    "decision": "STAY",
+    "feasible_placements": 20,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000072"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 5.452716,
+        "unit": "vCPU",
+        "factor": 1.69339
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 504.947,
+        "unit": "ms",
+        "budget_factor": 1.00989
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 504.947,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 16,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000073"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.383595,
+        "unit": "vCPU",
+        "factor": 1.30309
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 467.255,
+        "unit": "ms",
+        "budget_factor": 0.93451
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 467.255,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 10,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000074"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.337689368,
+        "unit": "GB",
+        "factor": 1.54117
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 425.581,
+        "unit": "ms",
+        "budget_factor": 0.85116
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 425.581
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000075"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 9.352179,
+        "unit": "vCPU",
+        "factor": 2.18611
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 437.058,
+        "unit": "ms",
+        "budget_factor": 0.87412
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 437.058,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 5,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000076"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.336431,
+        "unit": "vCPU",
+        "factor": 1.28907
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.331143765,
+        "unit": "GB",
+        "factor": 1.0764
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 501.898,
+        "unit": "ms",
+        "budget_factor": 1.0038
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 518.125,
+        "unit": "ms",
+        "budget_factor": 1.03625
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 501.898,
+      "f2": 518.125
+    },
+    "decision": "STAY",
+    "feasible_placements": 24,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000077"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 14.386583,
+        "unit": "vCPU",
+        "factor": 4.27663
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 304.271,
+        "unit": "ms",
+        "budget_factor": 0.60854
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 304.271,
+      "f2": 500.0
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000078"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 4.869647,
+        "unit": "vCPU",
+        "factor": 1.1383
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 505.752,
+        "unit": "ms",
+        "budget_factor": 1.0115
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 505.752,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 16,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000079"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 3.772793,
+        "unit": "vCPU",
+        "factor": 1.12152
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 475.737,
+        "unit": "ms",
+        "budget_factor": 0.95147
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 475.737
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000080"
+  },
+  {
+    "category": "single_flow",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 291.584,
+        "unit": "ms",
+        "budget_factor": 0.58317
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 291.584,
+      "f2": 500.0
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000081"
+  },
+  {
+    "category": "both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 499.853,
+        "unit": "ms",
+        "budget_factor": 0.99971
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 521.707,
+        "unit": "ms",
+        "budget_factor": 1.04341
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 499.853,
+      "f2": 521.707
+    },
+    "decision": "STAY",
+    "feasible_placements": 20,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000082"
+  },
+  {
+    "category": "single_service",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 9.47043397,
+        "unit": "GB",
+        "factor": 4.37295
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 12,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000083"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 15.323368,
+        "unit": "vCPU",
+        "factor": 3.5819
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 397.297,
+        "unit": "ms",
+        "budget_factor": 0.79459
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 397.297,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 2,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 485.450264
+    },
+    "id": "ARVR-000084"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 7.725424,
+        "unit": "vCPU",
+        "factor": 2.3992
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 8.411177,
+        "unit": "vCPU",
+        "factor": 2.50035
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 9,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000085"
+  },
+  {
+    "category": "cross_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 6.409685,
+        "unit": "vCPU",
+        "factor": 1.49829
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 3.565377,
+        "unit": "vCPU",
+        "factor": 1.10726
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000086"
+  },
+  {
+    "category": "single_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 5.671858,
+        "unit": "vCPU",
+        "factor": 1.32582
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000087"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 6.634817,
+        "unit": "vCPU",
+        "factor": 1.9723
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.998548268,
+        "unit": "GB",
+        "factor": 1.84632
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000088"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 5.990424,
+        "unit": "vCPU",
+        "factor": 1.86038
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.663407441,
+        "unit": "GB",
+        "factor": 1.58322
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 499.652,
+        "unit": "ms",
+        "budget_factor": 0.9993
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 422.074,
+        "unit": "ms",
+        "budget_factor": 0.84415
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 499.652,
+      "f2": 422.074
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000089"
+  },
+  {
+    "category": "single_service",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 11.400365463,
+        "unit": "GB",
+        "factor": 3.79754
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 7,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000090"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 470.523,
+        "unit": "ms",
+        "budget_factor": 0.94105
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 470.523
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000091"
+  },
+  {
+    "category": "single_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 5.214032,
+        "unit": "vCPU",
+        "factor": 1.54995
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000092"
+  },
+  {
+    "category": "single_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 484.211,
+        "unit": "ms",
+        "budget_factor": 0.96842
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 484.211
+    },
+    "decision": "STAY",
+    "feasible_placements": 6,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000093"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 7.027107702,
+        "unit": "GB",
+        "factor": 3.24475
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 340.764,
+        "unit": "ms",
+        "budget_factor": 0.68153
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 340.764
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000094"
+  },
+  {
+    "category": "multiservice",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 4.397575803,
+        "unit": "GB",
+        "factor": 2.03057
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.414658209,
+        "unit": "GB",
+        "factor": 1.49877
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 8.844595,
+        "unit": "vCPU",
+        "factor": 2.62919
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000095"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 391.267,
+        "unit": "ms",
+        "budget_factor": 0.78253
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 391.267,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 485.450264
+    },
+    "id": "ARVR-000096"
+  },
+  {
+    "category": "multiservice",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 13.439185,
+        "unit": "vCPU",
+        "factor": 4.17366
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 11.647826362,
+        "unit": "GB",
+        "factor": 3.95442
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 8.753046862,
+        "unit": "GB",
+        "factor": 2.9157
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 7,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 449.228983,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000097"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 6.109461,
+        "unit": "vCPU",
+        "factor": 1.81613
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 449.031,
+        "unit": "ms",
+        "budget_factor": 0.89806
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 449.031,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 5,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000098"
+  },
+  {
+    "category": "single_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.664787524,
+        "unit": "GB",
+        "factor": 1.24419
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000099"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 6.065135,
+        "unit": "vCPU",
+        "factor": 1.41775
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.863079413,
+        "unit": "GB",
+        "factor": 1.32202
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 505.114,
+        "unit": "ms",
+        "budget_factor": 1.01023
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 480.23,
+        "unit": "ms",
+        "budget_factor": 0.96046
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 505.114,
+      "f2": 480.23
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 3,
+    "moved_components": [
+      2,
+      3,
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 3,
+      "C3": 7,
+      "C4": 7,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 500.766121,
+      "f2": 457.895727
+    },
+    "id": "ARVR-000100"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 8.506113,
+        "unit": "vCPU",
+        "factor": 2.64165
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 4.741001059,
+        "unit": "GB",
+        "factor": 1.57926
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 399.998,
+        "unit": "ms",
+        "budget_factor": 0.8
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 465.06,
+        "unit": "ms",
+        "budget_factor": 0.93012
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 399.998,
+      "f2": 465.06
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 1,
+    "minimum_migrations": 3,
+    "moved_components": [
+      2,
+      3,
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 7,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 457.895727
+    },
+    "id": "ARVR-000101"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 5.707869,
+        "unit": "vCPU",
+        "factor": 1.77263
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.907060922,
+        "unit": "GB",
+        "factor": 1.66594
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 422.86,
+        "unit": "ms",
+        "budget_factor": 0.84572
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 465.937,
+        "unit": "ms",
+        "budget_factor": 0.93187
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 422.86,
+      "f2": 465.937
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 1,
+    "minimum_migrations": 3,
+    "moved_components": [
+      2,
+      3,
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 7,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 457.895727
+    },
+    "id": "ARVR-000102"
+  },
+  {
+    "category": "single_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.634583179,
+        "unit": "GB",
+        "factor": 1.67826
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000103"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 6.943769,
+        "unit": "vCPU",
+        "factor": 2.15645
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 396.557,
+        "unit": "ms",
+        "budget_factor": 0.79311
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 396.557
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000104"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.296519688,
+        "unit": "GB",
+        "factor": 1.52216
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 460.954,
+        "unit": "ms",
+        "budget_factor": 0.92191
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 460.954,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 7,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000105"
+  },
+  {
+    "category": "single_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 462.27,
+        "unit": "ms",
+        "budget_factor": 0.92454
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 462.27,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 7,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000106"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.080667,
+        "unit": "vCPU",
+        "factor": 1.21304
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 526.166,
+        "unit": "ms",
+        "budget_factor": 1.05233
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 526.166,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 21,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000107"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 448.99,
+        "unit": "ms",
+        "budget_factor": 0.89798
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 448.99
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 1,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000108"
+  },
+  {
+    "category": "single_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 512.188,
+        "unit": "ms",
+        "budget_factor": 1.02438
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 512.188
+    },
+    "decision": "STAY",
+    "feasible_placements": 18,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000109"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 410.375,
+        "unit": "ms",
+        "budget_factor": 0.82075
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 410.375
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000110"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.528684,
+        "unit": "vCPU",
+        "factor": 1.34622
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 485.456,
+        "unit": "ms",
+        "budget_factor": 0.97091
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 485.456
+    },
+    "decision": "STAY",
+    "feasible_placements": 8,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000111"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 8.330840012,
+        "unit": "GB",
+        "factor": 2.77506
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 456.582,
+        "unit": "ms",
+        "budget_factor": 0.91316
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 456.582
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000112"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 407.415,
+        "unit": "ms",
+        "budget_factor": 0.81483
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 407.415
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000113"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 448.908,
+        "unit": "ms",
+        "budget_factor": 0.89782
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 448.908
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 1,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000114"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 8.145859,
+        "unit": "vCPU",
+        "factor": 2.52977
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 7.999504902,
+        "unit": "GB",
+        "factor": 2.66469
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000115"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.398546211,
+        "unit": "GB",
+        "factor": 1.4933
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 465.378,
+        "unit": "ms",
+        "budget_factor": 0.93076
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 465.378,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 10,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000116"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 8.31416,
+        "unit": "vCPU",
+        "factor": 2.47151
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 8.283099042,
+        "unit": "GB",
+        "factor": 2.8121
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 454.681,
+        "unit": "ms",
+        "budget_factor": 0.90936
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 388.461,
+        "unit": "ms",
+        "budget_factor": 0.77692
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 454.681,
+      "f2": 388.461
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000117"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.339855053,
+        "unit": "GB",
+        "factor": 1.54217
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 519.986,
+        "unit": "ms",
+        "budget_factor": 1.03997
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 519.986,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 21,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000118"
+  },
+  {
+    "category": "both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 528.788,
+        "unit": "ms",
+        "budget_factor": 1.05758
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 513.698,
+        "unit": "ms",
+        "budget_factor": 1.0274
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 528.788,
+      "f2": 513.698
+    },
+    "decision": "STAY",
+    "feasible_placements": 31,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000119"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 6.913087,
+        "unit": "vCPU",
+        "factor": 2.05502
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 5.78064348,
+        "unit": "GB",
+        "factor": 1.96252
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000120"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.871730472,
+        "unit": "GB",
+        "factor": 1.2897
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 486.162,
+        "unit": "ms",
+        "budget_factor": 0.97232
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 486.162
+    },
+    "decision": "STAY",
+    "feasible_placements": 8,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000121"
+  },
+  {
+    "category": "cross_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 4.65348,
+        "unit": "vCPU",
+        "factor": 1.44518
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 6.32267,
+        "unit": "vCPU",
+        "factor": 1.47795
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000122"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 11.074031,
+        "unit": "vCPU",
+        "factor": 2.5886
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 6.720696073,
+        "unit": "GB",
+        "factor": 2.23871
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 420.288,
+        "unit": "ms",
+        "budget_factor": 0.84058
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 410.687,
+        "unit": "ms",
+        "budget_factor": 0.82137
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 420.288,
+      "f2": 410.687
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000123"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.603836,
+        "unit": "vCPU",
+        "factor": 1.36856
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.831785258,
+        "unit": "GB",
+        "factor": 1.30757
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 485.994,
+        "unit": "ms",
+        "budget_factor": 0.97199
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 469.069,
+        "unit": "ms",
+        "budget_factor": 0.93814
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 485.994,
+      "f2": 469.069
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000124"
+  },
+  {
+    "category": "multiservice",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.596396912,
+        "unit": "GB",
+        "factor": 1.19888
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.438836624,
+        "unit": "GB",
+        "factor": 1.16748
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.463453087,
+        "unit": "GB",
+        "factor": 1.1537
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000125"
+  },
+  {
+    "category": "cross_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.368821594,
+        "unit": "GB",
+        "factor": 1.14371
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.512649858,
+        "unit": "GB",
+        "factor": 1.16021
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000126"
+  },
+  {
+    "category": "multiservice",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 3.915037,
+        "unit": "vCPU",
+        "factor": 1.21585
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 5.357083,
+        "unit": "vCPU",
+        "factor": 1.25224
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 4.03531161,
+        "unit": "GB",
+        "factor": 1.34419
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000127"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 5.048896,
+        "unit": "vCPU",
+        "factor": 1.1802
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 475.573,
+        "unit": "ms",
+        "budget_factor": 0.95115
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 475.573,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000128"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 5.272396,
+        "unit": "vCPU",
+        "factor": 1.63739
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 397.523,
+        "unit": "ms",
+        "budget_factor": 0.79505
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 397.523
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000129"
+  },
+  {
+    "category": "single_flow",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 298.548,
+        "unit": "ms",
+        "budget_factor": 0.5971
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 298.548,
+      "f2": 500.0
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000130"
+  },
+  {
+    "category": "both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 499.692,
+        "unit": "ms",
+        "budget_factor": 0.99938
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 490.104,
+        "unit": "ms",
+        "budget_factor": 0.98021
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 499.692,
+      "f2": 490.104
+    },
+    "decision": "STAY",
+    "feasible_placements": 8,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000131"
+  },
+  {
+    "category": "both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 461.995,
+        "unit": "ms",
+        "budget_factor": 0.92399
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 511.517,
+        "unit": "ms",
+        "budget_factor": 1.02303
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 461.995,
+      "f2": 511.517
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 10,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000132"
+  },
+  {
+    "category": "multiservice",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 5.62149125,
+        "unit": "GB",
+        "factor": 2.59571
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 8.014968283,
+        "unit": "GB",
+        "factor": 2.72107
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 8.408953083,
+        "unit": "GB",
+        "factor": 2.80108
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 11,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000133"
+  },
+  {
+    "category": "both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 393.741,
+        "unit": "ms",
+        "budget_factor": 0.78748
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 488.306,
+        "unit": "ms",
+        "budget_factor": 0.97661
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 393.741,
+      "f2": 488.306
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 2,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 485.450264
+    },
+    "id": "ARVR-000134"
+  },
+  {
+    "category": "cross_service",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 2.295150073,
+        "unit": "GB",
+        "factor": 1.05978
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.066343288,
+        "unit": "GB",
+        "factor": 1.02142
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 13,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000135"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 5.404802,
+        "unit": "vCPU",
+        "factor": 1.67851
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.816515612,
+        "unit": "GB",
+        "factor": 1.6352
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 411.328,
+        "unit": "ms",
+        "budget_factor": 0.82266
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 474.447,
+        "unit": "ms",
+        "budget_factor": 0.94889
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 411.328,
+      "f2": 474.447
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 1,
+    "minimum_migrations": 3,
+    "moved_components": [
+      2,
+      3,
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 7,
+      "C3": 7,
+      "C4": 7,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 378.835777,
+      "f2": 457.895727
+    },
+    "id": "ARVR-000136"
+  },
+  {
+    "category": "multiservice",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.217602112,
+        "unit": "GB",
+        "factor": 1.48572
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.378247261,
+        "unit": "GB",
+        "factor": 1.14691
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 4.996717,
+        "unit": "vCPU",
+        "factor": 1.48535
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000137"
+  },
+  {
+    "category": "multi_service_both_flows",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 5.150654,
+        "unit": "vCPU",
+        "factor": 1.53111
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 4.454570016,
+        "unit": "GB",
+        "factor": 1.51232
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 511.645,
+        "unit": "ms",
+        "budget_factor": 1.02329
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 506.74,
+        "unit": "ms",
+        "budget_factor": 1.01348
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 511.645,
+      "f2": 506.74
+    },
+    "decision": "STAY",
+    "feasible_placements": 18,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000138"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.9455208,
+        "new_value": 3.251324769,
+        "unit": "GB",
+        "factor": 1.10382
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 526.536,
+        "unit": "ms",
+        "budget_factor": 1.05307
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 526.536,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 21,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000139"
+  },
+  {
+    "category": "multiservice",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 5.392534989,
+        "unit": "GB",
+        "factor": 2.48999
+      },
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 7.488981,
+        "unit": "vCPU",
+        "factor": 1.75058
+      },
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 9.22244,
+        "unit": "vCPU",
+        "factor": 2.74151
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 5,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000140"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 454.379,
+        "unit": "ms",
+        "budget_factor": 0.90876
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 454.379,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 7,
+    "minimum_migrations": 1,
+    "moved_components": [
+      2
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000141"
+  },
+  {
+    "category": "single_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 456.989,
+        "unit": "ms",
+        "budget_factor": 0.91398
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 456.989
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 1,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000142"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 3.110898793,
+        "unit": "GB",
+        "factor": 1.43645
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 489.874,
+        "unit": "ms",
+        "budget_factor": 0.97975
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 489.874
+    },
+    "decision": "STAY",
+    "feasible_placements": 8,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000143"
+  },
+  {
+    "category": "single_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 7.179215,
+        "unit": "vCPU",
+        "factor": 2.22957
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 12,
+    "minimum_migrations": 1,
+    "moved_components": [
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000144"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.364,
+        "new_value": 9.322956,
+        "unit": "vCPU",
+        "factor": 2.77139
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f1",
+        "flow_name": "Object Recognition Flow",
+        "path": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 458.189,
+        "unit": "ms",
+        "budget_factor": 0.91638
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 458.189,
+      "f2": 500.0
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 4,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      4
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 6,
+      "C4": 6,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 404.328378,
+      "f2": 498.35631
+    },
+    "id": "ARVR-000145"
+  },
+  {
+    "category": "single_flow",
+    "level": "strong",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 381.497,
+        "unit": "ms",
+        "budget_factor": 0.76299
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 381.497
+    },
+    "decision": "INFEASIBLE",
+    "feasible_placements": 0,
+    "minimum_migrations": null,
+    "moved_components": [],
+    "p1": null,
+    "p1_latency_ms": null,
+    "id": "ARVR-000146"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.759123967,
+        "unit": "GB",
+        "factor": 1.25219
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 464.075,
+        "unit": "ms",
+        "budget_factor": 0.92815
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 464.075
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000147"
+  },
+  {
+    "category": "cross_service",
+    "level": "moderate",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C3",
+        "component_id": 3,
+        "component_name": "Scene Processing",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 4.278,
+        "new_value": 7.395464,
+        "unit": "vCPU",
+        "factor": 1.72872
+      },
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 2.1656854,
+        "new_value": 5.722996924,
+        "unit": "GB",
+        "factor": 2.64258
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 500.0
+    },
+    "decision": "STAY",
+    "feasible_placements": 12,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000148"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C4",
+        "component_id": 4,
+        "component_name": "AR Rendering",
+        "kpi_type": "ram",
+        "resource": "memory",
+        "comparator": "gte",
+        "baseline_value": 3.0020396,
+        "new_value": 3.493143258,
+        "unit": "GB",
+        "factor": 1.16359
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 472.29,
+        "unit": "ms",
+        "budget_factor": 0.94458
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 472.29
+    },
+    "decision": "OFFLOAD",
+    "feasible_placements": 3,
+    "minimum_migrations": 2,
+    "moved_components": [
+      2,
+      3
+    ],
+    "p1": {
+      "C1": 12,
+      "C2": 6,
+      "C3": 4,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 478.860046,
+      "f2": 448.027436
+    },
+    "id": "ARVR-000149"
+  },
+  {
+    "category": "service_plus_flow",
+    "level": "mild",
+    "origin": "synthetic_outcome_stratified",
+    "requirements": [
+      {
+        "target_type": "service",
+        "target_id": "C2",
+        "component_id": 2,
+        "component_name": "Object Recognition",
+        "kpi_type": "cpu",
+        "resource": "cpuVcpu",
+        "comparator": "gte",
+        "baseline_value": 3.22,
+        "new_value": 4.087371,
+        "unit": "vCPU",
+        "factor": 1.26937
+      },
+      {
+        "target_type": "flow",
+        "target_id": "f2",
+        "flow_name": "AR Rendering Flow",
+        "path": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "baseline_value": 500.0,
+        "new_value": 523.705,
+        "unit": "ms",
+        "budget_factor": 1.04741
+      }
+    ],
+    "flow_budgets_ms": {
+      "f1": 500.0,
+      "f2": 523.705
+    },
+    "decision": "STAY",
+    "feasible_placements": 20,
+    "minimum_migrations": 0,
+    "moved_components": [],
+    "p1": {
+      "C1": 12,
+      "C2": 4,
+      "C3": 6,
+      "C4": 4,
+      "C5": 8
+    },
+    "p1_latency_ms": {
+      "f1": 473.101999,
+      "f2": 481.686668
+    },
+    "id": "ARVR-000150"
+  }
+]

@@ -1,0 +1,88 @@
+{
+  "application_context": {
+    "application_id": "App1",
+    "name": "Interactive Augmented Reality Application",
+    "services": [
+      {
+        "service_id": "C1",
+        "name": "Vision Capture",
+        "description": "Captures visual inputs from the user device",
+        "current_node": "N12",
+        "fixed_placement": true,
+        "requirements": {
+          "cpu_cores": 0.64,
+          "ram_gb": 1.2561600000000002
+        },
+        "workload_mi": 40.24,
+        "baseline_version": 1,
+        "output_size": 10.2,
+        "storage_gb": 1.7212319999999999,
+        "mips_reservation": 160.96
+      },
+      {
+        "service_id": "C2",
+        "name": "Object Recognition",
+        "description": "Detects and identifies objects in captured frames",
+        "current_node": "N4",
+        "fixed_placement": false,
+        "requirements": {
+          "cpu_cores": 3.22,
+          "ram_gb": 2.1656853999999996
+        },
+        "workload_mi": 500.8551,
+        "baseline_version": 3,
+        "output_size": 24.5,
+        "storage_gb": 1.7953192,
+        "mips_reservation": 2003.4205
+      },
+      {
+        "service_id": "C3",
+        "name": "Scene Processing",
+        "description": "Processes visual and scene-context information",
+        "current_node": "N6",
+        "fixed_placement": false,
+        "requirements": {
+          "cpu_cores": 4.278,
+          "ram_gb": 2.9455207999999997
+        },
+        "workload_mi": 670.3149,
+        "baseline_version": 2,
+        "output_size": 10.3,
+        "storage_gb": 2.3780523,
+        "mips_reservation": 2681.2596
+      },
+      {
+        "service_id": "C4",
+        "name": "AR Rendering",
+        "description": "Produces augmented-reality rendering elements",
+        "current_node": "N4",
+        "fixed_placement": false,
+        "requirements": {
+          "cpu_cores": 3.364,
+          "ram_gb": 3.0020396000000003
+        },
+        "workload_mi": 573.7381,
+        "baseline_version": 5,
+        "output_size": 27,
+        "storage_gb": 1.6805503000000002,
+        "mips_reservation": 2294.9525
+      },
+      {
+        "service_id": "C5",
+        "name": "Display Output",
+        "description": "Displays processed results to the receiving device",
+        "current_node": "N8",
+        "fixed_placement": true,
+        "requirements": {
+          "cpu_cores": 3.84,
+          "ram_gb": 1.5168
+        },
+        "workload_mi": 235.8,
+        "baseline_version": 1,
+        "output_size": 13.7,
+        "storage_gb": 2.8692800000000003,
+        "mips_reservation": 943.2
+      }
+    ]
+  }
+}

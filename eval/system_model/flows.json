@@ -1,0 +1,36 @@
+{
+  "application_context": {
+    "flows": [
+      {
+        "flow_id": "f1",
+        "name": "Object Recognition Flow",
+        "description": "Object recognition and scene-processing results delivered to the display",
+        "path": [
+          "C1",
+          "C2",
+          "C3",
+          "C5"
+        ],
+        "requirements": {
+          "latency": 500
+        },
+        "baseline_estimated_latency_ms": 473.101999
+      },
+      {
+        "flow_id": "f2",
+        "name": "AR Rendering Flow",
+        "description": "Scene processing and AR rendering delivered to the display",
+        "path": [
+          "C1",
+          "C3",
+          "C4",
+          "C5"
+        ],
+        "requirements": {
+          "latency": 500
+        },
+        "baseline_estimated_latency_ms": 481.686668
+      }
+    ]
+  }
+}
