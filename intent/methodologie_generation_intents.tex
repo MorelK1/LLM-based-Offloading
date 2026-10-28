@@ -1,0 +1,587 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black,citecolor=blue!50!black]{hyperref}
+
+\definecolor{ok}{HTML}{2E7D32}
+\definecolor{todo}{HTML}{B26A00}
+\definecolor{boxbg}{HTML}{F3F6FA}
+\definecolor{boxline}{HTML}{4A6FA5}
+
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.15}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{boxline},
+  backgroundcolor=\color{boxbg},
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  aboveskip=0.6em,
+  belowskip=0.4em
+}
+
+% Encadré simple
+\newenvironment{encadre}[1]{%
+  \par\medskip\noindent
+  \begin{minipage}{\dimexpr\linewidth\relax}
+  \begin{tikzpicture}
+  \node[draw=boxline,fill=boxbg,rounded corners=3pt,inner sep=7pt,text width=\dimexpr\linewidth-14pt-0.8pt\relax,align=left]\bgroup
+  \textbf{#1}\par\smallskip
+}{%
+  \egroup;
+  \end{tikzpicture}
+  \end{minipage}\par\medskip
+}
+
+\newcommand{\fait}{\textcolor{ok}{\textbf{fait}}}
+\newcommand{\propose}{\textcolor{todo}{\textbf{proposé, non exécuté}}}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+
+\title{\textbf{Génération d'intentions en langage naturel pour l'offloading piloté par l'intention}\\[0.3em]
+\large Méthodologie suivie de bout en bout, fondements dans la littérature,\\
+exemples détaillés et protocole de validation proposé}
+\author{Jeu ARVR-150 --- 150 scénarios, 150 intentions}
+\date{Octobre 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent Ce document décrit comment les 150 intentions du jeu ARVR-150 ont été produites, pourquoi chaque choix a été fait, ce que la littérature apporte (et n'apporte pas), et comment ces intentions devraient être validées avant d'être utilisées comme jeu d'évaluation.
+Il distingue systématiquement ce qui a été \fait{} de ce qui est seulement \propose{}.
+Chaque intention a été rédigée \emph{à la main} par un LLM (Claude), scénario par scénario, sans aucun algorithme de composition de texte~; le seul code utilisé affiche les exigences sans la vérité terrain, contrôle mécaniquement le texte écrit et l'enregistre.
+Aucune relecture humaine n'a eu lieu~: le statut des 150 entrées est \code{llm_generated_auto_checked}, jamais \code{validated}.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%=====================================================================
+\section{Objectif et vue d'ensemble}
+%=====================================================================
+
+\subsection{Ce qu'on cherche à évaluer}
+
+Le pipeline étudié transforme une demande exprimée en langage naturel en une décision de placement de composants applicatifs sur une infrastructure~:
+\[
+\text{intention (texte)} \;\longrightarrow\; \text{exigences structurées} \;\longrightarrow\; \text{décision} \in \{\text{STAY},\text{OFFLOAD},\text{INFEASIBLE}\}.
+\]
+La première étape (le \emph{Requirement Extractor}, actuellement \code{openai/gpt-5.4-mini} via OpenRouter) lit l'intention et en tire des exigences~: pour chacune, une cible (composant \code{C1}--\code{C5} ou flux \code{f1}, \code{f2}), un indicateur (\code{cpu}, \code{ram}, \code{e2e_latency}), un comparateur, une valeur et une unité.
+Le jeu d'intentions sert à mesurer \emph{cette} étape~: l'extracteur retrouve-t-il, à partir du texte seul, les exigences de référence~?
+
+\subsection{Ce qu'il faut produire}
+
+Pour chacun des 150 scénarios simulés de \code{eval/experiment_150/scenarios.json}, une intention en anglais qui~:
+\begin{itemize}
+  \item exprime \textbf{toutes} les exigences du scénario et \textbf{seulement} celles-ci~;
+  \item donne la \textbf{valeur exacte} (aucun arrondi, aucun «~environ~»)~;
+  \item soit \textbf{variée et humaine}~: tantôt explicite, tantôt implicite ou vague \emph{sur la forme}~;
+  \item ne \textbf{révèle jamais la décision} attendue ni ne parle de placement.
+\end{itemize}
+
+\subsection{Principe directeur}
+
+\begin{encadre}{Le flou porte sur la forme, jamais sur le fond}
+Une intention peut désigner un composant par son rôle (« ce qui dessine les éléments de réalité augmentée »), omettre son identifiant, changer d'unité ou raconter un contexte.
+Elle ne doit jamais rendre la \emph{valeur} approximative, ni rendre la \emph{cible} ambiguë.
+Ce qui est difficile pour l'extracteur doit l'être parce qu'il faut \emph{raisonner}, pas parce que la réponse est indécidable.
+\end{encadre}
+
+%=====================================================================
+\section{Données d'entrée}
+%=====================================================================
+
+\subsection{Le modèle applicatif ARVR}
+
+Application «~Interactive Augmented Reality Application~», 5 composants et 2 flux (tableaux~\ref{tab:comp} et~\ref{tab:flux}).
+
+\begin{table}[h]
+\centering
+\caption{Composants (extraits de \code{services.json}).}\label{tab:comp}
+\begin{tabularx}{\linewidth}{@{}llX@{}}
+\toprule
+Id & Nom & Description officielle \\
+\midrule
+C1 & Vision Capture & Captures visual inputs from the user device \\
+C2 & Object Recognition & Detects and identifies objects in captured frames \\
+C3 & Scene Processing & Processes visual and scene-context information \\
+C4 & AR Rendering & Produces augmented-reality rendering elements \\
+C5 & Display Output & Displays processed results to the receiving device \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Flux (extraits de \code{flows.json}).}\label{tab:flux}
+\begin{tabularx}{\linewidth}{@{}llllX@{}}
+\toprule
+Id & Nom & Chemin & Description officielle \\
+\midrule
+f1 & Object Recognition Flow & C1 $\to$ C2 $\to$ C3 $\to$ C5 & Object recognition and scene-processing results delivered to the display \\
+f2 & AR Rendering Flow & C1 $\to$ C3 $\to$ C4 $\to$ C5 & Scene processing and AR rendering delivered to the display \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Point critique.} \code{C1}, \code{C3} et \code{C5} appartiennent aux deux flux. Seuls \code{C2} (reconnaissance) distingue \code{f1} et \code{C4} (rendu) distingue \code{f2}. Toute désignation indirecte d'un flux doit s'appuyer sur l'un de ces deux composants.
+
+\subsection{Les exigences d'un scénario}
+
+Chaque scénario contient une à quatre exigences (315 au total~: 39 scénarios à une exigence, 77 à deux, 14 à trois, 20 à quatre).
+Une exigence est un tuple \emph{(cible, indicateur, comparateur, valeur de base, nouvelle valeur, unité)}, avec trois indicateurs~:
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Indicateur & Cible & Comparateur / unité canonique \\
+\midrule
+\code{cpu} & composant & $\geq$ (\code{gte}), vCPU \\
+\code{ram} & composant & $\geq$ (\code{gte}), GB \\
+\code{e2e_latency} & flux & $\leq$ (\code{lte}), ms \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Ce que le rédacteur a le droit de voir}
+
+Les scénarios contiennent aussi la vérité terrain de la décision (catégorie, niveau de difficulté, décision attendue, placements faisables, nombre minimal de migrations, \dots). Si le rédacteur la voit, le ton ou l'urgence peut la trahir, et l'évaluation devient circulaire.
+Les intentions ont donc été rédigées \textbf{uniquement} à partir de~:
+\begin{itemize}
+  \item l'identifiant du scénario et ses exigences (commande \code{intent_store.py view}, qui masque tout le reste)~;
+  \item les noms et descriptions des composants et des flux.
+\end{itemize}
+Le fichier \code{scenarios.json} n'a pas été ouvert pour écrire.
+
+%=====================================================================
+\section{Ancrage dans la littérature}
+%=====================================================================
+
+\subsection{Six articles, un cadre de contrôle}
+
+Les six articles du dépôt portent sur la génération de texte à partir de données (\emph{data-to-text}, \emph{table-to-text}). Notre tâche en est l'inverse sémantique~: partir d'exigences structurées pour produire un texte dont on doit pouvoir retrouver ces exigences. Les erreurs qu'ils étudient (valeur fausse, mauvaise entité, information ajoutée) sont exactement celles qui invalideraient une intention.
+
+\begin{table}[h]
+\centering
+\caption{Ce que le protocole retient de chaque source.}\label{tab:lit}
+\small
+\begin{tabularx}{\linewidth}{@{}p{3.6cm}X@{}}
+\toprule
+Source & Ce qui est repris dans notre méthode \\
+\midrule
+Sundararajan, Sripada \& Reiter (NAACL 2024) & Entrée \emph{atomique} et sémantiquement nommée~: chaque exigence est présentée isolément, avec ses unités explicites~; l'ordre de présentation est mélangé pour éviter le biais du premier élément cité. \\
+Chen et al. (EMNLP 2022) & Compréhension de la structure d'entrée, puis \emph{délibération}~: générer, relire, corriger. Origine de nos deux passes (rédaction puis contrôle). \\
+Zhao \& Sun (\emph{Knowledge-Based Systems} 304, 2024) & \emph{Planifier avant de générer}~: décider quelles informations, dans quel ordre, avec quelle structure, avant d'écrire. Origine de l'étape de plan par scénario. \\
+Thomson et al. (INLG 2023) & Vues sur les données et schéma de document~; \emph{taxonomie d'erreurs} (nombre, nom, contexte, ajout) que nous adaptons en contrôles. \\
+Kasner \& Dušek (ACL 2024) & La diversité doit venir d'un \emph{plan} explicite et pas du hasard d'échantillonnage~; ne pas laisser des exemples fuiter dans la sortie~; \emph{documenter} que le modèle générateur diffère du modèle évalué. \\
+Liu, Zheng \& Kong (ACL 2025) & Générer puis \emph{vérifier} par un contrôle d'implication (le texte entraîne-t-il bien l'information source~?). Origine de notre test de reconstruction à l'aveugle (section~\ref{sec:valid}). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Ce que la littérature ne couvre pas}
+
+Aucun de ces articles ne traite l'intention \emph{vague ou implicite}. Dans ces travaux, une information «~non vérifiable~» est une \emph{faute}. Ici, nous la produisons volontairement, mais \textbf{uniquement sur la forme} (désignation, vocabulaire, structure, contexte), jamais sur la valeur. C'est une adaptation propre au projet, pas un résultat de la littérature. Le découpage en quatre niveaux d'explicitation (section~\ref{sec:niveaux}) est également un choix de conception, non emprunté.
+
+%=====================================================================
+\section{Méthode de bout en bout}
+%=====================================================================
+
+\subsection{Règle d'or}
+
+\begin{encadre}{Interdiction d'un générateur automatique}
+Aucun gabarit, aucune table de phrases à trous, aucun tirage aléatoire de formulations, aucune boucle qui compose du texte.
+Chaque intention est écrite par jugement, après lecture du scénario.
+Le script \code{intent_store.py} ne choisit \emph{aucun mot}~: il affiche, vérifie et enregistre.
+\end{encadre}
+
+\subsection{Le cycle par scénario}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  node distance=11mm and 7mm,
+  box/.style={draw=boxline,fill=boxbg,rounded corners=3pt,align=center,minimum height=9mm,text width=2.9cm,font=\footnotesize},
+  human/.style={box,fill=green!8,draw=ok},
+  tool/.style={box},
+  arr/.style={-{Stealth[length=2mm]},thick,boxline}
+]
+\node[tool] (view) {1. Lire\\ \code{view} (vérité terrain masquée)};
+\node[human,right=of view] (plan) {2. Planifier\\ niveau, désignation, style, ordre};
+\node[human,right=of plan] (write) {3. Rédiger\\ texte anglais à la main};
+\node[human,below=of write] (batch) {4. Décrire\\ \code{plan}, \code{mentions} depuis le texte réel};
+\node[tool,left=of batch] (check) {5. Contrôler\\ \code{append}: contrôles automatiques};
+\node[tool,left=of check] (save) {6. Enregistrer\\ \code{intents.json} (écriture atomique)};
+\draw[arr] (view)--(plan);
+\draw[arr] (plan)--(write);
+\draw[arr] (write)--(batch);
+\draw[arr] (batch)--(check);
+\draw[arr] (check)--(save);
+\draw[arr,dashed,red!60!black] (check.north) -- ++(0,5.5mm) coordinate (m) -| ([xshift=-9mm]write.south);
+\node[font=\scriptsize,red!60!black,fill=white,inner sep=1pt] at ([xshift=-9mm]m) {refus : corriger le \emph{texte}};
+\node[font=\scriptsize,green!40!black] at ([yshift=-8mm]batch.south) {vert = jugement du rédacteur};
+\end{tikzpicture}
+\caption{Cycle de traitement d'un scénario. Les cases vertes sont des décisions du rédacteur~; les autres sont mécaniques.}
+\end{figure}
+
+\subsubsection*{Étape 1 --- Lire}
+\code{python3 intent_store.py view next 5} affiche pour chaque scénario son identifiant et ses exigences (cible, indicateur, comparateur, valeur de base, nouvelle valeur, unité). Le \emph{sens} de la variation se lit en comparant base et nouvelle valeur~: CPU et RAM montent toujours, la latence peut se resserrer ou se relâcher.
+
+\subsubsection*{Étape 2 --- Planifier}
+Pour chaque exigence~: niveau d'explicitation, mode de désignation de la cible, unité écrite. Pour l'ensemble~: style, registre, structure, ordre de mention, longueur. Le plan est choisi \emph{après} consultation de \code{intent_store.py report} (répartition courante) pour prendre volontairement ce qui est sous-représenté.
+
+\subsubsection*{Étape 3 --- Rédiger}
+En anglais, comme l'écrirait une personne réelle~: ticket, message à un collègue, note d'exploitation, demande polie, remarque en revue. Pas de recopie des intentions voisines.
+
+\subsubsection*{Étape 4 --- Décrire}
+Les métadonnées (\code{plan}, \code{mentions}) sont écrites \emph{après} le texte, à partir du texte réel, jamais l'inverse. Elles déclarent pour chaque exigence la forme écrite (\code{written_form}), la valeur et l'unité telles qu'écrites, le mode de désignation et le niveau.
+
+\subsubsection*{Étapes 5 et 6 --- Contrôler et enregistrer}
+Chaque scénario est contrôlé puis écrit \emph{séparément} dans \code{intents.json} par écriture atomique (fichier temporaire puis renommage). Un refus n'efface jamais les entrées précédentes. Après toute coupure, \code{status} indique la prochaine entrée à traiter~: la reprise est toujours possible, aucun travail n'est perdu.
+
+\subsection{Les quatre niveaux d'explicitation}\label{sec:niveaux}
+
+Un niveau est attribué \emph{par exigence}. Plusieurs niveaux coexistent dans un même scénario.
+
+\begin{table}[h]
+\centering
+\caption{Niveaux d'explicitation (valeurs de l'exemple fictives).}
+\small
+\begin{tabularx}{\linewidth}{@{}cp{3.3cm}p{3.5cm}X@{}}
+\toprule
+Niv. & Cible désignée par & Indicateur et comparateur & Exemple \\
+\midrule
+1 & identifiant (\code{C2}, \code{f1}), avec ou sans nom & unités canoniques, comparateur en clair & «~Keep the end-to-end latency of flow f2 at or below 412.5 ms.~» \\
+2 & nom du composant ou du flux & indicateur nommé, unité variée & «~The AR Rendering component needs at least 5250 millicores.~» \\
+3 & responsabilité ou flux métier, sans nom ni id & indicateur reformulé, comparateur porté par la tournure & «~Whatever draws the AR elements should get a minimum of 5.25 virtual CPUs.~» \\
+4 & raisonnement sur les descriptions (position, conséquence, circonlocution) & indicateur nommé indirectement, registre familier & «~The stage that turns detections into overlays is starving: 5.25 virtual CPUs minimum.~» \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Répartition visée~: 20\,\% / 30\,\% / 30\,\% / 20\,\%. Le niveau 1 contient un identifiant~; les niveaux 3 et 4 n'en contiennent jamais.
+
+\subsection{Règles de fond appliquées à chaque intention}
+
+\begin{enumerate}
+  \item \textbf{Toutes les exigences, et seulement celles-ci.} Aucun autre indicateur (bande passante, fiabilité, énergie\dots).
+  \item \textbf{Valeur exacte.} Reprise à toutes ses décimales ou convertie exactement~: $1\,\text{vCPU}=1000\,\text{mCPU}$, $1\,\text{GB}=1000\,\text{MB}$, $1\,\text{s}=1000\,\text{ms}$. Unités binaires (GiB, MiB) écartées~: leur conversion n'est pas décimale finie. Pas de séparateur de milliers.
+  \item \textbf{Comparateur déductible}~: minimum pour CPU et RAM, maximum pour la latence.
+  \item \textbf{Cible unique.} Un lecteur qui ne connaît que les noms et descriptions doit retrouver sans hésiter le composant ou le flux. Un composant n'a pas de latence de bout en bout~; un flux n'a pas de CPU.
+  \item \textbf{Application déjà déployée.} L'intention exprime une \emph{évolution} de besoin.
+  \item \textbf{Cohérence de direction.} «~tighten~» seulement si la latence diminue, «~relax~» seulement si elle augmente.
+  \item \textbf{Interdits.} Mots de placement ou de mouvement (move, migrate, offload, place, host), identifiants de nœud, couches (edge, cloud, fog), disponibilité, fiabilité, faisabilité.
+  \item \textbf{Pas de fuite de décision.} Urgence et ton indépendants de la difficulté du scénario.
+  \item \textbf{Pas de nombre en trop.} Les seuls nombres sont les valeurs cibles (et les valeurs de base déclarées).
+\end{enumerate}
+
+\subsection{Diversité}
+
+La diversité est obtenue par le \emph{plan}, pas par le hasard (Kasner \& Dušek). Sont variés~: style (impératif, demande polie, besoin, contrainte, objectif, récit, note de ticket, question), registre (développeur, manager, opérations télégraphiques, formel, familier, responsable produit), structure (une phrase, deux, conditionnelle, énumération, enchaînement), ordre de mention, longueur (7 à 57 mots) et ouverture. La variation doit être \emph{structurelle}~: remplacer «~increase~» par «~raise~» ne compte pas.
+
+\subsection{Les contrôles mécaniques}
+
+\code{append} refuse une entrée si l'une des conditions suivantes est violée (taxonomie adaptée de Thomson et al.)~:
+
+\begin{table}[h]
+\centering
+\caption{Contrôles automatiques et type d'erreur de la taxonomie visé.}
+\small
+\begin{tabularx}{\linewidth}{@{}Xl@{}}
+\toprule
+Contrôle & Erreur visée \\
+\midrule
+Chaque exigence du scénario apparaît exactement une fois, aucune ajoutée & omission / ajout \\
+Comparateur identique à la référence & contexte \\
+Valeur écrite $\times$ facteur d'unité $=$ valeur canonique, en arithmétique décimale exacte & nombre \\
+La forme écrite figure dans le texte~; aucun nombre non déclaré & nombre / ajout \\
+Identifiant présent si et seulement si la désignation le prévoit & nom \\
+Aucun identifiant de nœud, mot de placement, couche, disponibilité, faisabilité & fuite / hors périmètre \\
+Aucun mot d'approximation, tilde, séparateur de milliers, MIPS & nombre \\
+Verbe de direction cohérent avec base $\to$ nouvelle valeur & contexte \\
+Aucune intention en double~; avertissement si ouverture répétée ou longueur atypique & diversité \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Règle de correction}~: en cas de refus, on corrige le \emph{texte}, jamais le contrôle. Trois refus ont eu lieu, tous des faux positifs lexicaux («~three \emph{places}~», «~ceiling \emph{moves}~», «~all \emph{around}~»), corrigés par reformulation.
+
+%=====================================================================
+\section{Exemples de bout en bout}
+%=====================================================================
+
+\subsection{Exemple A --- une exigence, niveau 4 (ARVR-000146)}
+
+\paragraph{1. Lecture} (sortie de \code{view}, vérité terrain masquée)
+\begin{lstlisting}
+## ARVR-000146
+  - flow f2 (AR Rendering Flow): e2e_latency lte 381.497 ms   [valeur de base 500]
+\end{lstlisting}
+
+\paragraph{2. Plan}
+La cible est le flux \code{f2}. On choisit le niveau 4~: ni nom ni identifiant. Il faut une périphrase qui désigne \code{f2} et \emph{pas} \code{f1}. Les deux flux partagent la capture (\code{C1}) et l'affichage (\code{C5}), donc «~de la caméra à l'écran~» conviendrait aux deux et serait proscrit. Ce qui distingue \code{f2}, c'est le \textbf{rendu} (\code{C4}), qui produit des éléments de réalité augmentée~: on parle donc de «~visible overlay~». Style \emph{question}, registre \emph{casual}, structure \emph{deux phrases}, valeur placée en fin («~tops~» porte le «~au plus~»). La valeur passe de 500 à 381.497~: c'est un resserrement, donc aucun verbe de relâchement.
+
+\paragraph{3. Texte}
+\begin{quote}
+\foreignlanguage{english}{\emph{How quickly does a captured frame have to turn into a visible overlay? 381.497 ms, tops.}}
+\end{quote}
+
+\paragraph{4. Description}
+\begin{lstlisting}
+{"scenario_id": "ARVR-000146",
+ "intent": "How quickly does a captured frame have to turn into a visible overlay? 381.497 ms, tops.",
+ "plan": {"style": "question", "register": "casual", "structure": "two_sentences"},
+ "mentions": [{"target_id": "f2", "kpi_type": "e2e_latency", "comparator": "lte",
+   "written_value": "381.497", "written_unit": "ms", "written_form": "381.497 ms",
+   "designation": "context", "level": 4}]}
+\end{lstlisting}
+
+\paragraph{5. Contrôles}
+\begin{center}\small
+\begin{tabular}{@{}lc@{}}
+\toprule
+Contrôle & Résultat \\
+\midrule
+couverture~: 1 exigence attendue, 1 déclarée & \textcolor{ok}{ok} \\
+comparateur \code{lte} $=$ référence & \textcolor{ok}{ok} \\
+$381.497\times 1 = 381.497$ ms (valeur canonique) & \textcolor{ok}{ok} \\
+«~381.497 ms~» présent dans le texte, aucun autre nombre & \textcolor{ok}{ok} \\
+désignation sans \code{id} $\Rightarrow$ aucun \code{f1}/\code{f2} dans le texte & \textcolor{ok}{ok} \\
+aucun mot interdit, aucune approximation & \textcolor{ok}{ok} \\
+aucun verbe de direction (aucune incohérence possible) & \textcolor{ok}{ok} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{6. Ce que le contrôle ne dit pas.}
+Que «~visible overlay~» désigne bien \code{f2} et non \code{f1} n'est \textbf{pas} vérifié par le code. C'est une affirmation de jugement, à confirmer par la validation sémantique (section~\ref{sec:valid}).
+
+\subsection{Exemple B --- quatre exigences, niveaux mêlés (ARVR-000138)}
+
+\paragraph{1. Lecture}
+\begin{lstlisting}
+## ARVR-000138
+  - service C4 (AR Rendering): cpu gte 5.150654 vCPU         [valeur de base 3.364]
+  - service C3 (Scene Processing): ram gte 4.454570016 GB    [valeur de base 2.9455208]
+  - flow f1 (Object Recognition Flow): e2e_latency lte 511.645 ms  [valeur de base 500]
+  - flow f2 (AR Rendering Flow): e2e_latency lte 506.74 ms         [valeur de base 500]
+\end{lstlisting}
+
+\paragraph{2. Plan}
+Les deux latences \emph{montent} (500 $\to$ 511.645 et 506.74)~: il s'agit d'un relâchement, le verbe «~relaxed~» est permis. Les ressources sont des hausses. Choix~:
+\begin{itemize}
+  \item latences~: niveau 4, désignées par le contexte («~the route through object recognition~» pour \code{f1}, qui passe par \code{C2}~; «~the route through rendering~» pour \code{f2}, qui passe par \code{C4})~; unité \emph{ms}~;
+  \item \code{C4} et \code{C3}~: niveau 1, par identifiant, pour faire coexister explicite et implicite dans la même intention~; \code{C4} en \emph{millicores} (conversion), \code{C3} en \emph{GB}~;
+  \item style \emph{constraint\_statement}, registre \emph{manager}, structure \emph{deux phrases}~: latences d'abord, ressources ensuite.
+\end{itemize}
+
+\paragraph{3. Texte}
+\begin{quote}
+\foreignlanguage{english}{\emph{Latency can be relaxed a little: up to 511.645 ms for the route through object recognition and up to 506.74 ms for the route through rendering. On resources, C4 needs at least 5150.654 millicores and C3 at least 4.454570016 GB of RAM.}}
+\end{quote}
+
+\paragraph{4. Vérification de chaque valeur}
+\begin{center}\small
+\begin{tabular}{@{}llllc@{}}
+\toprule
+Cible & Écrit & Calcul exact & Canonique & \\
+\midrule
+f1 latence & 511.645 ms & $511.645\times1$ & 511.645 ms & \textcolor{ok}{ok} \\
+f2 latence & 506.74 ms & $506.74\times1$ & 506.74 ms & \textcolor{ok}{ok} \\
+C4 cpu & 5150.654 millicores & $5150.654\times0.001$ & 5.150654 vCPU & \textcolor{ok}{ok} \\
+C3 ram & 4.454570016 GB & $4.454570016\times1$ & 4.454570016 GB & \textcolor{ok}{ok} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Comparateurs~: «~up to~» $\to$ \code{lte} (deux fois), «~at least~» $\to$ \code{gte} (deux fois). Direction~: «~relaxed~» est compatible avec 500 $\to$ 511.645 et 500 $\to$ 506.74. Les identifiants \code{C4} et \code{C3} sont présents car leur désignation est de niveau 1~; \code{f1} et \code{f2} sont absents car leur désignation est contextuelle.
+
+\paragraph{5. Sortie attendue de l'extracteur} (jamais montrée à l'extracteur~; elle sert de référence)
+\begin{lstlisting}
+[{"target":"f1","kpi":"e2e_latency","op":"lte","value":511.645,"unit":"ms"},
+ {"target":"f2","kpi":"e2e_latency","op":"lte","value":506.74,"unit":"ms"},
+ {"target":"C4","kpi":"cpu","op":"gte","value":5.150654,"unit":"vCPU"},
+ {"target":"C3","kpi":"ram","op":"gte","value":4.454570016,"unit":"GB"}]
+\end{lstlisting}
+Ici l'extracteur doit en outre \textbf{convertir} 5150.654 millicores en 5.150654 vCPU et \textbf{raisonner} sur les deux périphrases de flux.
+
+\subsection{Un refus du contrôle (ARVR-000036)}
+
+Le texte contenait «~in three \emph{places}~». Le contrôle a refusé~: «~places~» est un mot de placement interdit, même employé au sens courant. Correction du \emph{texte} («~for three stages~»), contrôle inchangé, nouvel enregistrement accepté. C'est la règle~: le contrôle n'est jamais assoupli.
+
+%=====================================================================
+\section{Résultat de la génération}
+%=====================================================================
+
+\begin{table}[h]
+\centering
+\caption{Répartition des 315 mentions (calculée sur \code{intents.json}).}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Niveau & Mentions & Part & Cible \\
+\midrule
+1 explicite & 51 & 16\,\% & 20\,\% \\
+2 fonctionnel & 106 & 34\,\% & 30\,\% \\
+3 implicite & 101 & 32\,\% & 30\,\% \\
+4 oblique & 57 & 18\,\% & 20\,\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+  \item Indicateurs~: 132 latences, 96 RAM, 87 CPU.
+  \item Styles~: need\_statement 37, narrative 30, constraint\_statement 28, imperative 17, goal\_oriented 11, ticket\_note 11, polite\_request 9, question 7.
+  \item Longueur~: 7 à 57 mots, médiane 23, moyenne 24,3.
+  \item Unités écrites~: ms 100, GB 52, vCPU 55, MB 44, seconds 27, millicores 16, mCPU 8, virtual CPUs 8, autres 5.
+\end{itemize}
+
+\subsection{Limites connues}\label{sec:limites}
+
+\begin{itemize}
+  \item \textbf{Aucune relecture humaine.} Statut de toutes les entrées~: \code{llm_generated_auto_checked}.
+  \item La frontière entre niveaux 3 et 4 n'est pas stricte~: «~le flux qui se termine par l'overlay~» est étiquetée tantôt 3, tantôt 4.
+  \item Quasi-doublon~: ARVR-000137 et ARVR-000140 (similarité de mots 0,70).
+  \item Monotonie lexicale partielle~: «~at least $X$ GB of RAM~» revient 16 à 18 fois.
+  \item La longueur croît avec le nombre d'exigences~: indice de la taille du scénario, non de la décision.
+  \item \textbf{Recouvrement}~: le générateur est Claude, l'extracteur évalué est \code{gpt-5.4-mini}~; aucun recouvrement tant que cela reste vrai, à réévaluer sinon.
+  \item Scénarios synthétiques et stratifiés (35\,\% STAY, 45\,\% OFFLOAD, 20\,\% INFEASIBLE)~: ces intentions ne représentent pas des demandes réelles d'opérateurs.
+  \item Pas de GiB/MiB~; pas d'intentions sans seuil chiffré (jeu exploratoire séparé, non produit).
+\end{itemize}
+
+%=====================================================================
+\section{Méthode de validation proposée}\label{sec:valid}
+%=====================================================================
+
+Le contrôle mécanique garantit l'\emph{exactitude chiffrée}. Il ne dit rien du \emph{sens}. La validation proposée ajoute cinq couches, ordonnées de la moins chère à la plus chère. Seule la couche~0 est faite.
+
+\begin{table}[h]
+\centering
+\caption{Les couches de validation et leur statut.}
+\small
+\begin{tabularx}{\linewidth}{@{}clXl@{}}
+\toprule
+& Couche & Ce qu'elle établit & Statut \\
+\midrule
+0 & Contrôle mécanique & valeurs, unités, comparateurs, couverture, interdits & \fait \\
+1 & Reconstruction à l'aveugle par LLM indépendant & la cible est-elle retrouvable~? & \propose \\
+2 & Revue humaine en double aveugle & sens, unicité de la cible, naturel & \propose \\
+3 & Sous-ensemble rédigé par des humains & absence d'artefact «~style LLM~» & \propose \\
+4 & Tests de fuite et d'artefacts & la décision n'est pas devinable depuis le texte & \propose \\
+5 & Mesures de diversité & pas de quasi-doublons ni de monotonie & \propose \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Couche 1 --- Reconstruction à l'aveugle (inspirée de Liu et al.)}
+
+\textbf{Principe}~: donner à un modèle indépendant l'intention et le contexte applicatif autorisé (rien d'autre), lui demander de reconstruire les exigences, puis comparer à la référence.
+
+\begin{enumerate}
+  \item \textbf{Modèle}~: au moins deux modèles de familles différentes, ni Claude (générateur) ni l'extracteur évalué, pour éviter la circularité.
+  \item \textbf{Entrée}~: champ \code{intent}, \code{services.json}, \code{flows.json}. Jamais \code{plan}, \code{mentions}, ni la vérité terrain.
+  \item \textbf{Comparaison}~: pour chaque exigence de référence, correspondance exacte sur (cible, indicateur, comparateur, valeur normalisée). Chaque écart est classé~: \emph{mauvaise cible}, \emph{mauvaise valeur}, \emph{mauvais comparateur}, \emph{exigence omise}, \emph{exigence ajoutée}.
+  \item \textbf{Règle de décision}~: une intention est \textbf{signalée} si au moins un des modèles diverge. Un écart n'est \emph{pas} une preuve d'erreur~: il envoie l'intention en couche~2. À l'inverse, un accord ne prouve pas l'unicité de la cible, il la rend plausible.
+  \item \textbf{Lecture des résultats}~: le taux d'écart par niveau (1 à 4) doit \emph{croître avec le niveau}. Un écart massif au niveau~1 signale un défaut de protocole~; un écart concentré au niveau~4 sur \code{f1}/\code{f2} signale des périphrases ambiguës.
+\end{enumerate}
+
+\subsection{Couche 2 --- Revue humaine en double aveugle}
+
+\textbf{Échantillon.} Revue de toute intention qui présente au moins l'un des risques suivants~: une mention de niveau~4 (51 intentions), une désignation indirecte de flux de niveau~3 ou~4 (61), trois exigences ou plus (34). Union~: \textbf{93 intentions}. À cela s'ajoute un tirage aléatoire de 20\,\% des 57 restantes (environ 12), soit $\approx105$ intentions au total. Toute intention signalée en couche~1 y est ajoutée.
+
+\textbf{Procédure.}
+\begin{enumerate}
+  \item Deux annotateurs indépendants reçoivent l'intention, la description des composants et des flux, et \textbf{pas} la référence.
+  \item Pour chaque exigence qu'ils lisent, ils notent cible, indicateur, comparateur, valeur, unité.
+  \item Ils signalent~: (a) toute \emph{ambiguïté de cible} (la phrase conviendrait à plusieurs cibles)~; (b) tout \emph{indice de décision}, c'est-à-dire un ton ou une urgence qui laisse deviner STAY, OFFLOAD ou INFEASIBLE~; (c) un score de \emph{naturel} de 1 (artificiel) à 3 (indiscernable d'un message réel).
+  \item Un troisième relecteur tranche les désaccords, puis compare à la référence.
+\end{enumerate}
+
+\textbf{Mesures et seuils proposés.}
+\begin{itemize}
+  \item Accord de Cohen $\kappa$ entre annotateurs sur l'identification de la cible~: viser $\kappa\geq0{,}8$~; en dessous, réviser la grille avant de poursuivre.
+  \item Taux de cible retrouvée par la majorité des annotateurs~: viser $\geq 95\,\%$ globalement et aucune intention de niveau~1 ou~2 en échec.
+  \item Toute intention avec ambiguïté de cible ou indice de décision confirmé par deux relecteurs est \textbf{réécrite}, puis recontrôlée (couches 0 et~1).
+\end{itemize}
+
+\textbf{Statuts.} \code{llm_generated_auto_checked} $\to$ \code{semantically_checked} (couches 0 et 1 passées) $\to$ \code{validated} (couche 2 passée).
+
+\subsection{Couche 3 --- Sous-ensemble rédigé par des humains}
+
+Les consignes recommandent une partie du jeu écrite par des humains. Proposition~: 30 scénarios choisis au hasard (20\,\%), rédigés par au moins deux personnes à partir de la même vue masquée (\code{view}) et des mêmes interdits. On compare l'exactitude de l'extracteur sur ce sous-ensemble et sur les intentions LLM des \emph{mêmes} scénarios. Un écart significatif révèle un artefact de style LLM (trop propre, trop régulier) qui rendrait le jeu plus facile ou plus difficile qu'une demande réelle.
+
+\subsection{Couche 4 --- Fuite de décision et artefacts}
+
+\begin{itemize}
+  \item \textbf{Fuite}~: entraîner un classifieur simple (régression logistique sur n-grammes, validation croisée) à prédire STAY / OFFLOAD / INFEASIBLE à partir du seul texte. Référence de hasard~: classe majoritaire OFFLOAD, soit $68/150\approx45{,}3\,\%$. Une exactitude nettement au-dessus indique que le texte trahit la décision.
+  \item \textbf{Artefacts}~: corrélation longueur--nombre d'exigences (connue, limite documentée)~; association style--indicateur ou style--taille de scénario (doit être faible)~; association ton--niveau de difficulté.
+\end{itemize}
+
+\subsection{Couche 5 --- Diversité}
+
+\begin{itemize}
+  \item Similarité de Jaccard par paire d'intentions~: seuil d'alerte $0{,}6$ (la paire 137/140 est à $0{,}70$ et doit être revue).
+  \item Proportion de n-grammes distincts (distinct-2, distinct-3), répartition des mots d'ouverture.
+  \item Fréquence des tournures figées (par exemple «~at least $X$ GB of RAM~»)~: au-delà de 10\,\% des intentions, reformuler une partie d'entre elles.
+\end{itemize}
+
+\subsection{Critères d'acceptation}
+
+Le jeu est déclaré utilisable pour une évaluation publiée si~:
+\begin{enumerate}
+  \item couche~0 à 100\,\% (déjà vrai)~;
+  \item couche~1~: toutes les divergences examinées en couche~2~;
+  \item couche~2~: $\kappa\geq0{,}8$, cible retrouvée $\geq95\,\%$, intentions fautives réécrites et recontrôlées~;
+  \item couche~4~: pas de fuite détectable~;
+  \item les limites de la section~\ref{sec:limites} sont reportées dans toute publication.
+\end{enumerate}
+
+\subsection{Ce que cette validation ne prouve pas}
+
+Elle établit que les intentions sont \emph{exactes, non ambiguës et sans fuite}. Elle n'établit pas qu'elles ressemblent à de vraies demandes d'opérateurs~: les scénarios sont synthétiques. Cette affirmation exigerait des demandes réelles, hors périmètre.
+
+%=====================================================================
+\section{Fichiers livrés}
+%=====================================================================
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Fichier (racine du dépôt) & Rôle \\
+\midrule
+\code{intents.json} & 150 intentions avec \code{plan}, \code{mentions}, \code{review_status} \\
+\code{validation_report.json} & résultat des contrôles, rejets, répartitions, limites \\
+\code{intent_generation_report.md} & rapport demandé par les consignes \\
+\code{SKILL.md} & procédure suivie (protocole par scénario, reprise) \\
+\code{PROMPT_GENERATION_INTENTS.md} & prompt de travail (rôle, niveaux, interdits, format) \\
+\code{intent_store.py} & affichage masqué, contrôle, enregistrement atomique (n'écrit aucun texte) \\
+\code{methodologie_generation_intents.pdf} & ce document \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Utilisation sans fuite.} Donner à l'extracteur \emph{uniquement} le champ \code{intent} et le contexte applicatif autorisé. Les champs \code{plan}, \code{mentions}, \code{baseline_mentions} et \code{n_words} sont des métadonnées d'analyse. La vérité terrain n'est lue qu'après la prédiction, via \code{scenario_id}.
+
+\end{document}

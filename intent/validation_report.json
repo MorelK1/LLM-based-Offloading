@@ -1,0 +1,147 @@
+{
+  "generated_on": "2026-10-27",
+  "scenarios_total": 150,
+  "intents_total": 150,
+  "order_matches_scenarios": true,
+  "ids_unique": true,
+  "requirements_total": 315,
+  "mentions_total": 315,
+  "coverage": {
+    "requirements_missing": 0,
+    "requirements_added": 0
+  },
+  "automatic_checks": {
+    "exact_decimal_value_after_unit_conversion": "pass on 150/150",
+    "comparator_matches": "pass on 150/150",
+    "no_undeclared_number": "pass on 150/150",
+    "id_present_iff_designation_has_id": "pass on 150/150",
+    "forbidden_terms (placement, node ids, tiers, availability, feasibility, approximation words, thousands separators)": "pass on 150/150",
+    "direction_verbs_consistent_with_baseline_to_new": "pass on 150/150",
+    "no_duplicate_intent": "pass on 150/150",
+    "final_full_revalidation_of_intents.json": "0 failures"
+  },
+  "rejections_during_generation": {
+    "count": 3,
+    "all_corrected_by_rewriting_the_text": true,
+    "details": [
+      {
+        "scenario_id": "ARVR-000036",
+        "reason": "forbidden placement term",
+        "matched": "places",
+        "context": "'in three places'"
+      },
+      {
+        "scenario_id": "ARVR-000114",
+        "reason": "forbidden placement term",
+        "matched": "moves",
+        "context": "'ceiling moves to'"
+      },
+      {
+        "scenario_id": "ARVR-000125",
+        "reason": "forbidden approximation term",
+        "matched": "around",
+        "context": "'all around'"
+      }
+    ]
+  },
+  "warnings_during_generation": [
+    {
+      "scenario_id": "ARVR-000059",
+      "warning": "same first two words as one of the 4 previous intents"
+    }
+  ],
+  "failure_categories_checked_with_zero_final_occurrences": [
+    "missing requirement",
+    "added requirement",
+    "wrong comparator",
+    "wrong value or unit",
+    "wrong or duplicated id",
+    "duplicate intent"
+  ],
+  "not_verified_automatically": [
+    "meaning of level 3/4 designations",
+    "uniqueness of target between f1 and f2 for indirect references",
+    "naturalness",
+    "semantic review by a human"
+  ],
+  "review_status": {
+    "llm_generated_auto_checked": 150
+  },
+  "distribution": {
+    "levels": {
+      "1": 51,
+      "2": 106,
+      "3": 101,
+      "4": 57
+    },
+    "designations": {
+      "name": 106,
+      "flow": 39,
+      "id": 47,
+      "role": 62,
+      "context": 57,
+      "id+name": 4
+    },
+    "kpi": {
+      "e2e_latency": 132,
+      "cpu": 87,
+      "ram": 96
+    },
+    "styles": {
+      "narrative": 30,
+      "ticket_note": 11,
+      "polite_request": 9,
+      "need_statement": 37,
+      "imperative": 17,
+      "constraint_statement": 28,
+      "question": 7,
+      "goal_oriented": 11
+    },
+    "registers": {
+      "manager": 22,
+      "ops_terse": 31,
+      "casual": 26,
+      "formal": 21,
+      "developer": 33,
+      "product_owner": 17
+    },
+    "structures": {
+      "clause_chain": 38,
+      "enumeration": 25,
+      "single_sentence": 64,
+      "conditional": 4,
+      "two_sentences": 19
+    },
+    "written_units": {
+      "ms": 100,
+      "vcpu": 55,
+      "mb": 44,
+      "seconds": 27,
+      "gb": 52,
+      "milliseconds": 1,
+      "mcpu": 8,
+      "virtual cpus": 8,
+      "millicores": 16,
+      "µs": 3,
+      "microseconds": 1
+    },
+    "requirements_per_scenario": {
+      "1": 39,
+      "2": 77,
+      "3": 14,
+      "4": 20
+    },
+    "words": {
+      "min": 7,
+      "median": 23.0,
+      "mean": 24.3,
+      "max": 57
+    }
+  },
+  "known_limits": [
+    "near-duplicate pair ARVR-000137/ARVR-000140 (Jaccard 0.70)",
+    "lexical monotony of RAM-floor phrasing ('at least X GB of RAM' 16-18 times)",
+    "level 3/4 boundary labelled inconsistently for 'the flow that ends with overlays'",
+    "binary units (GiB/MiB) not used"
+  ]
+}

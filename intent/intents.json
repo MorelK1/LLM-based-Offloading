@@ -1,0 +1,5402 @@
+[
+  {
+    "scenario_id": "ARVR-000001",
+    "intent": "We're tightening the latency budgets for the demo: the object recognition flow can't exceed 387.146 ms end to end, and the chain that produces the augmented-reality view may take 453.022 ms at most.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "387.146",
+        "written_unit": "ms",
+        "written_form": "387.146 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "453.022",
+        "written_unit": "ms",
+        "written_form": "453.022 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 33
+  },
+  {
+    "scenario_id": "ARVR-000002",
+    "intent": "Spec change for next release — C2: 8.38546 vCPU minimum. The stage that processes scene context: at least 7949.577721 MB of memory. End-to-end, f1 must stay within 307.475 ms and the AR rendering chain within 0.42262 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.38546",
+        "written_unit": "vCPU",
+        "written_form": "8.38546 vCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "7949.577721",
+        "written_unit": "MB",
+        "written_form": "7949.577721 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "307.475",
+        "written_unit": "ms",
+        "written_form": "307.475 ms",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.42262",
+        "written_unit": "seconds",
+        "written_form": "0.42262 seconds",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 37
+  },
+  {
+    "scenario_id": "ARVR-000003",
+    "intent": "Overlays keep stuttering on the headset; whatever composes them needs a memory floor of 3693.199177 MB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3693.199177",
+        "written_unit": "MB",
+        "written_form": "3693.199177 MB",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 16
+  },
+  {
+    "scenario_id": "ARVR-000004",
+    "intent": "Could you please make sure that AR Rendering has at least 3.946391197 GB of RAM, and that the object recognition flow f1 completes within 461.421 milliseconds end to end?",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.946391197",
+        "written_unit": "GB",
+        "written_form": "3.946391197 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "461.421",
+        "written_unit": "milliseconds",
+        "written_form": "461.421 milliseconds",
+        "designation": "id+name",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 29
+  },
+  {
+    "scenario_id": "ARVR-000005",
+    "intent": "If the object-spotting stage is going to cope with the denser scenes, it needs 3065.462713 MB of memory at minimum, while the AR path from capture to display must come back within 0.468153 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "conditional"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3065.462713",
+        "written_unit": "MB",
+        "written_form": "3065.462713 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.468153",
+        "written_unit": "seconds",
+        "written_form": "0.468153 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 34
+  },
+  {
+    "scenario_id": "ARVR-000006",
+    "intent": "Bump AR Rendering to 11.469289 vCPU at the very least.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "11.469289",
+        "written_unit": "vCPU",
+        "written_form": "11.469289 vCPU",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 10
+  },
+  {
+    "scenario_id": "ARVR-000007",
+    "intent": "After the model update, object recognition will need 7849.78 mCPU or more, and the module that interprets scene context should be given at least 13.018023728 GB of memory.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "7849.78",
+        "written_unit": "mCPU",
+        "written_form": "7849.78 mCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "13.018023728",
+        "written_unit": "GB",
+        "written_form": "13.018023728 GB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 28
+  },
+  {
+    "scenario_id": "ARVR-000008",
+    "intent": "Object Recognition should get 4.272393 vCPU as a minimum; in return, the end-to-end recognition flow can take up to 501.454 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "ops_terse",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.272393",
+        "written_unit": "vCPU",
+        "written_form": "4.272393 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "501.454",
+        "written_unit": "ms",
+        "written_form": "501.454 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 21
+  },
+  {
+    "scenario_id": "ARVR-000009",
+    "intent": "Quick one: can Scene Processing have at least 15.108912 virtual CPUs, and can whatever detects objects have 6344.700232 MB of RAM at minimum?",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "question",
+      "register": "casual",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "15.108912",
+        "written_unit": "virtual CPUs",
+        "written_form": "15.108912 virtual CPUs",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "6344.700232",
+        "written_unit": "MB",
+        "written_form": "6344.700232 MB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000010",
+    "intent": "Frames are piling up right where detection results get picked up; that stage needs at least 5057.837 millicores.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "ops_terse",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5057.837",
+        "written_unit": "millicores",
+        "written_form": "5057.837 millicores",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 18
+  },
+  {
+    "scenario_id": "ARVR-000011",
+    "intent": "Neither the recognition flow nor the AR rendering flow may take longer than 427.997 ms and 429.957 ms respectively.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "427.997",
+        "written_unit": "ms",
+        "written_form": "427.997 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "429.957",
+        "written_unit": "ms",
+        "written_form": "429.957 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000012",
+    "intent": "C3 (Scene Processing) requires at least 4.264466104 GB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.264466104",
+        "written_unit": "GB",
+        "written_form": "4.264466104 GB",
+        "designation": "id+name",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 10
+  },
+  {
+    "scenario_id": "ARVR-000013",
+    "intent": "C2 needs at least 5.02189959 GB of RAM, and the path that ends in the AR overlay has to deliver in 436022 µs at most.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "5.02189959",
+        "written_unit": "GB",
+        "written_form": "5.02189959 GB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "436022",
+        "written_unit": "µs",
+        "written_form": "436022 µs",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 25
+  },
+  {
+    "scenario_id": "ARVR-000014",
+    "intent": "Renderer: 6.808097 vCPU floor. Scene processor: memory floor of 5205.589455 MB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.808097",
+        "written_unit": "vCPU",
+        "written_form": "6.808097 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "5205.589455",
+        "written_unit": "MB",
+        "written_form": "5205.589455 MB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 11
+  },
+  {
+    "scenario_id": "ARVR-000015",
+    "intent": "Memory floors go up for two components: the AR renderer needs 3.412478454 GB and object recognition 2.29049385 GB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.412478454",
+        "written_unit": "GB",
+        "written_form": "3.412478454 GB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.29049385",
+        "written_unit": "GB",
+        "written_form": "2.29049385 GB",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 18
+  },
+  {
+    "scenario_id": "ARVR-000016",
+    "intent": "Users noticed the AR view lagging, so its capture-to-display time is capped at 496.838 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "496.838",
+        "written_unit": "ms",
+        "written_form": "496.838 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 15
+  },
+  {
+    "scenario_id": "ARVR-000017",
+    "intent": "For the new venue we need object recognition on at least 3.454577 vCPU and scene processing on at least 4425.733368 MB of memory, while keeping the recognition flow within 456.151 ms and the augmented-reality chain within 0.465812 seconds, end to end.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "3.454577",
+        "written_unit": "vCPU",
+        "written_form": "3.454577 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4425.733368",
+        "written_unit": "MB",
+        "written_form": "4425.733368 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "456.151",
+        "written_unit": "ms",
+        "written_form": "456.151 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.465812",
+        "written_unit": "seconds",
+        "written_form": "0.465812 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 41
+  },
+  {
+    "scenario_id": "ARVR-000018",
+    "intent": "Cap f1 at 478.589 ms and f2 at 479.246 ms, end to end.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "478.589",
+        "written_unit": "ms",
+        "written_form": "478.589 ms",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "479.246",
+        "written_unit": "ms",
+        "written_form": "479.246 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 13
+  },
+  {
+    "scenario_id": "ARVR-000019",
+    "intent": "Perf review says each of these is short: object recognition needs at least 3847.256 millicores, scene processing at least 3454.388973 MB of RAM, and the AR renderer at least 4.356529847 GB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "developer",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "3847.256",
+        "written_unit": "millicores",
+        "written_form": "3847.256 millicores",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3454.388973",
+        "written_unit": "MB",
+        "written_form": "3454.388973 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.356529847",
+        "written_unit": "GB",
+        "written_form": "4.356529847 GB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 33
+  },
+  {
+    "scenario_id": "ARVR-000020",
+    "intent": "Before the trade show we want at least 8.173275 virtual CPUs behind the AR rendering component and at least 3.899273249 GB of RAM for the module that identifies objects, with the recognition chain finishing in 418.661 ms or less and the AR chain in 431.049 ms or less.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.173275",
+        "written_unit": "virtual CPUs",
+        "written_form": "8.173275 virtual CPUs",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.899273249",
+        "written_unit": "GB",
+        "written_form": "3.899273249 GB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "418.661",
+        "written_unit": "ms",
+        "written_form": "418.661 ms",
+        "designation": "flow",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "431.049",
+        "written_unit": "ms",
+        "written_form": "431.049 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 48
+  },
+  {
+    "scenario_id": "ARVR-000021",
+    "intent": "Okay, three changes before Friday. The detector needs 4560.413688 MB of RAM or more; C3 needs at least 10.441999 vCPU; and the AR renderer wants no less than 6.115334788 GB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4560.413688",
+        "written_unit": "MB",
+        "written_form": "4560.413688 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "10.441999",
+        "written_unit": "vCPU",
+        "written_form": "10.441999 vCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "6.115334788",
+        "written_unit": "GB",
+        "written_form": "6.115334788 GB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 32
+  },
+  {
+    "scenario_id": "ARVR-000022",
+    "intent": "Bigger textures are coming for the overlays, and whatever draws them has to be able to count on at least 7.416598873 GB of memory.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "7.416598873",
+        "written_unit": "GB",
+        "written_form": "7.416598873 GB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 24
+  },
+  {
+    "scenario_id": "ARVR-000023",
+    "intent": "Minimum allocations: 11.321855 vCPU for C3 and 9.42031 vCPU for C4.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "11.321855",
+        "written_unit": "vCPU",
+        "written_form": "11.321855 vCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "9.42031",
+        "written_unit": "vCPU",
+        "written_form": "9.42031 vCPU",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 11
+  },
+  {
+    "scenario_id": "ARVR-000024",
+    "intent": "We would like the scene processing component to be allocated no less than 4431.11 millicores and the object recognition component no less than 2459.958732 MB of RAM. In addition, the flow that identifies objects should complete within 492.902 ms, and the AR flow within 0.45699 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "formal",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4431.11",
+        "written_unit": "millicores",
+        "written_form": "4431.11 millicores",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2459.958732",
+        "written_unit": "MB",
+        "written_form": "2459.958732 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "492.902",
+        "written_unit": "ms",
+        "written_form": "492.902 ms",
+        "designation": "flow",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.45699",
+        "written_unit": "seconds",
+        "written_form": "0.45699 seconds",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 46
+  },
+  {
+    "scenario_id": "ARVR-000025",
+    "intent": "We can relax the AR rendering flow's end-to-end budget; 514.53 ms is the new ceiling.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "514.53",
+        "written_unit": "ms",
+        "written_form": "514.53 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 15
+  },
+  {
+    "scenario_id": "ARVR-000026",
+    "intent": "Product agreed to give the render path some slack: capture to display may now take 0.519788 seconds at most.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "product_owner",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.519788",
+        "written_unit": "seconds",
+        "written_form": "0.519788 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000027",
+    "intent": "Please reserve at least 5.797929639 GB of RAM for the module that recognizes objects and at least 7434.010702 MB for the one that renders the AR content.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "5.797929639",
+        "written_unit": "GB",
+        "written_form": "5.797929639 GB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "7434.010702",
+        "written_unit": "MB",
+        "written_form": "7434.010702 MB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 27
+  },
+  {
+    "scenario_id": "ARVR-000028",
+    "intent": "Both flows feel sluggish since the last release: recognition should land within 479.133 ms and the AR side within 469.149 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "479.133",
+        "written_unit": "ms",
+        "written_form": "479.133 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "469.149",
+        "written_unit": "ms",
+        "written_form": "469.149 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 21
+  },
+  {
+    "scenario_id": "ARVR-000029",
+    "intent": "Please set the RAM minimums to 2.288154909 GB for C2, 3.024195661 GB for C3 and 4.370489331 GB for C4.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "ops_terse",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.288154909",
+        "written_unit": "GB",
+        "written_form": "2.288154909 GB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.024195661",
+        "written_unit": "GB",
+        "written_form": "3.024195661 GB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.370489331",
+        "written_unit": "GB",
+        "written_form": "4.370489331 GB",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000030",
+    "intent": "Whenever several objects are in view the overlays drop frames — the step that builds them needs 4.847255 vCPU at minimum.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.847255",
+        "written_unit": "vCPU",
+        "written_form": "4.847255 vCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 21
+  },
+  {
+    "scenario_id": "ARVR-000031",
+    "intent": "Recognition results reach the display too late; the whole chain from camera to screen must finish within 385.749 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "ops_terse",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "385.749",
+        "written_unit": "ms",
+        "written_form": "385.749 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000032",
+    "intent": "Give the stage that interprets the scene at least 6745.596094 MB of RAM, and keep f2 within 434.984 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "6745.596094",
+        "written_unit": "MB",
+        "written_form": "6745.596094 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "434.984",
+        "written_unit": "ms",
+        "written_form": "434.984 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000033",
+    "intent": "How fast does the AR view have to react? 470.909 ms, camera to display, at the latest.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "question",
+      "register": "casual",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "470.909",
+        "written_unit": "ms",
+        "written_form": "470.909 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 17
+  },
+  {
+    "scenario_id": "ARVR-000034",
+    "intent": "The stage sitting right before the display on the AR side keeps running out of memory: it needs a minimum of 8092.928374 MB. And that whole AR chain must answer in 436.259 ms or less.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "8092.928374",
+        "written_unit": "MB",
+        "written_form": "8092.928374 MB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "436.259",
+        "written_unit": "ms",
+        "written_form": "436.259 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 35
+  },
+  {
+    "scenario_id": "ARVR-000035",
+    "intent": "Rebalancing the latency budgets: the recognition flow gets tighter, 464.432 ms at most, while the AR rendering flow gets a bit more room, 504.481 ms at most. Separately, the stage in the middle of both chains needs at least 6580.976 millicores, and the first stage after capture in the recognition chain at least 2.820437067 GB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "manager",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "464.432",
+        "written_unit": "ms",
+        "written_form": "464.432 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "504.481",
+        "written_unit": "ms",
+        "written_form": "504.481 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6580.976",
+        "written_unit": "millicores",
+        "written_form": "6580.976 millicores",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.820437067",
+        "written_unit": "GB",
+        "written_form": "2.820437067 GB",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 57
+  },
+  {
+    "scenario_id": "ARVR-000036",
+    "intent": "Memory headroom needs to grow for three stages: the detection stage to at least 2.395702846 GB, scene processing to at least 3331.501846 MB, and the stage at the end of the AR chain, right before the display, to at least 4.178719042 GB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "product_owner",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.395702846",
+        "written_unit": "GB",
+        "written_form": "2.395702846 GB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3331.501846",
+        "written_unit": "MB",
+        "written_form": "3331.501846 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.178719042",
+        "written_unit": "GB",
+        "written_form": "4.178719042 GB",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 42
+  },
+  {
+    "scenario_id": "ARVR-000037",
+    "intent": "RAM budget revision: C2 → 2.321376523 GB minimum, C3 → 4022.521025 MB minimum.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.321376523",
+        "written_unit": "GB",
+        "written_form": "2.321376523 GB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4022.521025",
+        "written_unit": "MB",
+        "written_form": "4022.521025 MB",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 13
+  },
+  {
+    "scenario_id": "ARVR-000038",
+    "intent": "Recognition has to be quicker, 454.599 ms at most, but the other chain, the one that ends with overlays on screen, is allowed up to 502.564 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "casual",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "454.599",
+        "written_unit": "ms",
+        "written_form": "454.599 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "502.564",
+        "written_unit": "ms",
+        "written_form": "502.564 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 27
+  },
+  {
+    "scenario_id": "ARVR-000039",
+    "intent": "Two items: raise AR Rendering to at least 4.118041 virtual CPUs, and bring f1 down to 474.104 ms or less end to end.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "developer",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.118041",
+        "written_unit": "virtual CPUs",
+        "written_form": "4.118041 virtual CPUs",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "474.104",
+        "written_unit": "ms",
+        "written_form": "474.104 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000040",
+    "intent": "Memory is getting tight in the stage right after capture in the recognition chain; it needs at least 2.290320595 GB, and the chain as a whole has to be done within 475.886 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "ops_terse",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.290320595",
+        "written_unit": "GB",
+        "written_form": "2.290320595 GB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "475.886",
+        "written_unit": "ms",
+        "written_form": "475.886 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 33
+  },
+  {
+    "scenario_id": "ARVR-000041",
+    "intent": "AR rendering and scene processing both get memory floors: 3.7025055 GB and 3429.440412 MB respectively.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.7025055",
+        "written_unit": "GB",
+        "written_form": "3.7025055 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3429.440412",
+        "written_unit": "MB",
+        "written_form": "3429.440412 MB",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 15
+  },
+  {
+    "scenario_id": "ARVR-000042",
+    "intent": "Compute is the bottleneck in two stages of the AR chain: the first of them, which digests the scene, needs at least 11.040662 vCPU, and the second, right before the display, at least 8.938081 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "11.040662",
+        "written_unit": "vCPU",
+        "written_form": "11.040662 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.938081",
+        "written_unit": "vCPU",
+        "written_form": "8.938081 vCPU",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 35
+  },
+  {
+    "scenario_id": "ARVR-000043",
+    "intent": "Object recognition now needs 3042.376507 MB of RAM at minimum; separately, the AR pipeline's end-to-end allowance is extended to 519.895 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3042.376507",
+        "written_unit": "MB",
+        "written_form": "3042.376507 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "519.895",
+        "written_unit": "ms",
+        "written_form": "519.895 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 21
+  },
+  {
+    "scenario_id": "ARVR-000044",
+    "intent": "Hi team — following the capacity review: the stage in the middle of both pipelines gets a floor of 6.192319 virtual CPUs, and object recognition a RAM floor of 2.378139138 GB. On latency, the recognition flow has to finish within 458.466 ms, whereas the augmented-reality one may use up to 528.795 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "manager",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.192319",
+        "written_unit": "virtual CPUs",
+        "written_form": "6.192319 virtual CPUs",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.378139138",
+        "written_unit": "GB",
+        "written_form": "2.378139138 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "458.466",
+        "written_unit": "ms",
+        "written_form": "458.466 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "528.795",
+        "written_unit": "ms",
+        "written_form": "528.795 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 52
+  },
+  {
+    "scenario_id": "ARVR-000045",
+    "intent": "Allocate a minimum of 4979.15 mCPU to C2 and 9917.473 mCPU to the stage that processes scene context.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4979.15",
+        "written_unit": "mCPU",
+        "written_form": "4979.15 mCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "9917.473",
+        "written_unit": "mCPU",
+        "written_form": "9917.473 mCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 18
+  },
+  {
+    "scenario_id": "ARVR-000046",
+    "intent": "The recognition flow needs to finish end to end within 0.383609 seconds; anything slower breaks the experience for users.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.383609",
+        "written_unit": "seconds",
+        "written_form": "0.383609 seconds",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000047",
+    "intent": "We're aiming for an object recognition flow that finishes within 418.617 ms end to end, and the object recognition component itself should have at least 8.710454 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "418.617",
+        "written_unit": "ms",
+        "written_form": "418.617 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.710454",
+        "written_unit": "vCPU",
+        "written_form": "8.710454 vCPU",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 27
+  },
+  {
+    "scenario_id": "ARVR-000048",
+    "intent": "Recognition may be slightly slower than before (519.394 ms end to end at most), and whatever builds the overlays needs at least 4.113331 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "casual",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "519.394",
+        "written_unit": "ms",
+        "written_form": "519.394 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.113331",
+        "written_unit": "vCPU",
+        "written_form": "4.113331 vCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 24
+  },
+  {
+    "scenario_id": "ARVR-000049",
+    "intent": "Update for C4 (AR Rendering): memory must be at least 4.580181797 GB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.580181797",
+        "written_unit": "GB",
+        "written_form": "4.580181797 GB",
+        "designation": "id+name",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 12
+  },
+  {
+    "scenario_id": "ARVR-000050",
+    "intent": "AR Rendering needs at least 4314.397 millicores. Separately, f1 should be done within 0.464468 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "manager",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4314.397",
+        "written_unit": "millicores",
+        "written_form": "4314.397 millicores",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.464468",
+        "written_unit": "seconds",
+        "written_form": "0.464468 seconds",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 15
+  },
+  {
+    "scenario_id": "ARVR-000051",
+    "intent": "Detection is memory hungry now: it needs at least 3.636467326 GB. Meanwhile, the full AR path, camera to display, must be completed within 0.440705 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.636467326",
+        "written_unit": "GB",
+        "written_form": "3.636467326 GB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.440705",
+        "written_unit": "seconds",
+        "written_form": "0.440705 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 25
+  },
+  {
+    "scenario_id": "ARVR-000052",
+    "intent": "End-to-end ceilings, updated: f1 at 436.927 ms, AR rendering flow at 490.767 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "ops_terse",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "436.927",
+        "written_unit": "ms",
+        "written_form": "436.927 ms",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "490.767",
+        "written_unit": "ms",
+        "written_form": "490.767 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 13
+  },
+  {
+    "scenario_id": "ARVR-000053",
+    "intent": "Goal: viewers should see AR content no later than 470.947 ms after it is captured.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "470.947",
+        "written_unit": "ms",
+        "written_form": "470.947 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 15
+  },
+  {
+    "scenario_id": "ARVR-000054",
+    "intent": "Hello, for the next sprint the compute floors are: 12.052685 vCPU for object recognition, 11335.502 millicores for the scene stage, and 13.564018 vCPU for C4.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "casual",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "12.052685",
+        "written_unit": "vCPU",
+        "written_form": "12.052685 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "11335.502",
+        "written_unit": "millicores",
+        "written_form": "11335.502 millicores",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "13.564018",
+        "written_unit": "vCPU",
+        "written_form": "13.564018 vCPU",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 25
+  },
+  {
+    "scenario_id": "ARVR-000055",
+    "intent": "Boost the AR renderer to 9.409377 vCPU minimum; object recognition also needs a RAM floor of 3.274841178 GB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "9.409377",
+        "written_unit": "vCPU",
+        "written_form": "9.409377 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.274841178",
+        "written_unit": "GB",
+        "written_form": "3.274841178 GB",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 18
+  },
+  {
+    "scenario_id": "ARVR-000056",
+    "intent": "Scene processing is the CPU-starved step: give it 9.317741 vCPU or more. And the augmented-reality chain should be done in 0.452169 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "9.317741",
+        "written_unit": "vCPU",
+        "written_form": "9.317741 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.452169",
+        "written_unit": "seconds",
+        "written_form": "0.452169 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 22
+  },
+  {
+    "scenario_id": "ARVR-000057",
+    "intent": "f1's end-to-end latency must not exceed 387.11 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "387.11",
+        "written_unit": "ms",
+        "written_form": "387.11 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 8
+  },
+  {
+    "scenario_id": "ARVR-000058",
+    "intent": "It would help if the AR renderer could be given at least 6711.516 millicores, and if the recognition flow could stay within 431.727 ms end to end.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "casual",
+      "structure": "conditional"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6711.516",
+        "written_unit": "millicores",
+        "written_form": "6711.516 millicores",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "431.727",
+        "written_unit": "ms",
+        "written_form": "431.727 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 27
+  },
+  {
+    "scenario_id": "ARVR-000059",
+    "intent": "Scene Processing needs 10.531794 vCPU as a floor, and the pipeline that ends in AR overlays needs to come in at 450.113 ms or less.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "10.531794",
+        "written_unit": "vCPU",
+        "written_form": "10.531794 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "450.113",
+        "written_unit": "ms",
+        "written_form": "450.113 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 25
+  },
+  {
+    "scenario_id": "ARVR-000060",
+    "intent": "Recognition results have to reach the display within 469.388 ms of capture.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "469.388",
+        "written_unit": "ms",
+        "written_form": "469.388 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 12
+  },
+  {
+    "scenario_id": "ARVR-000061",
+    "intent": "Dear team, following the latest benchmarks we ask for the following: at least 8.847369 vCPU for object recognition; at least 4434.128102 MB of RAM for the scene-context stage; end-to-end latency within 489.766 ms for the recognition flow and within 0.413058 seconds for the AR chain.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "formal",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.847369",
+        "written_unit": "vCPU",
+        "written_form": "8.847369 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4434.128102",
+        "written_unit": "MB",
+        "written_form": "4434.128102 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "489.766",
+        "written_unit": "ms",
+        "written_form": "489.766 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.413058",
+        "written_unit": "seconds",
+        "written_form": "0.413058 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 45
+  },
+  {
+    "scenario_id": "ARVR-000062",
+    "intent": "Requirements for this iteration: AR Rendering (C4) must have 3197.62248 MB of RAM or more, and f1 must finish in 463.884 ms or less.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3197.62248",
+        "written_unit": "MB",
+        "written_form": "3197.62248 MB",
+        "designation": "id+name",
+        "level": 1
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "463.884",
+        "written_unit": "ms",
+        "written_form": "463.884 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 24
+  },
+  {
+    "scenario_id": "ARVR-000063",
+    "intent": "The detector, the scene stage and the renderer all need serious compute now — minimums of 7.989947 vCPU, 7.054593 vCPU and 7.676648 vCPU respectively.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "product_owner",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "7.989947",
+        "written_unit": "vCPU",
+        "written_form": "7.989947 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "7.054593",
+        "written_unit": "vCPU",
+        "written_form": "7.054593 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "7.676648",
+        "written_unit": "vCPU",
+        "written_form": "7.676648 vCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 24
+  },
+  {
+    "scenario_id": "ARVR-000064",
+    "intent": "Tighten both pipelines: 446.294 ms for the object recognition one, and 0.380071 seconds for the one that ends with the AR overlay.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "manager",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "446.294",
+        "written_unit": "ms",
+        "written_form": "446.294 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.380071",
+        "written_unit": "seconds",
+        "written_form": "0.380071 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 22
+  },
+  {
+    "scenario_id": "ARVR-000065",
+    "intent": "Slack ask: at least 4.822634876 GB of RAM for recognition, at least 4455.15912 MB for scene processing, and at least 6.920488 virtual CPUs for the renderer.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "casual",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.822634876",
+        "written_unit": "GB",
+        "written_form": "4.822634876 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4455.15912",
+        "written_unit": "MB",
+        "written_form": "4455.15912 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.920488",
+        "written_unit": "virtual CPUs",
+        "written_form": "6.920488 virtual CPUs",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 26
+  },
+  {
+    "scenario_id": "ARVR-000066",
+    "intent": "AR rendering needs a memory floor of 8422.522302 MB, while the scene stage needs 6.515437 vCPU or more.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "8422.522302",
+        "written_unit": "MB",
+        "written_form": "8422.522302 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.515437",
+        "written_unit": "vCPU",
+        "written_form": "6.515437 vCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 18
+  },
+  {
+    "scenario_id": "ARVR-000067",
+    "intent": "Following the review: the AR renderer gets 5081.827 millicores as a floor and object recognition 2.480727655 GB of RAM. On latency, recognition is capped at 467.188 ms while the flow ending in overlays gets a longer allowance, 0.514992 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "manager",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5081.827",
+        "written_unit": "millicores",
+        "written_form": "5081.827 millicores",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.480727655",
+        "written_unit": "GB",
+        "written_form": "2.480727655 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "467.188",
+        "written_unit": "ms",
+        "written_form": "467.188 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.514992",
+        "written_unit": "seconds",
+        "written_form": "0.514992 seconds",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 39
+  },
+  {
+    "scenario_id": "ARVR-000068",
+    "intent": "Targets — C3: at least 6.367589 vCPU. C2: at least 4299.665166 MB of RAM. f1: at most 414.585 ms. f2: at most 380.443 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.367589",
+        "written_unit": "vCPU",
+        "written_form": "6.367589 vCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4299.665166",
+        "written_unit": "MB",
+        "written_form": "4299.665166 MB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "414.585",
+        "written_unit": "ms",
+        "written_form": "414.585 ms",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "380.443",
+        "written_unit": "ms",
+        "written_form": "380.443 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 24
+  },
+  {
+    "scenario_id": "ARVR-000069",
+    "intent": "Can we make sure the stage fed directly by the capture step on the recognition side has at least 6905.829319 MB of RAM?",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "question",
+      "register": "casual",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "6905.829319",
+        "written_unit": "MB",
+        "written_form": "6905.829319 MB",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000070",
+    "intent": "Heads up for the AR launch: the step that builds overlays needs at least 5.973388 vCPU, and the stage fed by capture that in turn feeds scene processing needs 5080.221498 MB of RAM at minimum. End to end, recognition has to land within 457.408 ms and the AR path within 391.673 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "manager",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5.973388",
+        "written_unit": "vCPU",
+        "written_form": "5.973388 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "5080.221498",
+        "written_unit": "MB",
+        "written_form": "5080.221498 MB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "457.408",
+        "written_unit": "ms",
+        "written_form": "457.408 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "391.673",
+        "written_unit": "ms",
+        "written_form": "391.673 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 52
+  },
+  {
+    "scenario_id": "ARVR-000071",
+    "intent": "Our target: from camera frame to visible overlay in 314.288 ms at the most.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "314.288",
+        "written_unit": "ms",
+        "written_form": "314.288 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 14
+  },
+  {
+    "scenario_id": "ARVR-000072",
+    "intent": "Rendering gets a small CPU bump to a minimum of 3.61297 vCPU, while the AR chain's time budget is loosened to 518.772 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "3.61297",
+        "written_unit": "vCPU",
+        "written_form": "3.61297 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "518.772",
+        "written_unit": "ms",
+        "written_form": "518.772 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000073",
+    "intent": "The recognition flow may now run for up to 504.947 ms end to end; separately, the recognition component's compute floor becomes 5452.716 mCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "504.947",
+        "written_unit": "ms",
+        "written_form": "504.947 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5452.716",
+        "written_unit": "mCPU",
+        "written_form": "5452.716 mCPU",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000074",
+    "intent": "C4 needs 4.383595 vCPU at minimum; separately the chain in which objects get identified before reaching the screen must finish within 467.255 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "ops_terse",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.383595",
+        "written_unit": "vCPU",
+        "written_form": "4.383595 vCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "467.255",
+        "written_unit": "ms",
+        "written_form": "467.255 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000075",
+    "intent": "Recognition needs at least 3.337689368 GB of RAM, and the path that goes from capture through scene processing and rendering has to complete within 425.581 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.337689368",
+        "written_unit": "GB",
+        "written_form": "3.337689368 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "425.581",
+        "written_unit": "ms",
+        "written_form": "425.581 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 26
+  },
+  {
+    "scenario_id": "ARVR-000076",
+    "intent": "In the AR chain, the stage between capture and the renderer needs at least 9.352179 vCPU; the recognition flow needs to finish within 437.058 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "9.352179",
+        "written_unit": "vCPU",
+        "written_form": "9.352179 vCPU",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "437.058",
+        "written_unit": "ms",
+        "written_form": "437.058 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 25
+  },
+  {
+    "scenario_id": "ARVR-000077",
+    "intent": "Both pipelines may be a little slower than before: up to 501.898 ms for recognition and up to 0.518125 seconds for the AR one. And two minimums: 4336.431 millicores for whatever sits right after scene processing in the AR chain, and 2.331143765 GB of RAM for the recognition component.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "501.898",
+        "written_unit": "ms",
+        "written_form": "501.898 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.518125",
+        "written_unit": "seconds",
+        "written_form": "0.518125 seconds",
+        "designation": "flow",
+        "level": 3
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4336.431",
+        "written_unit": "millicores",
+        "written_form": "4336.431 millicores",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.331143765",
+        "written_unit": "GB",
+        "written_form": "2.331143765 GB",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 49
+  },
+  {
+    "scenario_id": "ARVR-000078",
+    "intent": "Big upgrade ahead: the AR renderer needs 14.386583 vCPU minimum. Also, the recognition flow should finish within 0.304271 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "casual",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "14.386583",
+        "written_unit": "vCPU",
+        "written_form": "14.386583 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.304271",
+        "written_unit": "seconds",
+        "written_form": "0.304271 seconds",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000079",
+    "intent": "Could we give Scene Processing a floor of 4869.647 millicores, and let the recognition flow run up to 505.752 ms end to end?",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4869.647",
+        "written_unit": "millicores",
+        "written_form": "4869.647 millicores",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "505.752",
+        "written_unit": "ms",
+        "written_form": "505.752 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000080",
+    "intent": "Keep the last step before the screen in the AR chain at 3.772793 vCPU or above, and make sure that chain as a whole finishes within 475.737 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "3.772793",
+        "written_unit": "vCPU",
+        "written_form": "3.772793 vCPU",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "475.737",
+        "written_unit": "ms",
+        "written_form": "475.737 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 28
+  },
+  {
+    "scenario_id": "ARVR-000081",
+    "intent": "Everything that happens between camera and screen while objects are being identified shouldn't exceed 291.584 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "casual",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "291.584",
+        "written_unit": "ms",
+        "written_form": "291.584 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 16
+  },
+  {
+    "scenario_id": "ARVR-000082",
+    "intent": "A small shuffle of budgets: the recognition flow goes down to 499.853 ms, and the AR one is relaxed to 521.707 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "499.853",
+        "written_unit": "ms",
+        "written_form": "499.853 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "521.707",
+        "written_unit": "ms",
+        "written_form": "521.707 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 22
+  },
+  {
+    "scenario_id": "ARVR-000083",
+    "intent": "Please ensure C2 has no less than 9470.43397 MB of memory.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "9470.43397",
+        "written_unit": "MB",
+        "written_form": "9470.43397 MB",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 11
+  },
+  {
+    "scenario_id": "ARVR-000084",
+    "intent": "The step just before the display in the recognition chain needs at least 15.323368 vCPU, and that whole chain has to finish within 397.297 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "15.323368",
+        "written_unit": "vCPU",
+        "written_form": "15.323368 vCPU",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "397.297",
+        "written_unit": "ms",
+        "written_form": "397.297 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 25
+  },
+  {
+    "scenario_id": "ARVR-000085",
+    "intent": "To keep the demo smooth we want at least 7725.424 millicores for the detector and at least 8.411177 virtual CPUs for the stage that composes the AR view.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "7725.424",
+        "written_unit": "millicores",
+        "written_form": "7725.424 millicores",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.411177",
+        "written_unit": "virtual CPUs",
+        "written_form": "8.411177 virtual CPUs",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 28
+  },
+  {
+    "scenario_id": "ARVR-000086",
+    "intent": "Raise the CPU floor of C3 to 6.409685 vCPU and that of C2 to 3.565377 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.409685",
+        "written_unit": "vCPU",
+        "written_form": "6.409685 vCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "3.565377",
+        "written_unit": "vCPU",
+        "written_form": "3.565377 vCPU",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 16
+  },
+  {
+    "scenario_id": "ARVR-000087",
+    "intent": "Whichever stage sits in both the recognition and AR chains without being first or last needs 5671.858 millicores at least.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5671.858",
+        "written_unit": "millicores",
+        "written_form": "5671.858 millicores",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 20
+  },
+  {
+    "scenario_id": "ARVR-000088",
+    "intent": "Two things on the wishlist: overlays need 6.634817 virtual CPUs at least, and the detection stage 3998.548268 MB of memory at least.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "product_owner",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.634817",
+        "written_unit": "virtual CPUs",
+        "written_form": "6.634817 virtual CPUs",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3998.548268",
+        "written_unit": "MB",
+        "written_form": "3998.548268 MB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 22
+  },
+  {
+    "scenario_id": "ARVR-000089",
+    "intent": "Latency first: f1 must stay within 499.652 ms and the AR chain within 0.422074 seconds. Then resources: object recognition needs 5.990424 vCPU or more, and C3 at least 4663.407441 MB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "manager",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "499.652",
+        "written_unit": "ms",
+        "written_form": "499.652 ms",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.422074",
+        "written_unit": "seconds",
+        "written_form": "0.422074 seconds",
+        "designation": "flow",
+        "level": 3
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5.990424",
+        "written_unit": "vCPU",
+        "written_form": "5.990424 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4663.407441",
+        "written_unit": "MB",
+        "written_form": "4663.407441 MB",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 32
+  },
+  {
+    "scenario_id": "ARVR-000090",
+    "intent": "The next AR feature is memory hungry: the step that builds the overlays has to get 11400.365463 MB or more.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "11400.365463",
+        "written_unit": "MB",
+        "written_form": "11400.365463 MB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 20
+  },
+  {
+    "scenario_id": "ARVR-000091",
+    "intent": "Please make sure the AR Rendering Flow completes end to end within 470523 microseconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "470523",
+        "written_unit": "microseconds",
+        "written_form": "470523 microseconds",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 14
+  },
+  {
+    "scenario_id": "ARVR-000092",
+    "intent": "Set the minimum for the AR Rendering component to 5214.032 mCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5214.032",
+        "written_unit": "mCPU",
+        "written_form": "5214.032 mCPU",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 11
+  },
+  {
+    "scenario_id": "ARVR-000093",
+    "intent": "Each time the AR view is shown to a user, the time since capture must stay within 484.211 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "484.211",
+        "written_unit": "ms",
+        "written_form": "484.211 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000094",
+    "intent": "Two asks from product: C2 should get 7027.107702 MB of RAM or more, and the AR rendering flow should come in at 0.340764 seconds or less.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "7027.107702",
+        "written_unit": "MB",
+        "written_form": "7027.107702 MB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.340764",
+        "written_unit": "seconds",
+        "written_form": "0.340764 seconds",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 26
+  },
+  {
+    "scenario_id": "ARVR-000095",
+    "intent": "Object recognition needs at least 4.397575803 GB of RAM, the stage both chains share between their endpoints at least 4414.658209 MB, and whatever draws the final AR elements at least 8.844595 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.397575803",
+        "written_unit": "GB",
+        "written_form": "4.397575803 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4414.658209",
+        "written_unit": "MB",
+        "written_form": "4414.658209 MB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.844595",
+        "written_unit": "vCPU",
+        "written_form": "8.844595 vCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 32
+  },
+  {
+    "scenario_id": "ARVR-000096",
+    "intent": "Object spotting, end to end, gets a 391.267 ms budget.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "391.267",
+        "written_unit": "ms",
+        "written_form": "391.267 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 10
+  },
+  {
+    "scenario_id": "ARVR-000097",
+    "intent": "Big model drop incoming. The detector needs 13.439185 vCPU at minimum, scene processing 11.647826362 GB of RAM at minimum, and the AR rendering stage 8753.046862 MB of RAM at minimum.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "13.439185",
+        "written_unit": "vCPU",
+        "written_form": "13.439185 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "11.647826362",
+        "written_unit": "GB",
+        "written_form": "11.647826362 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "8753.046862",
+        "written_unit": "MB",
+        "written_form": "8753.046862 MB",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 30
+  },
+  {
+    "scenario_id": "ARVR-000098",
+    "intent": "If you're touching the AR renderer anyway, give it 6.109461 vCPU or more; and while at it, get the recognition flow to 449.031 ms or better.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "developer",
+      "structure": "conditional"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.109461",
+        "written_unit": "vCPU",
+        "written_form": "6.109461 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "449.031",
+        "written_unit": "ms",
+        "written_form": "449.031 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 26
+  },
+  {
+    "scenario_id": "ARVR-000099",
+    "intent": "In the AR path, the component sandwiched between capture and rendering should never have less than 3.664787524 GB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.664787524",
+        "written_unit": "GB",
+        "written_form": "3.664787524 GB",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 20
+  },
+  {
+    "scenario_id": "ARVR-000100",
+    "intent": "In this revision, the recognition flow is allowed 505.114 ms while the AR flow is held to 480.23 ms; scene processing receives a floor of 6.065135 vCPU, and the step that decides what is in the frame before scene context is added gets a RAM floor of 2.863079413 GB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "505.114",
+        "written_unit": "ms",
+        "written_form": "505.114 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "480.23",
+        "written_unit": "ms",
+        "written_form": "480.23 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.065135",
+        "written_unit": "vCPU",
+        "written_form": "6.065135 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.863079413",
+        "written_unit": "GB",
+        "written_form": "2.863079413 GB",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 49
+  },
+  {
+    "scenario_id": "ARVR-000101",
+    "intent": "Release checklist — object recognition: 8506.113 mCPU minimum; AR renderer: 4.741001059 GB RAM minimum; recognition flow: 399.998 ms ceiling; AR flow: 465.06 ms ceiling.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8506.113",
+        "written_unit": "mCPU",
+        "written_form": "8506.113 mCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.741001059",
+        "written_unit": "GB",
+        "written_form": "4.741001059 GB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "399.998",
+        "written_unit": "ms",
+        "written_form": "399.998 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "465.06",
+        "written_unit": "ms",
+        "written_form": "465.06 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 24
+  },
+  {
+    "scenario_id": "ARVR-000102",
+    "intent": "A customer demo next month raises the bar: the recognition flow must finish within 422.86 ms and the AR flow within 465.937 ms, object recognition needs at least 5.707869 vCPU, and the scene-context stage at least 4907.060922 MB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "422.86",
+        "written_unit": "ms",
+        "written_form": "422.86 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "465.937",
+        "written_unit": "ms",
+        "written_form": "465.937 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5.707869",
+        "written_unit": "vCPU",
+        "written_form": "5.707869 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4907.060922",
+        "written_unit": "MB",
+        "written_form": "4907.060922 MB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 40
+  },
+  {
+    "scenario_id": "ARVR-000103",
+    "intent": "Spec line: C2 RAM ≥ 3.634583179 GB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.634583179",
+        "written_unit": "GB",
+        "written_form": "3.634583179 GB",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 7
+  },
+  {
+    "scenario_id": "ARVR-000104",
+    "intent": "Could the detector get 6.943769 vCPU or more, and could the AR path from capture to display come in at 0.396557 seconds or less?",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "question",
+      "register": "casual",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6.943769",
+        "written_unit": "vCPU",
+        "written_form": "6.943769 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.396557",
+        "written_unit": "seconds",
+        "written_form": "0.396557 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 24
+  },
+  {
+    "scenario_id": "ARVR-000105",
+    "intent": "Memory for object recognition: 3.296519688 GB or more. And how quickly detected objects show up on screen: 460.954 ms at the most.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "ops_terse",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.296519688",
+        "written_unit": "GB",
+        "written_form": "3.296519688 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "460.954",
+        "written_unit": "ms",
+        "written_form": "460.954 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 22
+  },
+  {
+    "scenario_id": "ARVR-000106",
+    "intent": "Detected objects that reach the screen later than 0.46227 seconds after capture are no good for us.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "casual",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.46227",
+        "written_unit": "seconds",
+        "written_form": "0.46227 seconds",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 17
+  },
+  {
+    "scenario_id": "ARVR-000107",
+    "intent": "Relax the recognition flow's end-to-end budget to 526.166 ms, and raise the AR renderer's CPU floor to 4.080667 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "526.166",
+        "written_unit": "ms",
+        "written_form": "526.166 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.080667",
+        "written_unit": "vCPU",
+        "written_form": "4.080667 vCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000108",
+    "intent": "How long the AR picture takes to appear after capture should not be more than 448990 µs.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "448990",
+        "written_unit": "µs",
+        "written_form": "448990 µs",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 17
+  },
+  {
+    "scenario_id": "ARVR-000109",
+    "intent": "The overlay path gets a little more slack, up to 512.188 ms end to end.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "512.188",
+        "written_unit": "ms",
+        "written_form": "512.188 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 15
+  },
+  {
+    "scenario_id": "ARVR-000110",
+    "intent": "Make the overlay appear within 0.410375 seconds of the frame being captured.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.410375",
+        "written_unit": "seconds",
+        "written_form": "0.410375 seconds",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 12
+  },
+  {
+    "scenario_id": "ARVR-000111",
+    "intent": "Our objective is for the route through scene processing and rendering to take 485.456 ms at most, with the component that draws the overlays having at least 4.528684 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "485.456",
+        "written_unit": "ms",
+        "written_form": "485.456 ms",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.528684",
+        "written_unit": "vCPU",
+        "written_form": "4.528684 vCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 29
+  },
+  {
+    "scenario_id": "ARVR-000112",
+    "intent": "In the AR chain, the stage that receives scene processing's output must always have 8.330840012 GB of RAM or more, and the chain must complete in 0.456582 seconds or less.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "formal",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "8.330840012",
+        "written_unit": "GB",
+        "written_form": "8.330840012 GB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.456582",
+        "written_unit": "seconds",
+        "written_form": "0.456582 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 30
+  },
+  {
+    "scenario_id": "ARVR-000113",
+    "intent": "Whenever a frame is captured, the overlay built from it has to be on screen within 407.415 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "product_owner",
+      "structure": "conditional"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "407.415",
+        "written_unit": "ms",
+        "written_form": "407.415 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 18
+  },
+  {
+    "scenario_id": "ARVR-000114",
+    "intent": "The AR pipeline's end-to-end latency ceiling is now 448.908 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "448.908",
+        "written_unit": "ms",
+        "written_form": "448.908 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 10
+  },
+  {
+    "scenario_id": "ARVR-000115",
+    "intent": "Whatever receives the raw camera frames in the recognition chain needs at least 8.145859 vCPU, and the AR stage that draws the final picture at least 7.999504902 GB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.145859",
+        "written_unit": "vCPU",
+        "written_form": "8.145859 vCPU",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "7.999504902",
+        "written_unit": "GB",
+        "written_form": "7.999504902 GB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 30
+  },
+  {
+    "scenario_id": "ARVR-000116",
+    "intent": "Memory for Scene Processing goes to 4398.546211 MB at least, and the recognition flow has to come in within 465.378 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4398.546211",
+        "written_unit": "MB",
+        "written_form": "4398.546211 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "465.378",
+        "written_unit": "ms",
+        "written_form": "465.378 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 21
+  },
+  {
+    "scenario_id": "ARVR-000117",
+    "intent": "For the investor demo we need four things. First, 8.31416 vCPU at least on the stage that draws overlays. Second, 8283.099042 MB of RAM at least for scene processing. Third, the recognition flow done within 454.681 ms. Fourth, the path from capture to visible overlay done within 0.388461 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "manager",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "8.31416",
+        "written_unit": "vCPU",
+        "written_form": "8.31416 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "8283.099042",
+        "written_unit": "MB",
+        "written_form": "8283.099042 MB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "454.681",
+        "written_unit": "ms",
+        "written_form": "454.681 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.388461",
+        "written_unit": "seconds",
+        "written_form": "0.388461 seconds",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 49
+  },
+  {
+    "scenario_id": "ARVR-000118",
+    "intent": "Give the detection step at least 3339.855053 MB of RAM, and loosen the recognition chain's time limit to 519.986 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3339.855053",
+        "written_unit": "MB",
+        "written_form": "3339.855053 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "519.986",
+        "written_unit": "ms",
+        "written_form": "519.986 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 20
+  },
+  {
+    "scenario_id": "ARVR-000119",
+    "intent": "Good news on latency: recognition can now take up to 528.788 ms, and the pipeline behind the overlay view up to 513.698 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "528.788",
+        "written_unit": "ms",
+        "written_form": "528.788 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "513.698",
+        "written_unit": "ms",
+        "written_form": "513.698 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000120",
+    "intent": "In the updated spec, C4 requires 6913.087 mCPU or more and C3 requires 5.78064348 GB of RAM or more.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6913.087",
+        "written_unit": "mCPU",
+        "written_form": "6913.087 mCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "5.78064348",
+        "written_unit": "GB",
+        "written_form": "5.78064348 GB",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 19
+  },
+  {
+    "scenario_id": "ARVR-000121",
+    "intent": "Overlay builder needs 3871.730472 MB of memory at least, and the AR path should take no more than 486.162 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "casual",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3871.730472",
+        "written_unit": "MB",
+        "written_form": "3871.730472 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "486.162",
+        "written_unit": "ms",
+        "written_form": "486.162 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 20
+  },
+  {
+    "scenario_id": "ARVR-000122",
+    "intent": "Compute budget: 4653.48 millicores for the detector, 6322.67 millicores for the scene step, both as minimums.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "manager",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4653.48",
+        "written_unit": "millicores",
+        "written_form": "4653.48 millicores",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "6322.67",
+        "written_unit": "millicores",
+        "written_form": "6322.67 millicores",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 16
+  },
+  {
+    "scenario_id": "ARVR-000123",
+    "intent": "Handoff note: C3 needs 11.074031 vCPU at least and C4 6720.696073 MB of RAM at least; on latency, f1 must finish within 0.420288 seconds and f2 within 410.687 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "11.074031",
+        "written_unit": "vCPU",
+        "written_form": "11.074031 vCPU",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "6720.696073",
+        "written_unit": "MB",
+        "written_form": "6720.696073 MB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.420288",
+        "written_unit": "seconds",
+        "written_form": "0.420288 seconds",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "410.687",
+        "written_unit": "ms",
+        "written_form": "410.687 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 29
+  },
+  {
+    "scenario_id": "ARVR-000124",
+    "intent": "Small tweaks across the board: the last processing stage of the AR chain gets a compute floor of 4.603836 vCPU, the detector a memory floor of 2831.785258 MB, the object recognition flow a limit of 485.994 ms, and the AR flow a limit of 469.069 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.603836",
+        "written_unit": "vCPU",
+        "written_form": "4.603836 vCPU",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2831.785258",
+        "written_unit": "MB",
+        "written_form": "2831.785258 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "485.994",
+        "written_unit": "ms",
+        "written_form": "485.994 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "469.069",
+        "written_unit": "ms",
+        "written_form": "469.069 ms",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 46
+  },
+  {
+    "scenario_id": "ARVR-000125",
+    "intent": "Mid-sized memory bumps throughout: at least 2596.396912 MB for the detector, at least 3.438836624 GB for the scene stage and at least 3463.453087 MB for the AR renderer.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2596.396912",
+        "written_unit": "MB",
+        "written_form": "2596.396912 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.438836624",
+        "written_unit": "GB",
+        "written_form": "3.438836624 GB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3463.453087",
+        "written_unit": "MB",
+        "written_form": "3463.453087 MB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 28
+  },
+  {
+    "scenario_id": "ARVR-000126",
+    "intent": "The stage that consumes the camera feed first needs at least 2.512649858 GB of RAM, and the one after it in the recognition chain needs at least 3368.821594 MB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.512649858",
+        "written_unit": "GB",
+        "written_form": "2.512649858 GB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3368.821594",
+        "written_unit": "MB",
+        "written_form": "3368.821594 MB",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 29
+  },
+  {
+    "scenario_id": "ARVR-000127",
+    "intent": "At least 3.915037 vCPU for object recognition, at least 5.357083 vCPU for scene processing, and at least 4.03531161 GB of RAM for the AR rendering stage.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "ops_terse",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "3.915037",
+        "written_unit": "vCPU",
+        "written_form": "3.915037 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5.357083",
+        "written_unit": "vCPU",
+        "written_form": "5.357083 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.03531161",
+        "written_unit": "GB",
+        "written_form": "4.03531161 GB",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 26
+  },
+  {
+    "scenario_id": "ARVR-000128",
+    "intent": "From camera to detected-object display, 475.573 ms is the limit; and the scene-context stage must have 5.048896 vCPU at least.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "475.573",
+        "written_unit": "ms",
+        "written_form": "475.573 ms",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5.048896",
+        "written_unit": "vCPU",
+        "written_form": "5.048896 vCPU",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 20
+  },
+  {
+    "scenario_id": "ARVR-000129",
+    "intent": "Would it be possible to give object recognition a floor of 5272.396 millicores, and to have the path from capture to visible overlay finish within 0.397523 seconds?",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5272.396",
+        "written_unit": "millicores",
+        "written_form": "5272.396 millicores",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.397523",
+        "written_unit": "seconds",
+        "written_form": "0.397523 seconds",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 27
+  },
+  {
+    "scenario_id": "ARVR-000130",
+    "intent": "Tightening f1 to 298.548 ms, end to end, maximum.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "298.548",
+        "written_unit": "ms",
+        "written_form": "298.548 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 9
+  },
+  {
+    "scenario_id": "ARVR-000131",
+    "intent": "Almost no change for the route that identifies objects (499.692 ms is the new limit); and for whatever the user sees as AR, from the instant of capture, 490.104 ms is the limit.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "499.692",
+        "written_unit": "ms",
+        "written_form": "499.692 ms",
+        "designation": "flow",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "490.104",
+        "written_unit": "ms",
+        "written_form": "490.104 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 33
+  },
+  {
+    "scenario_id": "ARVR-000132",
+    "intent": "The goal is a faster recognition flow, no more than 461.995 ms, and a slightly more relaxed AR side, up to 511.517 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "461.995",
+        "written_unit": "ms",
+        "written_form": "461.995 ms",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "511.517",
+        "written_unit": "ms",
+        "written_form": "511.517 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000133",
+    "intent": "Three heavy memory asks: the detector at least 5.62149125 GB; the stage between detector and display, or between capture and renderer, at least 8014.968283 MB; and the stage that draws the overlays at least 8.408953083 GB.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "5.62149125",
+        "written_unit": "GB",
+        "written_form": "5.62149125 GB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "8014.968283",
+        "written_unit": "MB",
+        "written_form": "8014.968283 MB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "8.408953083",
+        "written_unit": "GB",
+        "written_form": "8.408953083 GB",
+        "designation": "role",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 36
+  },
+  {
+    "scenario_id": "ARVR-000134",
+    "intent": "Latency targets for the next milestone: the recognition route 393741 µs, the AR route 0.488306 seconds, both end to end and both maxima.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "manager",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "393741",
+        "written_unit": "µs",
+        "written_form": "393741 µs",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.488306",
+        "written_unit": "seconds",
+        "written_form": "0.488306 seconds",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000135",
+    "intent": "Small memory top-ups: object recognition gets 2.295150073 GB and AR rendering 3.066343288 GB, both as minimums.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "casual",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "2.295150073",
+        "written_unit": "GB",
+        "written_form": "2.295150073 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.066343288",
+        "written_unit": "GB",
+        "written_form": "3.066343288 GB",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 16
+  },
+  {
+    "scenario_id": "ARVR-000136",
+    "intent": "Hi, a few changes for tomorrow's review: object recognition should have at least 5404.802 mCPU, and C3 at least 4.816515612 GB of RAM. As for latency, the route that identifies objects must finish within 411.328 ms and the one that ends in the AR overlay within 0.474447 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "casual",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5404.802",
+        "written_unit": "mCPU",
+        "written_form": "5404.802 mCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.816515612",
+        "written_unit": "GB",
+        "written_form": "4.816515612 GB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "411.328",
+        "written_unit": "ms",
+        "written_form": "411.328 ms",
+        "designation": "flow",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.474447",
+        "written_unit": "seconds",
+        "written_form": "0.474447 seconds",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 48
+  },
+  {
+    "scenario_id": "ARVR-000137",
+    "intent": "Can we get the stage that precedes scene processing on the recognition route to 3217.602112 MB of RAM at least, the stage that precedes rendering to 3.378247261 GB at least, and the stage whose output goes straight to the display on the AR route to 4.996717 vCPU at least?",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "question",
+      "register": "developer",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3217.602112",
+        "written_unit": "MB",
+        "written_form": "3217.602112 MB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.378247261",
+        "written_unit": "GB",
+        "written_form": "3.378247261 GB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.996717",
+        "written_unit": "vCPU",
+        "written_form": "4.996717 vCPU",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 49
+  },
+  {
+    "scenario_id": "ARVR-000138",
+    "intent": "Latency can be relaxed a little: up to 511.645 ms for the route through object recognition and up to 506.74 ms for the route through rendering. On resources, C4 needs at least 5150.654 millicores and C3 at least 4.454570016 GB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "manager",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "511.645",
+        "written_unit": "ms",
+        "written_form": "511.645 ms",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "506.74",
+        "written_unit": "ms",
+        "written_form": "506.74 ms",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "5150.654",
+        "written_unit": "millicores",
+        "written_form": "5150.654 millicores",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "4.454570016",
+        "written_unit": "GB",
+        "written_form": "4.454570016 GB",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 42
+  },
+  {
+    "scenario_id": "ARVR-000139",
+    "intent": "Let the route through object recognition run up to 526.536 ms, and make sure scene processing has at least 3.251324769 GB of RAM.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "526.536",
+        "written_unit": "ms",
+        "written_form": "526.536 ms",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.251324769",
+        "written_unit": "GB",
+        "written_form": "3.251324769 GB",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 23
+  },
+  {
+    "scenario_id": "ARVR-000140",
+    "intent": "Heavier models land soon: the stage that precedes scene processing on the recognition route needs 5.392534989 GB of RAM at least, scene processing 7.488981 vCPU at least, and the stage whose output goes straight to the display on the AR route 9.22244 vCPU at least.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "narrative",
+      "register": "developer",
+      "structure": "enumeration"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "5.392534989",
+        "written_unit": "GB",
+        "written_form": "5.392534989 GB",
+        "designation": "context",
+        "level": 4
+      },
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "7.488981",
+        "written_unit": "vCPU",
+        "written_form": "7.488981 vCPU",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "9.22244",
+        "written_unit": "vCPU",
+        "written_form": "9.22244 vCPU",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 45
+  },
+  {
+    "scenario_id": "ARVR-000141",
+    "intent": "Target: recognition-to-screen time of 454.379 ms or less.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "454.379",
+        "written_unit": "ms",
+        "written_form": "454.379 ms",
+        "designation": "flow",
+        "level": 3
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 8
+  },
+  {
+    "scenario_id": "ARVR-000142",
+    "intent": "The end-to-end latency of flow f2 shall not exceed 456.989 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "456.989",
+        "written_unit": "ms",
+        "written_form": "456.989 ms",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 11
+  },
+  {
+    "scenario_id": "ARVR-000143",
+    "intent": "Question for the team: can object recognition be given 3.110898793 GB of RAM at minimum, and can the route through rendering be kept within 489.874 ms?",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "question",
+      "register": "manager",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.110898793",
+        "written_unit": "GB",
+        "written_form": "3.110898793 GB",
+        "designation": "name",
+        "level": 2
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "489.874",
+        "written_unit": "ms",
+        "written_form": "489.874 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 26
+  },
+  {
+    "scenario_id": "ARVR-000144",
+    "intent": "Please give C2 at least 7.179215 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "polite_request",
+      "register": "ops_terse",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "7.179215",
+        "written_unit": "vCPU",
+        "written_form": "7.179215 vCPU",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 7
+  },
+  {
+    "scenario_id": "ARVR-000145",
+    "intent": "Priority change: the renderer needs 9.322956 virtual CPUs at least; the route through object recognition has a new limit of 458.189 ms.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "ticket_note",
+      "register": "manager",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "9.322956",
+        "written_unit": "virtual CPUs",
+        "written_form": "9.322956 virtual CPUs",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f1",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "458.189",
+        "written_unit": "ms",
+        "written_form": "458.189 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 22
+  },
+  {
+    "scenario_id": "ARVR-000146",
+    "intent": "How quickly does a captured frame have to turn into a visible overlay? 381.497 ms, tops.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "question",
+      "register": "casual",
+      "structure": "two_sentences"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "381.497",
+        "written_unit": "ms",
+        "written_form": "381.497 ms",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 16
+  },
+  {
+    "scenario_id": "ARVR-000147",
+    "intent": "Per the revised service level, C4 must be given no less than 3.759123967 GB of RAM and flow f2 must complete in no more than 0.464075 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "constraint_statement",
+      "register": "formal",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3.759123967",
+        "written_unit": "GB",
+        "written_form": "3.759123967 GB",
+        "designation": "id",
+        "level": 1
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.464075",
+        "written_unit": "seconds",
+        "written_form": "0.464075 seconds",
+        "designation": "id",
+        "level": 1
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 27
+  },
+  {
+    "scenario_id": "ARVR-000148",
+    "intent": "The scene-context stage needs 7.395464 vCPU at least, while the stage right before it on the recognition route needs 5722.996924 MB of RAM at least.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "need_statement",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "C3",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "7.395464",
+        "written_unit": "vCPU",
+        "written_form": "7.395464 vCPU",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "5722.996924",
+        "written_unit": "MB",
+        "written_form": "5722.996924 MB",
+        "designation": "context",
+        "level": 4
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 25
+  },
+  {
+    "scenario_id": "ARVR-000149",
+    "intent": "We'd like the overlay builder to have 3493.143258 MB of RAM at least, with the AR route finishing within 0.47229 seconds.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "goal_oriented",
+      "register": "product_owner",
+      "structure": "single_sentence"
+    },
+    "mentions": [
+      {
+        "target_id": "C4",
+        "kpi_type": "ram",
+        "comparator": "gte",
+        "written_value": "3493.143258",
+        "written_unit": "MB",
+        "written_form": "3493.143258 MB",
+        "designation": "role",
+        "level": 3
+      },
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "0.47229",
+        "written_unit": "seconds",
+        "written_form": "0.47229 seconds",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 21
+  },
+  {
+    "scenario_id": "ARVR-000150",
+    "intent": "On one hand, extend the AR budget to 523.705 ms; on the other, object recognition needs at least 4.087371 vCPU.",
+    "review_status": "llm_generated_auto_checked",
+    "variant_id": 1,
+    "plan": {
+      "style": "imperative",
+      "register": "developer",
+      "structure": "clause_chain"
+    },
+    "mentions": [
+      {
+        "target_id": "f2",
+        "kpi_type": "e2e_latency",
+        "comparator": "lte",
+        "written_value": "523.705",
+        "written_unit": "ms",
+        "written_form": "523.705 ms",
+        "designation": "flow",
+        "level": 3
+      },
+      {
+        "target_id": "C2",
+        "kpi_type": "cpu",
+        "comparator": "gte",
+        "written_value": "4.087371",
+        "written_unit": "vCPU",
+        "written_form": "4.087371 vCPU",
+        "designation": "name",
+        "level": 2
+      }
+    ],
+    "baseline_mentions": [],
+    "n_words": 20
+  }
+]
