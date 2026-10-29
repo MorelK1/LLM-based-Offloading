@@ -178,7 +178,8 @@ pytest
   own execution time (`workload_mi / node.mips` if both are declared, else
   `wcet_ms` if declared, else `0` -- `pipeline.py:service_processing_delay_ms`)
   plus per-hop communication delay. Communication delay is transmission
-  (`ceil(output_size / link.bandwidth_mbps)`, `0` if `output_size` isn't
+  (`output_size / link.bandwidth_mbps * 1000`, `output_size` in megabits --
+  same unit family as `bandwidth_mbps` -- `0` if `output_size` isn't
   declared) plus propagation (`link.propagation_delay_ms`), summed along the
   *minimum-delay path* between the two services' nodes -- a Dijkstra search
   over the links graph (`pipeline.py:shortest_path_delays_ms`), not just a
