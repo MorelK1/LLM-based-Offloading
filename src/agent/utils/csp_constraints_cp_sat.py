@@ -52,6 +52,21 @@ def add_capacity_constraints_cp_sat(
             model.Add(total <= capacity)
 
 
+def add_fixed_placement_constraints_cp_sat(
+    model: cp_model.CpModel,
+    x: _Assignment,
+    services: dict[str, Service],
+) -> None:
+    """Pins every service with fixed_placement=True to its current_node --
+    combined with the "exactly one node per service" constraint the caller
+    already adds, forcing x[sid][current_node]==1 forces every other
+    x[sid][n] to 0, so the service can never appear as moved in a solution.
+    """
+    for sid, service in services.items():
+        if service.fixed_placement:
+            model.Add(x[sid][service.current_node] == 1)
+
+
 def _processing_delay_terms_cp_sat(
     service_id: str,
     service: Service,

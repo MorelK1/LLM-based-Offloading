@@ -48,10 +48,20 @@ def solve_placement(
     service_ids = list(services.keys())
     node_ids = list(nodes.keys())
 
-    total = len(node_ids) ** len(service_ids)
+    # A fixed_placement service is only ever a candidate for its own
+    # current_node -- shrinks the search space instead of relying on
+    # post-hoc filtering, and guarantees it never appears as moved.
+    candidates_per_service = [
+        [services[sid].current_node] if services[sid].fixed_placement else node_ids
+        for sid in service_ids
+    ]
+    total = 1
+    for candidates in candidates_per_service:
+        total *= len(candidates)
     search_trace = [
         f"exploring {total} candidate placements "
-        f"({len(node_ids)} nodes ^ {len(service_ids)} services)"
+        f"({len(node_ids)} nodes ^ {len(service_ids)} services, "
+        f"reduced for any fixed_placement service)"
     ]
 
     best_candidate: dict[str, str] | None = None
@@ -60,7 +70,7 @@ def solve_placement(
     tried = 0
     valid_count = 0
 
-    for node_choice in itertools.product(node_ids, repeat=len(service_ids)):
+    for node_choice in itertools.product(*candidates_per_service):
         tried += 1
         candidate = dict(zip(service_ids, node_choice))
 

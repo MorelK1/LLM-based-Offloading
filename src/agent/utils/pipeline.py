@@ -120,16 +120,19 @@ def shortest_path_delays_ms(
     rather than once per (source, target) pair.
 
     output_size is the data volume carried over this hop (the upstream
-    service's own output_size); 0/undeclared means only propagation delay
-    drives the weighting, consistent with every other quantity in this
-    model defaulting to its simplest behavior when absent. A direct link is
-    no longer required between two consecutive services -- only a node
-    missing from the returned dict is genuinely unreachable from source (a
-    disconnected infrastructure graph), which callers treat as infeasible."""
+    service's own output_size), in megabits (Mb) -- the same unit family as
+    bandwidth_mbps (Mb/s), so output_size/bandwidth_mbps is seconds, and
+    *1000 converts that to ms to match propagation_delay_ms. 0/undeclared
+    means only propagation delay drives the weighting, consistent with
+    every other quantity in this model defaulting to its simplest behavior
+    when absent. A direct link is no longer required between two
+    consecutive services -- only a node missing from the returned dict is
+    genuinely unreachable from source (a disconnected infrastructure
+    graph), which callers treat as infeasible."""
     size = output_size or 0.0
     adjacency: dict[str, list[tuple[str, float]]] = {}
     for link in links:
-        cost = math.ceil(size / link.bandwidth_mbps) + link.propagation_delay_ms
+        cost = (size / link.bandwidth_mbps) * 1000 + link.propagation_delay_ms
         adjacency.setdefault(link.source_node, []).append((link.target_node, cost))
         adjacency.setdefault(link.target_node, []).append((link.source_node, cost))
 
@@ -185,10 +188,11 @@ def flow_latency_ms(
     communication_delay (sum of per-hop network delay, 0 for a co-located hop).
 
     Per-hop communication delay is Equation 2's minimum-delay path cost (see
-    shortest_path_delays_ms): transmission (output_size/bandwidth, 0 if the
-    upstream service doesn't declare output_size) plus propagation
-    (link.propagation_delay_ms), summed over every link on the
-    cheapest path between the two services' nodes -- not just a direct link.
+    shortest_path_delays_ms): transmission (output_size in Mb / bandwidth_mbps,
+    *1000 for ms -- 0 if the upstream service doesn't declare output_size)
+    plus propagation (link.propagation_delay_ms), summed over every link on
+    the cheapest path between the two services' nodes -- not just a direct
+    link.
 
     node_by_service maps each service_id to the node it's hosted on --
     pass {sid: s.current_node for sid, s in services.items()} to evaluate the

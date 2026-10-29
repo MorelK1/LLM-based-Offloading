@@ -28,6 +28,7 @@ from agent.model.schemas import DecisionResult
 from agent.states.state import AgentState
 from agent.utils.csp_constraints_cp_sat import (
     add_capacity_constraints_cp_sat,
+    add_fixed_placement_constraints_cp_sat,
     add_latency_constraints_cp_sat,
 )
 from agent.utils.pipeline import check_candidate_placement, explain_moved_services
@@ -54,6 +55,7 @@ def decision_engine_node_cp_sat(state: AgentState) -> dict:
 
     add_capacity_constraints_cp_sat(model, x, nodes, services, requirements)
     add_latency_constraints_cp_sat(model, x, flows, services, links, requirements, node_ids, nodes)
+    add_fixed_placement_constraints_cp_sat(model, x, services)
 
     # --- objective: minimize disruption, the number of services moved ---
     disruption = sum(1 - x[s][services[s].current_node] for s in service_ids)

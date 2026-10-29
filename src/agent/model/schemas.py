@@ -37,8 +37,17 @@ class Service(BaseModel):
     description: str
     current_node: str
     requirements: dict[str, float] | None = None
+    # Both solvers treat this service's node as immovable: it must stay on
+    # current_node in every candidate/solution, never counted as "moved".
+    # See utils/csp_solver.py:solve_placement and
+    # utils/csp_constraints_cp_sat.py:add_fixed_placement_constraints_cp_sat.
+    fixed_placement: bool = False
     wcet_ms: float | None = None
     workload_mi: float | None = None
+    # Data volume this service emits per invocation, in megabits (Mb) -- the
+    # same unit family as Link.bandwidth_mbps. See
+    # utils/pipeline.py:shortest_path_delays_ms for how this becomes a
+    # transmission delay.
     output_size: float | None = None
 
 
