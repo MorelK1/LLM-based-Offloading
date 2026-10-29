@@ -11,7 +11,7 @@
           "ram_gb": 1
         },
         "workload_mi": 25,
-        "output_size": 30
+        "output_size": 4
       },
       {
         "service_id": "T2",
@@ -23,7 +23,7 @@
           "ram_gb": 2
         },
         "workload_mi": 40,
-        "output_size": 20
+        "output_size": 2
       },
       {
         "service_id": "T3",
@@ -35,7 +35,7 @@
           "ram_gb": 8
         },
         "workload_mi": 600,
-        "output_size": 0.2
+        "output_size": 0.1
       },
       {
         "service_id": "T4",
@@ -47,7 +47,7 @@
           "ram_gb": 4
         },
         "workload_mi": 300,
-        "output_size": 0.5
+        "output_size": 0.1
       },
       {
         "service_id": "T5",
