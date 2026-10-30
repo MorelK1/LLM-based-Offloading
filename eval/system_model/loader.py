@@ -25,11 +25,25 @@ from agent.model.schemas import Flow, Link, Node, Service
 
 DATA_DIR = Path(__file__).parent
 EXPERIMENT_DIR = DATA_DIR.parent / "experiment_150"
+INTENT_DIR = DATA_DIR.parents[1] / "intent"
 
 # Scenario requirements use "e2e_latency" for what our schema calls "latency"
 # -- cpu/ram already match our own kpi_type spelling, so only this one entry
 # is needed. See eval/CONSIGNES_GENERATION_INTENTS_FR.md section 3.1.
 _SCENARIO_KPI_TO_NODE_FIELD = {"cpu": "cpu_cores", "ram": "ram_gb"}
+
+# README.json's placement_eligibility: "C1 fixed on N12 and C5 on N8; C2-C4
+# may be placed on compute-capable access points N1,N2, edge N3-N5 or cloud
+# N6,N7 ... Other IoT endpoints N9-N15 are not general offloading hosts."
+# Excluded from `nodes` entirely (not placement candidates for ANY service)
+# -- but N8/N12 are deliberately KEPT, since C5/C1's fixed_placement needs
+# them to exist as real candidate nodes (both solvers would otherwise have
+# no node to pin them to). Filtering happens here, not in nodes.csv itself,
+# so the source file stays the untouched ECSP-Sim-derived reference; the
+# excluded nodes remain in links.csv and can still serve as network relays
+# for multi-hop routing (shortest_path_delays_ms reads links independently
+# of `nodes`), just never as compute hosts.
+_EXCLUDED_HOST_NODES = {"N9", "N10", "N11", "N13", "N14", "N15"}
 
 
 def _read_csv(name: str) -> list[dict]:
@@ -41,6 +55,8 @@ def load_nodes() -> dict[str, Node]:
     background = {row["node_id"]: row for row in _read_csv("background_loads.csv")}
     nodes: dict[str, Node] = {}
     for row in _read_csv("nodes.csv"):
+        if row["node_id"] in _EXCLUDED_HOST_NODES:
+            continue
         bg = background.get(row["node_id"])
         bg_cpu = float(bg["background_cpu_cores"]) if bg else 0.0
         bg_ram = float(bg["background_ram_gb"]) if bg else 0.0
@@ -82,6 +98,16 @@ def load_scenario(scenario_id: str) -> dict:
     with open(EXPERIMENT_DIR / "scenarios.json") as f:
         scenarios = json.load(f)
     return next(s for s in scenarios if s["id"] == scenario_id)
+
+
+def load_intent(scenario_id: str) -> dict:
+    """The intent/intents.json entry for scenario_id -- "intent" is the
+    natural-language text to feed intent_grounding_node; the rest (plan,
+    mentions, n_words, review_status) is generation metadata, never fed to
+    the model itself (see intent/intent_generation_report.md section 10)."""
+    with open(INTENT_DIR / "intents.json") as f:
+        intents = json.load(f)
+    return next(i for i in intents if i["scenario_id"] == scenario_id)
 
 
 def _baseline_placement() -> dict[str, str]:
