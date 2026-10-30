@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 .env
 .ipynb_checkpoints/
+src/agent/nodes/test.ipynb
 *.egg-info/
 build/
 dist/
