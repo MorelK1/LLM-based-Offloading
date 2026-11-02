@@ -1,0 +1,306 @@
+{
+  "generated_on": "2026-11-02",
+  "set": "experiment_500",
+  "scenarios_total": 500,
+  "intents_total": 500,
+  "new_intents_written_this_pass": 350,
+  "carried_over_from_experiment_150": 150,
+  "carry_method": "match on exact equality of the requirements array; text unchanged; each entry revalidated against its new scenario",
+  "order_matches_scenarios": true,
+  "requirements_total": 1057,
+  "mentions_total": 1057,
+  "full_revalidation_failures": 0,
+  "review_status": {
+    "llm_generated_auto_checked": 500
+  },
+  "generation": {
+    "written_by": "Claude (claude-sonnet-5-5), by hand, one scenario at a time, in about twenty batches of 12-18",
+    "text_generation_code": "none; intent_store.py only displays (ground truth masked), validates, stores",
+    "rejections_by_checker": [
+      {
+        "scenario_id": "ARVR-000263",
+        "matched": "about",
+        "context": "How about at least ... (rewritten)"
+      }
+    ],
+    "revisions_after_audit": [
+      {
+        "scenario_id": "ARVR-000069",
+        "reason": "audit: quasi-doublon ou texte trop court (<7 mots)"
+      },
+      {
+        "scenario_id": "ARVR-000183",
+        "reason": "audit: quasi-doublon ou texte trop court (<7 mots)"
+      },
+      {
+        "scenario_id": "ARVR-000218",
+        "reason": "audit: quasi-doublon ou texte trop court (<7 mots)"
+      },
+      {
+        "scenario_id": "ARVR-000242",
+        "reason": "audit: quasi-doublon ou texte trop court (<7 mots)"
+      },
+      {
+        "scenario_id": "ARVR-000324",
+        "reason": "audit: quasi-doublon ou texte trop court (<7 mots)"
+      },
+      {
+        "scenario_id": "ARVR-000396",
+        "reason": "audit: quasi-doublon ou texte trop court (<7 mots)"
+      },
+      {
+        "scenario_id": "ARVR-000422",
+        "reason": "audit: quasi-doublon ou texte trop court (<7 mots)"
+      },
+      {
+        "scenario_id": "ARVR-000435",
+        "reason": "audit: quasi-doublon ou texte trop court (<7 mots)"
+      }
+    ]
+  },
+  "distribution_new_350": {
+    "intents": 350,
+    "mentions": 742,
+    "levels_count": {
+      "1": 164,
+      "2": 179,
+      "3": 277,
+      "4": 122
+    },
+    "levels_pct": {
+      "1": 22.1,
+      "2": 24.1,
+      "3": 37.3,
+      "4": 16.4
+    },
+    "designations": {
+      "name": 179,
+      "id": 160,
+      "flow": 170,
+      "role": 107,
+      "id+name": 4,
+      "context": 122
+    },
+    "styles": {
+      "ticket_note": 42,
+      "need_statement": 89,
+      "narrative": 64,
+      "constraint_statement": 50,
+      "goal_oriented": 31,
+      "question": 20,
+      "imperative": 31,
+      "polite_request": 23
+    },
+    "registers": {
+      "manager": 60,
+      "developer": 77,
+      "product_owner": 46,
+      "ops_terse": 59,
+      "formal": 39,
+      "casual": 69
+    },
+    "structures": {
+      "clause_chain": 115,
+      "single_sentence": 120,
+      "enumeration": 84,
+      "two_sentences": 23,
+      "conditional": 8
+    },
+    "kpi": {
+      "ram": 212,
+      "e2e_latency": 312,
+      "cpu": 218
+    },
+    "written_units": {
+      "mb": 120,
+      "gb": 92,
+      "ms": 240,
+      "seconds": 72,
+      "mcpu": 53,
+      "vcpu": 132,
+      "millicores": 31,
+      "virtual cpus": 2
+    },
+    "words": {
+      "min": 7,
+      "median": 18.0,
+      "mean": 18.8,
+      "max": 45
+    },
+    "distinct_first_two_words": 289,
+    "distinct_first_word": 143
+  },
+  "distribution_carried_150": {
+    "intents": 150,
+    "mentions": 315,
+    "levels_count": {
+      "1": 51,
+      "2": 106,
+      "3": 101,
+      "4": 57
+    },
+    "levels_pct": {
+      "1": 16.2,
+      "2": 33.7,
+      "3": 32.1,
+      "4": 18.1
+    },
+    "designations": {
+      "id": 47,
+      "context": 57,
+      "role": 62,
+      "flow": 39,
+      "name": 106,
+      "id+name": 4
+    },
+    "styles": {
+      "ticket_note": 11,
+      "constraint_statement": 28,
+      "narrative": 30,
+      "goal_oriented": 11,
+      "need_statement": 37,
+      "question": 7,
+      "polite_request": 9,
+      "imperative": 17
+    },
+    "registers": {
+      "ops_terse": 31,
+      "developer": 33,
+      "manager": 22,
+      "product_owner": 17,
+      "casual": 26,
+      "formal": 21
+    },
+    "structures": {
+      "single_sentence": 64,
+      "clause_chain": 38,
+      "enumeration": 25,
+      "two_sentences": 19,
+      "conditional": 4
+    },
+    "kpi": {
+      "e2e_latency": 132,
+      "cpu": 87,
+      "ram": 96
+    },
+    "written_units": {
+      "ms": 100,
+      "vcpu": 55,
+      "millicores": 16,
+      "mb": 44,
+      "gb": 52,
+      "virtual cpus": 8,
+      "mcpu": 8,
+      "seconds": 27,
+      "µs": 3,
+      "milliseconds": 1,
+      "microseconds": 1
+    },
+    "words": {
+      "min": 7,
+      "median": 23.0,
+      "mean": 24.3,
+      "max": 57
+    },
+    "distinct_first_two_words": 135,
+    "distinct_first_word": 95
+  },
+  "distribution_all_500": {
+    "intents": 500,
+    "mentions": 1057,
+    "levels_count": {
+      "1": 215,
+      "2": 285,
+      "3": 378,
+      "4": 179
+    },
+    "levels_pct": {
+      "1": 20.3,
+      "2": 27.0,
+      "3": 35.8,
+      "4": 16.9
+    },
+    "designations": {
+      "name": 285,
+      "id": 207,
+      "flow": 209,
+      "context": 179,
+      "role": 169,
+      "id+name": 8
+    },
+    "styles": {
+      "ticket_note": 53,
+      "need_statement": 126,
+      "constraint_statement": 78,
+      "narrative": 94,
+      "goal_oriented": 42,
+      "question": 27,
+      "imperative": 48,
+      "polite_request": 32
+    },
+    "registers": {
+      "manager": 82,
+      "developer": 110,
+      "ops_terse": 90,
+      "product_owner": 63,
+      "formal": 60,
+      "casual": 95
+    },
+    "structures": {
+      "clause_chain": 153,
+      "single_sentence": 184,
+      "enumeration": 109,
+      "two_sentences": 42,
+      "conditional": 12
+    },
+    "kpi": {
+      "ram": 308,
+      "e2e_latency": 444,
+      "cpu": 305
+    },
+    "written_units": {
+      "mb": 164,
+      "gb": 144,
+      "ms": 340,
+      "seconds": 99,
+      "vcpu": 187,
+      "mcpu": 61,
+      "millicores": 47,
+      "virtual cpus": 10,
+      "µs": 3,
+      "milliseconds": 1,
+      "microseconds": 1
+    },
+    "words": {
+      "min": 7,
+      "median": 19.0,
+      "mean": 20.5,
+      "max": 57
+    },
+    "distinct_first_two_words": 386,
+    "distinct_first_word": 183
+  },
+  "max_pairwise_word_jaccard_numbers_removed": {
+    "value": 0.7,
+    "pair": [
+      "ARVR-000035",
+      "ARVR-000192"
+    ]
+  },
+  "targets": {
+    "levels_pct": {
+      "1": 20,
+      "2": 30,
+      "3": 30,
+      "4": 20
+    }
+  },
+  "known_limits": [
+    "level mix deviates from the 20/30/30/20 target: level 3 over-represented, levels 2 and 4 under-represented in the 350 new intents",
+    "level 3/4 boundary remains a judgment call",
+    "no human review; semantic uniqueness of f1/f2 references is not machine-checked",
+    "carried-over 150 keep their previous known limits (ARVR-000137/000140 near-duplicate pair in the old numbering)",
+    "'minimum' appears in 144/500 intents and repeated openings 'the stage' / 'object recognition' / 'scene processing' appear 6-7 times in the 350 new",
+    "synthetic stratified scenarios: not representative of real operator requests"
+  ]
+}

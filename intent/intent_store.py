@@ -3,6 +3,8 @@
 
 Commandes :
   status                 entrées déjà enregistrées et prochain scénario à traiter
+  revise LOT.json RAISON corrige une entrée déjà enregistrée (revalidée, ancien texte conservé)
+  carry                  (jeu 500) reporte les intentions du jeu 150 vers leurs nouveaux ids, après revalidation
   view [next|ID] [N]     affiche N scénarios (exigences seulement, vérité terrain masquée)
   append LOT.json        contrôle puis enregistre, scénario par scénario, dans intents.json
   report                 répartition des niveaux/styles/longueurs/ouvertures déjà enregistrés
@@ -21,8 +23,10 @@ from pathlib import Path
 from statistics import median
 
 ROOT = Path(__file__).resolve().parent
-SCENARIOS = ROOT.parent / "eval" / "experiment_150" / "scenarios.json"
-OUT = ROOT / "intents.json"
+# Jeu de scénarios : INTENT_SET=150 (défaut) ou 500. Chaque jeu a son propre fichier de sortie.
+SET = os.environ.get("INTENT_SET", "150")
+SCENARIOS = ROOT.parent / "eval" / f"experiment_{SET}" / "scenarios.json"
+OUT = ROOT / ("intents.json" if SET == "150" else f"intents_{SET}.json")
 
 REVIEW_STATUS = "llm_generated_auto_checked"
 
@@ -86,6 +90,8 @@ def load_out():
 
 
 def save_out(entries):
+    order = {s["id"]: i for i, s in enumerate(load_scenarios())}
+    entries = sorted(entries, key=lambda e: order[e["scenario_id"]])
     fd, tmp = tempfile.mkstemp(prefix="intents.", suffix=".tmp", dir=str(ROOT))
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
@@ -115,29 +121,34 @@ def show(s):
               f"   [valeur de base {fmt(r['baseline_value'])}]")
 
 
+def pending(scenarios, out):
+    """Scénarios sans intention, dans l'ordre du fichier de scénarios."""
+    done = {e["scenario_id"] for e in out}
+    return [s for s in scenarios if s["id"] not in done]
+
+
 def cmd_view(args):
     scenarios = load_scenarios()
-    done = len(load_out())
-    start, count = done, 5
-    if args:
-        if args[0] != "next":
-            ids = [s["id"] for s in scenarios]
-            if args[0] not in ids:
-                sys.exit(f"id inconnu : {args[0]}")
-            start = ids.index(args[0])
-        if len(args) > 1:
-            count = int(args[1])
-    for s in scenarios[start:start + count]:
+    todo = pending(scenarios, load_out())
+    count = 5
+    if args and args[0] != "next":
+        ids = [s["id"] for s in scenarios]
+        if args[0] not in ids:
+            sys.exit(f"id inconnu : {args[0]}")
+        todo = scenarios[ids.index(args[0]):]
+    if len(args) > 1:
+        count = int(args[1])
+    for s in todo[:count]:
         show(s)
 
 
 def cmd_status(_):
     scenarios = load_scenarios()
     out = load_out()
-    n = len(out)
-    print(f"enregistrés : {n}/{len(scenarios)}")
-    if n < len(scenarios):
-        print(f"prochain    : {scenarios[n]['id']}")
+    todo = pending(scenarios, out)
+    print(f"enregistrés : {len(out)}/{len(scenarios)}")
+    if todo:
+        print(f"prochain    : {todo[0]['id']}   (restants : {len(todo)})")
     else:
         print("terminé.")
 
@@ -286,11 +297,11 @@ def cmd_append(args):
     for entry in batch:
         if entry.get("scenario_id") in done_ids:
             continue  # déjà enregistré lors d'une exécution précédente : on ne réécrit jamais
-        n = len(out)
-        if n >= len(scenarios):
+        todo = pending(scenarios, out)
+        if not todo:
             print("tous les scénarios sont déjà enregistrés.")
             break
-        scen = scenarios[n]
+        scen = todo[0]
         if entry.get("scenario_id") != scen["id"]:
             print(f"STOP : attendu {scen['id']}, reçu {entry.get('scenario_id')}")
             break
@@ -314,9 +325,85 @@ def cmd_append(args):
         }
         out.append(stored)
         save_out(out)
+        done_ids.add(scen["id"])
         saved += 1
         print(f"ok {scen['id']} ({stored['n_words']} mots)")
     print(f"total enregistré : {len(out)}/{len(scenarios)}")
+
+
+def cmd_carry(_):
+    """Jeu 500 : reprend les intentions déjà écrites et contrôlées du jeu 150, sous leur nouvel id.
+
+    Correspondance par égalité exacte des exigences ; le texte n'est pas modifié ; chaque entrée est
+    revalidée contre le scénario du jeu 500.
+    """
+    if SET == "150":
+        sys.exit("carry s'utilise avec INTENT_SET=500")
+    old_scen = json.load(open(ROOT.parent / "eval" / "experiment_150" / "scenarios.json", encoding="utf-8"))
+    old_int = {e["scenario_id"]: e for e in json.load(open(ROOT / "intents.json", encoding="utf-8"))}
+    new_scen = load_scenarios()
+    key = lambda s: json.dumps(s["requirements"], sort_keys=True)
+    by_req = {}
+    for s in new_scen:
+        by_req.setdefault(key(s), []).append(s)
+    out = load_out()
+    done_ids = {e["scenario_id"] for e in out}
+    carried = 0
+    for o in old_scen:
+        matches = by_req.get(key(o), [])
+        if len(matches) != 1:
+            sys.exit(f"{o['id']}: {len(matches)} correspondances dans le jeu 500, abandon")
+        scen = matches[0]
+        if scen["id"] in done_ids:
+            continue
+        e = old_int[o["id"]]
+        errors, _w = validate(e, scen, out)
+        if errors:
+            sys.exit(f"{o['id']} -> {scen['id']} : revalidation refusée : {errors}")
+        stored = dict(e)
+        stored["scenario_id"] = scen["id"]
+        stored["carried_over_from"] = {"set": "experiment_150", "scenario_id": o["id"]}
+        out.append(stored)
+        done_ids.add(scen["id"])
+        carried += 1
+    save_out(out)
+    print(f"reportées : {carried} ; total {len(out)}/{len(new_scen)}")
+
+
+def cmd_revise(args):
+    """Corrige à la main une entrée déjà enregistrée : revalidation complète, ancien texte conservé."""
+    if len(args) < 2:
+        sys.exit("usage: revise LOT.json 'raison'")
+    with open(args[0], encoding="utf-8") as f:
+        batch = json.load(f)
+    scenarios = {s["id"]: s for s in load_scenarios()}
+    out = load_out()
+    index = {e["scenario_id"]: i for i, e in enumerate(out)}
+    for entry in batch:
+        sid = entry.get("scenario_id")
+        if sid not in index:
+            sys.exit(f"{sid}: pas encore enregistré, utiliser append")
+        old = out[index[sid]]
+        others = [e for e in out if e["scenario_id"] != sid]
+        errors, warnings = validate(entry, scenarios[sid], others)
+        for w in warnings:
+            print(f"  avertissement {sid}: {w}")
+        if errors:
+            for e in errors:
+                print(f"  ERREUR {sid}: {e}")
+            sys.exit(f"STOP : révision de {sid} refusée, entrée inchangée.")
+        new = dict(old)
+        new.update({
+            "intent": entry["intent"].strip(),
+            "plan": entry["plan"],
+            "mentions": entry["mentions"],
+            "baseline_mentions": entry.get("baseline_mentions", []),
+            "n_words": len(entry["intent"].split()),
+            "revision": {"previous_intent": old["intent"], "reason": args[1]},
+        })
+        out[index[sid]] = new
+        save_out(out)
+        print(f"révisé {sid} ({new['n_words']} mots)")
 
 
 def cmd_report(_):
@@ -344,7 +431,7 @@ def cmd_report(_):
 
 
 def main():
-    cmds = {"status": cmd_status, "view": cmd_view, "append": cmd_append, "report": cmd_report}
+    cmds = {"status": cmd_status, "view": cmd_view, "append": cmd_append, "report": cmd_report, "carry": cmd_carry, "revise": cmd_revise}
     if len(sys.argv) < 2 or sys.argv[1] not in cmds:
         sys.exit(__doc__)
     cmds[sys.argv[1]](sys.argv[2:])
